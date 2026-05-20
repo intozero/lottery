@@ -4,3 +4,4 @@
 *.class
 */.idea/*
 *.xml
+*shelved.patch*
