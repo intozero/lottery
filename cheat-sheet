@@ -1,0 +1,49 @@
+
+may-2024-documents
+
+
+cheat sheet
+
+. This option uses a combination of commands to reverse the file order.
+$ nl file | sort -nr | cut -f 2-
+AIX
+Solaris
+Linux
+ nl commands numbers the file contents. sort sorts the numbered file in the reverse order, and the cut command removes the number and prints the file contents.
+
+
+
+*******************************************************
+
+
+0-9, 10-19 etc are called group or range.
+
+ ************* Power Ball ****************
+
+0 - 9    1
+30 - 39  1
+40 - 49  2
+50 - 59  1
+
+
+0 - 9    1
+10 - 19  1
+20 - 29  1
+40 - 49  2
+
+
+10 - 19  1
+20 - 29  1
+30 - 39  1
+40 - 49  2
+
+
+
+*************** Mega Million **************
+
+
+0 - 9    1
+30 - 39  1
+50 - 59  2
+
+40 - 49  OR 60 - 69 OR 70 - 75 

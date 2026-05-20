@@ -1,0 +1,1300 @@
+<div id="searchNumbersResults">
+    <div class="d-flex gap-3 flex-column">
+      <a class="card" href="https://www.powerball.com/draw-result?gc=powerball&amp;sd=2025-03-31&amp;ed=2025-06-16&amp;date=2025-06-14">
+  <div class="card-body ps-3 pe-4 pe-lg-5">
+    <div class="row justify-content-between gap-2 gap-lg-0">
+      <div class="col-12 col-lg-4">
+        <div class="d-flex h-100 align-items-center justify-content-center justify-content-lg-start text-center">
+          <h5 class="card-title">Sat, Jun 14, 2025</h5>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-4">
+        <div class="row row-cols-2 flex-column gap-3 h-100">
+          <div class="col d-flex gap-1 gap-lg-2 mx-0 align-items-center w-100 justify-content-center | game-ball-group  ">
+
+  <div class="form-control col white-balls item-powerball">4</div>
+
+  <div class="form-control col white-balls item-powerball">6</div>
+
+  <div class="form-control col white-balls item-powerball">9</div>
+
+  <div class="form-control col white-balls item-powerball">23</div>
+
+  <div class="form-control col white-balls item-powerball">59</div>
+
+  <div class="form-control col powerball item-powerball">25</div>
+          </div>
+            <div class="col align-self-center w-100">
+
+  <span class="power-play item-power-play | form-control badge rounded-pill col mx-auto text-center">
+    Power Play
+    <span class="multiplier">3x</span>
+  </span>
+            </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-4">
+
+      </div>
+
+    </div>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"></path>
+    </svg>
+  </div>
+</a><a class="card" href="https://www.powerball.com/draw-result?gc=powerball&amp;sd=2025-03-31&amp;ed=2025-06-16&amp;date=2025-06-11">
+  <div class="card-body ps-3 pe-4 pe-lg-5">
+    <div class="row justify-content-between gap-2 gap-lg-0">
+      <div class="col-12 col-lg-4">
+        <div class="d-flex h-100 align-items-center justify-content-center justify-content-lg-start text-center">
+          <h5 class="card-title">Wed, Jun 11, 2025</h5>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-4">
+        <div class="row row-cols-2 flex-column gap-3 h-100">
+          <div class="col d-flex gap-1 gap-lg-2 mx-0 align-items-center w-100 justify-content-center | game-ball-group  ">
+
+  <div class="form-control col white-balls item-powerball">13</div>
+
+  <div class="form-control col white-balls item-powerball">25</div>
+
+  <div class="form-control col white-balls item-powerball">29</div>
+
+  <div class="form-control col white-balls item-powerball">37</div>
+
+  <div class="form-control col white-balls item-powerball">53</div>
+
+  <div class="form-control col powerball item-powerball">3</div>
+          </div>
+            <div class="col align-self-center w-100">
+
+  <span class="power-play item-power-play | form-control badge rounded-pill col mx-auto text-center">
+    Power Play
+    <span class="multiplier">2x</span>
+  </span>
+            </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-4">
+
+      </div>
+
+    </div>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"></path>
+    </svg>
+  </div>
+</a><a class="card" href="https://www.powerball.com/draw-result?gc=powerball&amp;sd=2025-03-31&amp;ed=2025-06-16&amp;date=2025-06-09">
+  <div class="card-body ps-3 pe-4 pe-lg-5">
+    <div class="row justify-content-between gap-2 gap-lg-0">
+      <div class="col-12 col-lg-4">
+        <div class="d-flex h-100 align-items-center justify-content-center justify-content-lg-start text-center">
+          <h5 class="card-title">Mon, Jun 9, 2025</h5>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-4">
+        <div class="row row-cols-2 flex-column gap-3 h-100">
+          <div class="col d-flex gap-1 gap-lg-2 mx-0 align-items-center w-100 justify-content-center | game-ball-group  ">
+
+  <div class="form-control col white-balls item-powerball">30</div>
+
+  <div class="form-control col white-balls item-powerball">33</div>
+
+  <div class="form-control col white-balls item-powerball">40</div>
+
+  <div class="form-control col white-balls item-powerball">43</div>
+
+  <div class="form-control col white-balls item-powerball">52</div>
+
+  <div class="form-control col powerball item-powerball">25</div>
+          </div>
+            <div class="col align-self-center w-100">
+
+  <span class="power-play item-power-play | form-control badge rounded-pill col mx-auto text-center">
+    Power Play
+    <span class="multiplier">4x</span>
+  </span>
+            </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-4">
+
+      </div>
+
+    </div>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"></path>
+    </svg>
+  </div>
+</a><a class="card" href="https://www.powerball.com/draw-result?gc=powerball&amp;sd=2025-03-31&amp;ed=2025-06-16&amp;date=2025-06-07">
+  <div class="card-body ps-3 pe-4 pe-lg-5">
+    <div class="row justify-content-between gap-2 gap-lg-0">
+      <div class="col-12 col-lg-4">
+        <div class="d-flex h-100 align-items-center justify-content-center justify-content-lg-start text-center">
+          <h5 class="card-title">Sat, Jun 7, 2025</h5>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-4">
+        <div class="row row-cols-2 flex-column gap-3 h-100">
+          <div class="col d-flex gap-1 gap-lg-2 mx-0 align-items-center w-100 justify-content-center | game-ball-group  ">
+
+  <div class="form-control col white-balls item-powerball">31</div>
+
+  <div class="form-control col white-balls item-powerball">36</div>
+
+  <div class="form-control col white-balls item-powerball">43</div>
+
+  <div class="form-control col white-balls item-powerball">48</div>
+
+  <div class="form-control col white-balls item-powerball">62</div>
+
+  <div class="form-control col powerball item-powerball">25</div>
+          </div>
+            <div class="col align-self-center w-100">
+
+  <span class="power-play item-power-play | form-control badge rounded-pill col mx-auto text-center">
+    Power Play
+    <span class="multiplier">2x</span>
+  </span>
+            </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-4">
+
+      </div>
+
+    </div>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"></path>
+    </svg>
+  </div>
+</a><a class="card" href="https://www.powerball.com/draw-result?gc=powerball&amp;sd=2025-03-31&amp;ed=2025-06-16&amp;date=2025-06-04">
+  <div class="card-body ps-3 pe-4 pe-lg-5">
+    <div class="row justify-content-between gap-2 gap-lg-0">
+      <div class="col-12 col-lg-4">
+        <div class="d-flex h-100 align-items-center justify-content-center justify-content-lg-start text-center">
+          <h5 class="card-title">Wed, Jun 4, 2025</h5>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-4">
+        <div class="row row-cols-2 flex-column gap-3 h-100">
+          <div class="col d-flex gap-1 gap-lg-2 mx-0 align-items-center w-100 justify-content-center | game-ball-group  ">
+
+  <div class="form-control col white-balls item-powerball">5</div>
+
+  <div class="form-control col white-balls item-powerball">17</div>
+
+  <div class="form-control col white-balls item-powerball">23</div>
+
+  <div class="form-control col white-balls item-powerball">35</div>
+
+  <div class="form-control col white-balls item-powerball">45</div>
+
+  <div class="form-control col powerball item-powerball">24</div>
+          </div>
+            <div class="col align-self-center w-100">
+
+  <span class="power-play item-power-play | form-control badge rounded-pill col mx-auto text-center">
+    Power Play
+    <span class="multiplier">10x</span>
+  </span>
+            </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-4">
+
+      </div>
+
+    </div>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"></path>
+    </svg>
+  </div>
+</a><a class="card" href="https://www.powerball.com/draw-result?gc=powerball&amp;sd=2025-03-31&amp;ed=2025-06-16&amp;date=2025-06-02">
+  <div class="card-body ps-3 pe-4 pe-lg-5">
+    <div class="row justify-content-between gap-2 gap-lg-0">
+      <div class="col-12 col-lg-4">
+        <div class="d-flex h-100 align-items-center justify-content-center justify-content-lg-start text-center">
+          <h5 class="card-title">Mon, Jun 2, 2025</h5>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-4">
+        <div class="row row-cols-2 flex-column gap-3 h-100">
+          <div class="col d-flex gap-1 gap-lg-2 mx-0 align-items-center w-100 justify-content-center | game-ball-group  ">
+
+  <div class="form-control col white-balls item-powerball">1</div>
+
+  <div class="form-control col white-balls item-powerball">7</div>
+
+  <div class="form-control col white-balls item-powerball">44</div>
+
+  <div class="form-control col white-balls item-powerball">57</div>
+
+  <div class="form-control col white-balls item-powerball">61</div>
+
+  <div class="form-control col powerball item-powerball">21</div>
+          </div>
+            <div class="col align-self-center w-100">
+
+  <span class="power-play item-power-play | form-control badge rounded-pill col mx-auto text-center">
+    Power Play
+    <span class="multiplier">3x</span>
+  </span>
+            </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-4">
+
+      </div>
+
+    </div>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"></path>
+    </svg>
+  </div>
+</a><a class="card" href="https://www.powerball.com/draw-result?gc=powerball&amp;sd=2025-03-31&amp;ed=2025-06-16&amp;date=2025-05-31">
+  <div class="card-body ps-3 pe-4 pe-lg-5">
+    <div class="row justify-content-between gap-2 gap-lg-0">
+      <div class="col-12 col-lg-4">
+        <div class="d-flex h-100 align-items-center justify-content-center justify-content-lg-start text-center">
+          <h5 class="card-title">Sat, May 31, 2025</h5>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-4">
+        <div class="row row-cols-2 flex-column gap-3 h-100">
+          <div class="col d-flex gap-1 gap-lg-2 mx-0 align-items-center w-100 justify-content-center | game-ball-group  ">
+
+  <div class="form-control col white-balls item-powerball">1</div>
+
+  <div class="form-control col white-balls item-powerball">29</div>
+
+  <div class="form-control col white-balls item-powerball">37</div>
+
+  <div class="form-control col white-balls item-powerball">56</div>
+
+  <div class="form-control col white-balls item-powerball">68</div>
+
+  <div class="form-control col powerball item-powerball">13</div>
+          </div>
+            <div class="col align-self-center w-100">
+
+  <span class="power-play item-power-play | form-control badge rounded-pill col mx-auto text-center">
+    Power Play
+    <span class="multiplier">2x</span>
+  </span>
+            </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-4">
+
+      </div>
+
+    </div>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"></path>
+    </svg>
+  </div>
+</a><a class="card" href="https://www.powerball.com/draw-result?gc=powerball&amp;sd=2025-03-31&amp;ed=2025-06-16&amp;date=2025-05-28">
+  <div class="card-body ps-3 pe-4 pe-lg-5">
+    <div class="row justify-content-between gap-2 gap-lg-0">
+      <div class="col-12 col-lg-4">
+        <div class="d-flex h-100 align-items-center justify-content-center justify-content-lg-start text-center">
+          <h5 class="card-title">Wed, May 28, 2025</h5>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-4">
+        <div class="row row-cols-2 flex-column gap-3 h-100">
+          <div class="col d-flex gap-1 gap-lg-2 mx-0 align-items-center w-100 justify-content-center | game-ball-group  ">
+
+  <div class="form-control col white-balls item-powerball">23</div>
+
+  <div class="form-control col white-balls item-powerball">27</div>
+
+  <div class="form-control col white-balls item-powerball">32</div>
+
+  <div class="form-control col white-balls item-powerball">35</div>
+
+  <div class="form-control col white-balls item-powerball">59</div>
+
+  <div class="form-control col powerball item-powerball">11</div>
+          </div>
+            <div class="col align-self-center w-100">
+
+  <span class="power-play item-power-play | form-control badge rounded-pill col mx-auto text-center">
+    Power Play
+    <span class="multiplier">2x</span>
+  </span>
+            </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-4">
+
+      </div>
+
+    </div>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"></path>
+    </svg>
+  </div>
+</a><a class="card" href="https://www.powerball.com/draw-result?gc=powerball&amp;sd=2025-03-31&amp;ed=2025-06-16&amp;date=2025-05-26">
+  <div class="card-body ps-3 pe-4 pe-lg-5">
+    <div class="row justify-content-between gap-2 gap-lg-0">
+      <div class="col-12 col-lg-4">
+        <div class="d-flex h-100 align-items-center justify-content-center justify-content-lg-start text-center">
+          <h5 class="card-title">Mon, May 26, 2025</h5>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-4">
+        <div class="row row-cols-2 flex-column gap-3 h-100">
+          <div class="col d-flex gap-1 gap-lg-2 mx-0 align-items-center w-100 justify-content-center | game-ball-group  ">
+
+  <div class="form-control col white-balls item-powerball">13</div>
+
+  <div class="form-control col white-balls item-powerball">47</div>
+
+  <div class="form-control col white-balls item-powerball">52</div>
+
+  <div class="form-control col white-balls item-powerball">64</div>
+
+  <div class="form-control col white-balls item-powerball">67</div>
+
+  <div class="form-control col powerball item-powerball">25</div>
+          </div>
+            <div class="col align-self-center w-100">
+
+  <span class="power-play item-power-play | form-control badge rounded-pill col mx-auto text-center">
+    Power Play
+    <span class="multiplier">2x</span>
+  </span>
+            </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-4">
+
+      </div>
+
+    </div>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"></path>
+    </svg>
+  </div>
+</a><a class="card" href="https://www.powerball.com/draw-result?gc=powerball&amp;sd=2025-03-31&amp;ed=2025-06-16&amp;date=2025-05-24">
+  <div class="card-body ps-3 pe-4 pe-lg-5">
+    <div class="row justify-content-between gap-2 gap-lg-0">
+      <div class="col-12 col-lg-4">
+        <div class="d-flex h-100 align-items-center justify-content-center justify-content-lg-start text-center">
+          <h5 class="card-title">Sat, May 24, 2025</h5>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-4">
+        <div class="row row-cols-2 flex-column gap-3 h-100">
+          <div class="col d-flex gap-1 gap-lg-2 mx-0 align-items-center w-100 justify-content-center | game-ball-group  ">
+
+  <div class="form-control col white-balls item-powerball">12</div>
+
+  <div class="form-control col white-balls item-powerball">18</div>
+
+  <div class="form-control col white-balls item-powerball">28</div>
+
+  <div class="form-control col white-balls item-powerball">48</div>
+
+  <div class="form-control col white-balls item-powerball">52</div>
+
+  <div class="form-control col powerball item-powerball">5</div>
+          </div>
+            <div class="col align-self-center w-100">
+
+  <span class="power-play item-power-play | form-control badge rounded-pill col mx-auto text-center">
+    Power Play
+    <span class="multiplier">3x</span>
+  </span>
+            </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-4">
+
+      </div>
+
+    </div>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"></path>
+    </svg>
+  </div>
+</a><a class="card" href="https://www.powerball.com/draw-result?gc=powerball&amp;sd=2025-03-31&amp;ed=2025-06-16&amp;date=2025-05-21">
+  <div class="card-body ps-3 pe-4 pe-lg-5">
+    <div class="row justify-content-between gap-2 gap-lg-0">
+      <div class="col-12 col-lg-4">
+        <div class="d-flex h-100 align-items-center justify-content-center justify-content-lg-start text-center">
+          <h5 class="card-title">Wed, May 21, 2025</h5>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-4">
+        <div class="row row-cols-2 flex-column gap-3 h-100">
+          <div class="col d-flex gap-1 gap-lg-2 mx-0 align-items-center w-100 justify-content-center | game-ball-group  ">
+
+  <div class="form-control col white-balls item-powerball">9</div>
+
+  <div class="form-control col white-balls item-powerball">29</div>
+
+  <div class="form-control col white-balls item-powerball">31</div>
+
+  <div class="form-control col white-balls item-powerball">34</div>
+
+  <div class="form-control col white-balls item-powerball">43</div>
+
+  <div class="form-control col powerball item-powerball">2</div>
+          </div>
+            <div class="col align-self-center w-100">
+
+  <span class="power-play item-power-play | form-control badge rounded-pill col mx-auto text-center">
+    Power Play
+    <span class="multiplier">2x</span>
+  </span>
+            </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-4">
+
+      </div>
+
+    </div>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"></path>
+    </svg>
+  </div>
+</a><a class="card" href="https://www.powerball.com/draw-result?gc=powerball&amp;sd=2025-03-31&amp;ed=2025-06-16&amp;date=2025-05-19">
+  <div class="card-body ps-3 pe-4 pe-lg-5">
+    <div class="row justify-content-between gap-2 gap-lg-0">
+      <div class="col-12 col-lg-4">
+        <div class="d-flex h-100 align-items-center justify-content-center justify-content-lg-start text-center">
+          <h5 class="card-title">Mon, May 19, 2025</h5>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-4">
+        <div class="row row-cols-2 flex-column gap-3 h-100">
+          <div class="col d-flex gap-1 gap-lg-2 mx-0 align-items-center w-100 justify-content-center | game-ball-group  ">
+
+  <div class="form-control col white-balls item-powerball">13</div>
+
+  <div class="form-control col white-balls item-powerball">14</div>
+
+  <div class="form-control col white-balls item-powerball">37</div>
+
+  <div class="form-control col white-balls item-powerball">50</div>
+
+  <div class="form-control col white-balls item-powerball">60</div>
+
+  <div class="form-control col powerball item-powerball">11</div>
+          </div>
+            <div class="col align-self-center w-100">
+
+  <span class="power-play item-power-play | form-control badge rounded-pill col mx-auto text-center">
+    Power Play
+    <span class="multiplier">2x</span>
+  </span>
+            </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-4">
+
+      </div>
+
+    </div>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"></path>
+    </svg>
+  </div>
+</a><a class="card" href="https://www.powerball.com/draw-result?gc=powerball&amp;sd=2025-03-31&amp;ed=2025-06-16&amp;date=2025-05-17">
+  <div class="card-body ps-3 pe-4 pe-lg-5">
+    <div class="row justify-content-between gap-2 gap-lg-0">
+      <div class="col-12 col-lg-4">
+        <div class="d-flex h-100 align-items-center justify-content-center justify-content-lg-start text-center">
+          <h5 class="card-title">Sat, May 17, 2025</h5>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-4">
+        <div class="row row-cols-2 flex-column gap-3 h-100">
+          <div class="col d-flex gap-1 gap-lg-2 mx-0 align-items-center w-100 justify-content-center | game-ball-group  ">
+
+  <div class="form-control col white-balls item-powerball">7</div>
+
+  <div class="form-control col white-balls item-powerball">34</div>
+
+  <div class="form-control col white-balls item-powerball">40</div>
+
+  <div class="form-control col white-balls item-powerball">42</div>
+
+  <div class="form-control col white-balls item-powerball">52</div>
+
+  <div class="form-control col powerball item-powerball">15</div>
+          </div>
+            <div class="col align-self-center w-100">
+
+  <span class="power-play item-power-play | form-control badge rounded-pill col mx-auto text-center">
+    Power Play
+    <span class="multiplier">2x</span>
+  </span>
+            </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-4">
+
+      </div>
+
+    </div>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"></path>
+    </svg>
+  </div>
+</a><a class="card" href="https://www.powerball.com/draw-result?gc=powerball&amp;sd=2025-03-31&amp;ed=2025-06-16&amp;date=2025-05-14">
+  <div class="card-body ps-3 pe-4 pe-lg-5">
+    <div class="row justify-content-between gap-2 gap-lg-0">
+      <div class="col-12 col-lg-4">
+        <div class="d-flex h-100 align-items-center justify-content-center justify-content-lg-start text-center">
+          <h5 class="card-title">Wed, May 14, 2025</h5>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-4">
+        <div class="row row-cols-2 flex-column gap-3 h-100">
+          <div class="col d-flex gap-1 gap-lg-2 mx-0 align-items-center w-100 justify-content-center | game-ball-group  ">
+
+  <div class="form-control col white-balls item-powerball">4</div>
+
+  <div class="form-control col white-balls item-powerball">10</div>
+
+  <div class="form-control col white-balls item-powerball">24</div>
+
+  <div class="form-control col white-balls item-powerball">29</div>
+
+  <div class="form-control col white-balls item-powerball">53</div>
+
+  <div class="form-control col powerball item-powerball">4</div>
+          </div>
+            <div class="col align-self-center w-100">
+
+  <span class="power-play item-power-play | form-control badge rounded-pill col mx-auto text-center">
+    Power Play
+    <span class="multiplier">3x</span>
+  </span>
+            </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-4">
+
+      </div>
+
+    </div>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"></path>
+    </svg>
+  </div>
+</a><a class="card" href="https://www.powerball.com/draw-result?gc=powerball&amp;sd=2025-03-31&amp;ed=2025-06-16&amp;date=2025-05-12">
+  <div class="card-body ps-3 pe-4 pe-lg-5">
+    <div class="row justify-content-between gap-2 gap-lg-0">
+      <div class="col-12 col-lg-4">
+        <div class="d-flex h-100 align-items-center justify-content-center justify-content-lg-start text-center">
+          <h5 class="card-title">Mon, May 12, 2025</h5>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-4">
+        <div class="row row-cols-2 flex-column gap-3 h-100">
+          <div class="col d-flex gap-1 gap-lg-2 mx-0 align-items-center w-100 justify-content-center | game-ball-group  ">
+
+  <div class="form-control col white-balls item-powerball">15</div>
+
+  <div class="form-control col white-balls item-powerball">16</div>
+
+  <div class="form-control col white-balls item-powerball">41</div>
+
+  <div class="form-control col white-balls item-powerball">48</div>
+
+  <div class="form-control col white-balls item-powerball">60</div>
+
+  <div class="form-control col powerball item-powerball">21</div>
+          </div>
+            <div class="col align-self-center w-100">
+
+  <span class="power-play item-power-play | form-control badge rounded-pill col mx-auto text-center">
+    Power Play
+    <span class="multiplier">3x</span>
+  </span>
+            </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-4">
+
+      </div>
+
+    </div>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"></path>
+    </svg>
+  </div>
+</a><a class="card" href="https://www.powerball.com/draw-result?gc=powerball&amp;sd=2025-03-31&amp;ed=2025-06-16&amp;date=2025-05-10">
+  <div class="card-body ps-3 pe-4 pe-lg-5">
+    <div class="row justify-content-between gap-2 gap-lg-0">
+      <div class="col-12 col-lg-4">
+        <div class="d-flex h-100 align-items-center justify-content-center justify-content-lg-start text-center">
+          <h5 class="card-title">Sat, May 10, 2025</h5>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-4">
+        <div class="row row-cols-2 flex-column gap-3 h-100">
+          <div class="col d-flex gap-1 gap-lg-2 mx-0 align-items-center w-100 justify-content-center | game-ball-group  ">
+
+  <div class="form-control col white-balls item-powerball">5</div>
+
+  <div class="form-control col white-balls item-powerball">20</div>
+
+  <div class="form-control col white-balls item-powerball">28</div>
+
+  <div class="form-control col white-balls item-powerball">39</div>
+
+  <div class="form-control col white-balls item-powerball">42</div>
+
+  <div class="form-control col powerball item-powerball">13</div>
+          </div>
+            <div class="col align-self-center w-100">
+
+  <span class="power-play item-power-play | form-control badge rounded-pill col mx-auto text-center">
+    Power Play
+    <span class="multiplier">2x</span>
+  </span>
+            </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-4">
+
+      </div>
+
+    </div>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"></path>
+    </svg>
+  </div>
+</a><a class="card" href="https://www.powerball.com/draw-result?gc=powerball&amp;sd=2025-03-31&amp;ed=2025-06-16&amp;date=2025-05-07">
+  <div class="card-body ps-3 pe-4 pe-lg-5">
+    <div class="row justify-content-between gap-2 gap-lg-0">
+      <div class="col-12 col-lg-4">
+        <div class="d-flex h-100 align-items-center justify-content-center justify-content-lg-start text-center">
+          <h5 class="card-title">Wed, May 7, 2025</h5>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-4">
+        <div class="row row-cols-2 flex-column gap-3 h-100">
+          <div class="col d-flex gap-1 gap-lg-2 mx-0 align-items-center w-100 justify-content-center | game-ball-group  ">
+
+  <div class="form-control col white-balls item-powerball">14</div>
+
+  <div class="form-control col white-balls item-powerball">15</div>
+
+  <div class="form-control col white-balls item-powerball">30</div>
+
+  <div class="form-control col white-balls item-powerball">40</div>
+
+  <div class="form-control col white-balls item-powerball">59</div>
+
+  <div class="form-control col powerball item-powerball">20</div>
+          </div>
+            <div class="col align-self-center w-100">
+
+  <span class="power-play item-power-play | form-control badge rounded-pill col mx-auto text-center">
+    Power Play
+    <span class="multiplier">3x</span>
+  </span>
+            </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-4">
+
+      </div>
+
+    </div>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"></path>
+    </svg>
+  </div>
+</a><a class="card" href="https://www.powerball.com/draw-result?gc=powerball&amp;sd=2025-03-31&amp;ed=2025-06-16&amp;date=2025-05-05">
+  <div class="card-body ps-3 pe-4 pe-lg-5">
+    <div class="row justify-content-between gap-2 gap-lg-0">
+      <div class="col-12 col-lg-4">
+        <div class="d-flex h-100 align-items-center justify-content-center justify-content-lg-start text-center">
+          <h5 class="card-title">Mon, May 5, 2025</h5>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-4">
+        <div class="row row-cols-2 flex-column gap-3 h-100">
+          <div class="col d-flex gap-1 gap-lg-2 mx-0 align-items-center w-100 justify-content-center | game-ball-group  ">
+
+  <div class="form-control col white-balls item-powerball">16</div>
+
+  <div class="form-control col white-balls item-powerball">34</div>
+
+  <div class="form-control col white-balls item-powerball">40</div>
+
+  <div class="form-control col white-balls item-powerball">45</div>
+
+  <div class="form-control col white-balls item-powerball">66</div>
+
+  <div class="form-control col powerball item-powerball">19</div>
+          </div>
+            <div class="col align-self-center w-100">
+
+  <span class="power-play item-power-play | form-control badge rounded-pill col mx-auto text-center">
+    Power Play
+    <span class="multiplier">2x</span>
+  </span>
+            </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-4">
+
+      </div>
+
+    </div>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"></path>
+    </svg>
+  </div>
+</a><a class="card" href="https://www.powerball.com/draw-result?gc=powerball&amp;sd=2025-03-31&amp;ed=2025-06-16&amp;date=2025-05-03">
+  <div class="card-body ps-3 pe-4 pe-lg-5">
+    <div class="row justify-content-between gap-2 gap-lg-0">
+      <div class="col-12 col-lg-4">
+        <div class="d-flex h-100 align-items-center justify-content-center justify-content-lg-start text-center">
+          <h5 class="card-title">Sat, May 3, 2025</h5>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-4">
+        <div class="row row-cols-2 flex-column gap-3 h-100">
+          <div class="col d-flex gap-1 gap-lg-2 mx-0 align-items-center w-100 justify-content-center | game-ball-group  ">
+
+  <div class="form-control col white-balls item-powerball">10</div>
+
+  <div class="form-control col white-balls item-powerball">21</div>
+
+  <div class="form-control col white-balls item-powerball">23</div>
+
+  <div class="form-control col white-balls item-powerball">35</div>
+
+  <div class="form-control col white-balls item-powerball">65</div>
+
+  <div class="form-control col powerball item-powerball">24</div>
+          </div>
+            <div class="col align-self-center w-100">
+
+  <span class="power-play item-power-play | form-control badge rounded-pill col mx-auto text-center">
+    Power Play
+    <span class="multiplier">2x</span>
+  </span>
+            </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-4">
+
+      </div>
+
+    </div>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"></path>
+    </svg>
+  </div>
+</a><a class="card" href="https://www.powerball.com/draw-result?gc=powerball&amp;sd=2025-03-31&amp;ed=2025-06-16&amp;date=2025-04-30">
+  <div class="card-body ps-3 pe-4 pe-lg-5">
+    <div class="row justify-content-between gap-2 gap-lg-0">
+      <div class="col-12 col-lg-4">
+        <div class="d-flex h-100 align-items-center justify-content-center justify-content-lg-start text-center">
+          <h5 class="card-title">Wed, Apr 30, 2025</h5>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-4">
+        <div class="row row-cols-2 flex-column gap-3 h-100">
+          <div class="col d-flex gap-1 gap-lg-2 mx-0 align-items-center w-100 justify-content-center | game-ball-group  ">
+
+  <div class="form-control col white-balls item-powerball">1</div>
+
+  <div class="form-control col white-balls item-powerball">2</div>
+
+  <div class="form-control col white-balls item-powerball">3</div>
+
+  <div class="form-control col white-balls item-powerball">57</div>
+
+  <div class="form-control col white-balls item-powerball">59</div>
+
+  <div class="form-control col powerball item-powerball">9</div>
+          </div>
+            <div class="col align-self-center w-100">
+
+  <span class="power-play item-power-play | form-control badge rounded-pill col mx-auto text-center">
+    Power Play
+    <span class="multiplier">2x</span>
+  </span>
+            </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-4">
+
+      </div>
+
+    </div>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"></path>
+    </svg>
+  </div>
+</a><a class="card" href="https://www.powerball.com/draw-result?gc=powerball&amp;sd=2025-03-31&amp;ed=2025-06-16&amp;date=2025-04-28">
+  <div class="card-body ps-3 pe-4 pe-lg-5">
+    <div class="row justify-content-between gap-2 gap-lg-0">
+      <div class="col-12 col-lg-4">
+        <div class="d-flex h-100 align-items-center justify-content-center justify-content-lg-start text-center">
+          <h5 class="card-title">Mon, Apr 28, 2025</h5>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-4">
+        <div class="row row-cols-2 flex-column gap-3 h-100">
+          <div class="col d-flex gap-1 gap-lg-2 mx-0 align-items-center w-100 justify-content-center | game-ball-group  ">
+
+  <div class="form-control col white-balls item-powerball">26</div>
+
+  <div class="form-control col white-balls item-powerball">43</div>
+
+  <div class="form-control col white-balls item-powerball">51</div>
+
+  <div class="form-control col white-balls item-powerball">56</div>
+
+  <div class="form-control col white-balls item-powerball">60</div>
+
+  <div class="form-control col powerball item-powerball">24</div>
+          </div>
+            <div class="col align-self-center w-100">
+
+  <span class="power-play item-power-play | form-control badge rounded-pill col mx-auto text-center">
+    Power Play
+    <span class="multiplier">4x</span>
+  </span>
+            </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-4">
+
+      </div>
+
+    </div>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"></path>
+    </svg>
+  </div>
+</a><a class="card" href="https://www.powerball.com/draw-result?gc=powerball&amp;sd=2025-03-31&amp;ed=2025-06-16&amp;date=2025-04-26">
+  <div class="card-body ps-3 pe-4 pe-lg-5">
+    <div class="row justify-content-between gap-2 gap-lg-0">
+      <div class="col-12 col-lg-4">
+        <div class="d-flex h-100 align-items-center justify-content-center justify-content-lg-start text-center">
+          <h5 class="card-title">Sat, Apr 26, 2025</h5>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-4">
+        <div class="row row-cols-2 flex-column gap-3 h-100">
+          <div class="col d-flex gap-1 gap-lg-2 mx-0 align-items-center w-100 justify-content-center | game-ball-group  ">
+
+  <div class="form-control col white-balls item-powerball">1</div>
+
+  <div class="form-control col white-balls item-powerball">12</div>
+
+  <div class="form-control col white-balls item-powerball">14</div>
+
+  <div class="form-control col white-balls item-powerball">18</div>
+
+  <div class="form-control col white-balls item-powerball">69</div>
+
+  <div class="form-control col powerball item-powerball">2</div>
+          </div>
+            <div class="col align-self-center w-100">
+
+  <span class="power-play item-power-play | form-control badge rounded-pill col mx-auto text-center">
+    Power Play
+    <span class="multiplier">3x</span>
+  </span>
+            </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-4">
+
+      </div>
+
+    </div>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"></path>
+    </svg>
+  </div>
+</a><a class="card" href="https://www.powerball.com/draw-result?gc=powerball&amp;sd=2025-03-31&amp;ed=2025-06-16&amp;date=2025-04-23">
+  <div class="card-body ps-3 pe-4 pe-lg-5">
+    <div class="row justify-content-between gap-2 gap-lg-0">
+      <div class="col-12 col-lg-4">
+        <div class="d-flex h-100 align-items-center justify-content-center justify-content-lg-start text-center">
+          <h5 class="card-title">Wed, Apr 23, 2025</h5>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-4">
+        <div class="row row-cols-2 flex-column gap-3 h-100">
+          <div class="col d-flex gap-1 gap-lg-2 mx-0 align-items-center w-100 justify-content-center | game-ball-group  ">
+
+  <div class="form-control col white-balls item-powerball">15</div>
+
+  <div class="form-control col white-balls item-powerball">44</div>
+
+  <div class="form-control col white-balls item-powerball">63</div>
+
+  <div class="form-control col white-balls item-powerball">66</div>
+
+  <div class="form-control col white-balls item-powerball">69</div>
+
+  <div class="form-control col powerball item-powerball">20</div>
+          </div>
+            <div class="col align-self-center w-100">
+
+  <span class="power-play item-power-play | form-control badge rounded-pill col mx-auto text-center">
+    Power Play
+    <span class="multiplier">2x</span>
+  </span>
+            </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-4">
+
+      </div>
+
+    </div>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"></path>
+    </svg>
+  </div>
+</a><a class="card" href="https://www.powerball.com/draw-result?gc=powerball&amp;sd=2025-03-31&amp;ed=2025-06-16&amp;date=2025-04-21">
+  <div class="card-body ps-3 pe-4 pe-lg-5">
+    <div class="row justify-content-between gap-2 gap-lg-0">
+      <div class="col-12 col-lg-4">
+        <div class="d-flex h-100 align-items-center justify-content-center justify-content-lg-start text-center">
+          <h5 class="card-title">Mon, Apr 21, 2025</h5>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-4">
+        <div class="row row-cols-2 flex-column gap-3 h-100">
+          <div class="col d-flex gap-1 gap-lg-2 mx-0 align-items-center w-100 justify-content-center | game-ball-group  ">
+
+  <div class="form-control col white-balls item-powerball">4</div>
+
+  <div class="form-control col white-balls item-powerball">33</div>
+
+  <div class="form-control col white-balls item-powerball">45</div>
+
+  <div class="form-control col white-balls item-powerball">46</div>
+
+  <div class="form-control col white-balls item-powerball">51</div>
+
+  <div class="form-control col powerball item-powerball">25</div>
+          </div>
+            <div class="col align-self-center w-100">
+
+  <span class="power-play item-power-play | form-control badge rounded-pill col mx-auto text-center">
+    Power Play
+    <span class="multiplier">3x</span>
+  </span>
+            </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-4">
+
+      </div>
+
+    </div>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"></path>
+    </svg>
+  </div>
+</a><a class="card" href="https://www.powerball.com/draw-result?gc=powerball&amp;sd=2025-03-31&amp;ed=2025-06-16&amp;date=2025-04-19">
+  <div class="card-body ps-3 pe-4 pe-lg-5">
+    <div class="row justify-content-between gap-2 gap-lg-0">
+      <div class="col-12 col-lg-4">
+        <div class="d-flex h-100 align-items-center justify-content-center justify-content-lg-start text-center">
+          <h5 class="card-title">Sat, Apr 19, 2025</h5>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-4">
+        <div class="row row-cols-2 flex-column gap-3 h-100">
+          <div class="col d-flex gap-1 gap-lg-2 mx-0 align-items-center w-100 justify-content-center | game-ball-group  ">
+
+  <div class="form-control col white-balls item-powerball">7</div>
+
+  <div class="form-control col white-balls item-powerball">25</div>
+
+  <div class="form-control col white-balls item-powerball">37</div>
+
+  <div class="form-control col white-balls item-powerball">39</div>
+
+  <div class="form-control col white-balls item-powerball">63</div>
+
+  <div class="form-control col powerball item-powerball">1</div>
+          </div>
+            <div class="col align-self-center w-100">
+
+  <span class="power-play item-power-play | form-control badge rounded-pill col mx-auto text-center">
+    Power Play
+    <span class="multiplier">3x</span>
+  </span>
+            </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-4">
+
+      </div>
+
+    </div>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"></path>
+    </svg>
+  </div>
+</a><a class="card" href="https://www.powerball.com/draw-result?gc=powerball&amp;sd=2025-03-31&amp;ed=2025-06-16&amp;date=2025-04-16">
+  <div class="card-body ps-3 pe-4 pe-lg-5">
+    <div class="row justify-content-between gap-2 gap-lg-0">
+      <div class="col-12 col-lg-4">
+        <div class="d-flex h-100 align-items-center justify-content-center justify-content-lg-start text-center">
+          <h5 class="card-title">Wed, Apr 16, 2025</h5>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-4">
+        <div class="row row-cols-2 flex-column gap-3 h-100">
+          <div class="col d-flex gap-1 gap-lg-2 mx-0 align-items-center w-100 justify-content-center | game-ball-group  ">
+
+  <div class="form-control col white-balls item-powerball">20</div>
+
+  <div class="form-control col white-balls item-powerball">24</div>
+
+  <div class="form-control col white-balls item-powerball">42</div>
+
+  <div class="form-control col white-balls item-powerball">43</div>
+
+  <div class="form-control col white-balls item-powerball">49</div>
+
+  <div class="form-control col powerball item-powerball">19</div>
+          </div>
+            <div class="col align-self-center w-100">
+
+  <span class="power-play item-power-play | form-control badge rounded-pill col mx-auto text-center">
+    Power Play
+    <span class="multiplier">3x</span>
+  </span>
+            </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-4">
+
+      </div>
+
+    </div>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"></path>
+    </svg>
+  </div>
+</a><a class="card" href="https://www.powerball.com/draw-result?gc=powerball&amp;sd=2025-03-31&amp;ed=2025-06-16&amp;date=2025-04-14">
+  <div class="card-body ps-3 pe-4 pe-lg-5">
+    <div class="row justify-content-between gap-2 gap-lg-0">
+      <div class="col-12 col-lg-4">
+        <div class="d-flex h-100 align-items-center justify-content-center justify-content-lg-start text-center">
+          <h5 class="card-title">Mon, Apr 14, 2025</h5>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-4">
+        <div class="row row-cols-2 flex-column gap-3 h-100">
+          <div class="col d-flex gap-1 gap-lg-2 mx-0 align-items-center w-100 justify-content-center | game-ball-group  ">
+
+  <div class="form-control col white-balls item-powerball">3</div>
+
+  <div class="form-control col white-balls item-powerball">20</div>
+
+  <div class="form-control col white-balls item-powerball">30</div>
+
+  <div class="form-control col white-balls item-powerball">52</div>
+
+  <div class="form-control col white-balls item-powerball">62</div>
+
+  <div class="form-control col powerball item-powerball">1</div>
+          </div>
+            <div class="col align-self-center w-100">
+
+  <span class="power-play item-power-play | form-control badge rounded-pill col mx-auto text-center">
+    Power Play
+    <span class="multiplier">3x</span>
+  </span>
+            </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-4">
+
+      </div>
+
+    </div>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"></path>
+    </svg>
+  </div>
+</a><a class="card" href="https://www.powerball.com/draw-result?gc=powerball&amp;sd=2025-03-31&amp;ed=2025-06-16&amp;date=2025-04-12">
+  <div class="card-body ps-3 pe-4 pe-lg-5">
+    <div class="row justify-content-between gap-2 gap-lg-0">
+      <div class="col-12 col-lg-4">
+        <div class="d-flex h-100 align-items-center justify-content-center justify-content-lg-start text-center">
+          <h5 class="card-title">Sat, Apr 12, 2025</h5>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-4">
+        <div class="row row-cols-2 flex-column gap-3 h-100">
+          <div class="col d-flex gap-1 gap-lg-2 mx-0 align-items-center w-100 justify-content-center | game-ball-group  ">
+
+  <div class="form-control col white-balls item-powerball">16</div>
+
+  <div class="form-control col white-balls item-powerball">22</div>
+
+  <div class="form-control col white-balls item-powerball">44</div>
+
+  <div class="form-control col white-balls item-powerball">45</div>
+
+  <div class="form-control col white-balls item-powerball">53</div>
+
+  <div class="form-control col powerball item-powerball">19</div>
+          </div>
+            <div class="col align-self-center w-100">
+
+  <span class="power-play item-power-play | form-control badge rounded-pill col mx-auto text-center">
+    Power Play
+    <span class="multiplier">2x</span>
+  </span>
+            </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-4">
+
+      </div>
+
+    </div>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"></path>
+    </svg>
+  </div>
+</a><a class="card" href="https://www.powerball.com/draw-result?gc=powerball&amp;sd=2025-03-31&amp;ed=2025-06-16&amp;date=2025-04-09">
+  <div class="card-body ps-3 pe-4 pe-lg-5">
+    <div class="row justify-content-between gap-2 gap-lg-0">
+      <div class="col-12 col-lg-4">
+        <div class="d-flex h-100 align-items-center justify-content-center justify-content-lg-start text-center">
+          <h5 class="card-title">Wed, Apr 9, 2025</h5>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-4">
+        <div class="row row-cols-2 flex-column gap-3 h-100">
+          <div class="col d-flex gap-1 gap-lg-2 mx-0 align-items-center w-100 justify-content-center | game-ball-group  ">
+
+  <div class="form-control col white-balls item-powerball">4</div>
+
+  <div class="form-control col white-balls item-powerball">29</div>
+
+  <div class="form-control col white-balls item-powerball">37</div>
+
+  <div class="form-control col white-balls item-powerball">55</div>
+
+  <div class="form-control col white-balls item-powerball">67</div>
+
+  <div class="form-control col powerball item-powerball">10</div>
+          </div>
+            <div class="col align-self-center w-100">
+
+  <span class="power-play item-power-play | form-control badge rounded-pill col mx-auto text-center">
+    Power Play
+    <span class="multiplier">4x</span>
+  </span>
+            </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-4">
+
+      </div>
+
+    </div>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"></path>
+    </svg>
+  </div>
+</a><a class="card" href="https://www.powerball.com/draw-result?gc=powerball&amp;sd=2025-03-31&amp;ed=2025-06-16&amp;date=2025-04-07">
+  <div class="card-body ps-3 pe-4 pe-lg-5">
+    <div class="row justify-content-between gap-2 gap-lg-0">
+      <div class="col-12 col-lg-4">
+        <div class="d-flex h-100 align-items-center justify-content-center justify-content-lg-start text-center">
+          <h5 class="card-title">Mon, Apr 7, 2025</h5>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-4">
+        <div class="row row-cols-2 flex-column gap-3 h-100">
+          <div class="col d-flex gap-1 gap-lg-2 mx-0 align-items-center w-100 justify-content-center | game-ball-group  ">
+
+  <div class="form-control col white-balls item-powerball">20</div>
+
+  <div class="form-control col white-balls item-powerball">23</div>
+
+  <div class="form-control col white-balls item-powerball">48</div>
+
+  <div class="form-control col white-balls item-powerball">59</div>
+
+  <div class="form-control col white-balls item-powerball">66</div>
+
+  <div class="form-control col powerball item-powerball">4</div>
+          </div>
+            <div class="col align-self-center w-100">
+
+  <span class="power-play item-power-play | form-control badge rounded-pill col mx-auto text-center">
+    Power Play
+    <span class="multiplier">2x</span>
+  </span>
+            </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-4">
+
+      </div>
+
+    </div>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"></path>
+    </svg>
+  </div>
+</a>
+    </div>
+      <div class="col-sm-12 col-md-auto add justify-content-center d-flex my-4 my-md-5">
+        <button id="loadMore" class="btn btn-primary btn-lg" data-val="2" data-max="2">
+          Load More
+        </button>
+      </div>
+</div>
