@@ -1,6 +1,5 @@
 */target/*
 /as-number/target/
-/.idea/vipin-lottery.iml
 *.iml
 *.class
 */.idea/*
