@@ -32,12 +32,12 @@ public class AllNumbers {
         if (inputType.equalsIgnoreCase("MM")) {
             ResultDto.requestType = "MM";
 
-            filePath = System.getProperty("user.home") + "/Documents/may-2024-documents/Projects/JavaProjects/General/lottery/mm-sorted.txt";
+            filePath = System.getProperty("user.home") + "/Documents/Projects/JavaProjects/General/lottery/files/mm-sorted.txt";
 
         } else if (inputType.equalsIgnoreCase("PB")) {
 
             ResultDto.requestType = "PB";
-            filePath = System.getProperty("user.home") + "/Documents/may-2024-documents/Projects/JavaProjects/General/lottery/pb-sorted.txt";
+            filePath = System.getProperty("user.home") + "/Documents/Projects/JavaProjects/General/lottery/files/pb-sorted.txt";
         } else if (inputType.equalsIgnoreCase("F5")) {
             ResultDto.requestType = "F5";
             //TODO if required
