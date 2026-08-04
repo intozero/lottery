@@ -17,14 +17,14 @@ public class WebPageExtractor {
 
         if (inputType.equalsIgnoreCase("MM")) {
 
-            String fp = System.getProperty("user.home") + "/Documents/may-2024-documents/Projects/JavaProjects/General/lottery/files/pb-2026-web.txt";
+            String fp = System.getProperty("user.home") + "/Documents/Projects/JavaProjects/General/lottery/files/mm-2026-web.txt";
             FileReadMM fr = new FileReadMM();
             fr.openFile(fp);
             fr.readFile();
             fr.printArray();
 
         } else if (inputType.equalsIgnoreCase("PB")) {
-            String fp = System.getProperty("user.home") + "/Documents/may-2024-documents/Projects/JavaProjects/General/lottery/pb-2025-web.txt";
+            String fp = System.getProperty("user.home") + "/Documents/Projects/JavaProjects/General/lottery/files/pb-2026-web.txt";
             FileReadPB fileReadPB = new FileReadPB();
             fileReadPB.openFile(fp);
             List<String> qq = fileReadPB.readFile();
