@@ -17,7 +17,7 @@ public class WebPageExtractor {
 
         if (inputType.equalsIgnoreCase("MM")) {
 
-            String fp = System.getProperty("user.home") + "/Documents/may-2024-documents/Projects/JavaProjects/General/lottery/mm-2024-web.txt";
+            String fp = System.getProperty("user.home") + "/Documents/may-2024-documents/Projects/JavaProjects/General/lottery/files/pb-2026-web.txt";
             FileReadMM fr = new FileReadMM();
             fr.openFile(fp);
             fr.readFile();
