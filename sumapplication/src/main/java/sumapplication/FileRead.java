@@ -1,75 +1,57 @@
-
 package sumapplication;
 
-import java.io.*;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
+/** Reads the repository's whitespace-delimited lottery history format. */
+public final class FileRead {
+    private static final DateTimeFormatter DATE_FORMAT =
+            DateTimeFormatter.ofPattern("M/d/yyyy");
 
-/**
- * @author vipin
- */
-public class FileRead {
+    public List<LineDTO> read(Path file) throws IOException {
+        List<LineDTO> draws = new ArrayList<>();
+        try (BufferedReader reader = Files.newBufferedReader(file, StandardCharsets.UTF_8)) {
+            String line;
+            int lineNumber = 0;
+            while ((line = reader.readLine()) != null) {
+                lineNumber++;
+                if (!line.trim().isEmpty()) {
+                    draws.add(parse(line, file, lineNumber));
+                }
+            }
+        }
+        return draws;
+    }
 
-    private Scanner s;
+    LineDTO parse(String line, Path file, int lineNumber) {
+        String[] fields = line.trim().split("\\s+");
+        if (fields.length != 6 && fields.length != 7) {
+            throw invalidLine(file, lineNumber,
+                    "expected a date, five white balls, and an optional bonus ball");
+        }
 
-    SimpleDateFormat sdformat = new SimpleDateFormat("MM/dd/yyyy");
-
-    int i = 0;
-
-
-    void openFile(String fp) {
         try {
-            s = new Scanner(new File(fp));
-
-        } catch (FileNotFoundException ex) {
-            System.out.println("File Not Found" + ex);
-
+            LocalDate date = LocalDate.parse(fields[0], DATE_FORMAT);
+            int[] whiteBalls = new int[5];
+            for (int index = 0; index < whiteBalls.length; index++) {
+                whiteBalls[index] = Integer.parseInt(fields[index + 1]);
+            }
+            Integer bonusBall = fields.length == 7 ? Integer.valueOf(fields[6]) : null;
+            return new LineDTO(date, whiteBalls, bonusBall);
+        } catch (DateTimeParseException | NumberFormatException exception) {
+            throw invalidLine(file, lineNumber, exception.getMessage());
         }
-
     }
 
-
-    public List<LineDTO> readFile() throws ParseException {
-        s.useDelimiter("\\n");
-        List<LineDTO> listlinedto = new ArrayList<>();
-        while (s.hasNext()) {
-            String a = s.next();
-            LineDTO linedto = setLineDto(a);
-            listlinedto.add(i, linedto);
-
-            i = i + 1;
-
-        }
-        s.close();
-        return listlinedto;
-
+    private IllegalArgumentException invalidLine(Path file, int lineNumber, String reason) {
+        return new IllegalArgumentException(file + ":" + lineNumber + ": " + reason);
     }
-
-
-    public LineDTO setLineDto(String x) throws ParseException {
-
-        String[] temp = x.split("  ");
-        java.util.Date dt = sdformat.parse(temp[0]);
-
-        LineDTO lineDTO = new LineDTO();
-        lineDTO.setLotDate(dt);
-        lineDTO.setNumberone(Integer.valueOf(temp[1]));
-        lineDTO.setNumbertwo(Integer.valueOf(temp[2]));
-        lineDTO.setNumberthree(Integer.valueOf(temp[3]));
-        lineDTO.setNumberfour(Integer.valueOf(temp[4]));
-        lineDTO.setNumberfive(Integer.valueOf(temp[5]));
-        lineDTO.setNumbersix(Integer.valueOf(temp[6]));
-
-        return lineDTO;
-
-    }
-
-
 }
