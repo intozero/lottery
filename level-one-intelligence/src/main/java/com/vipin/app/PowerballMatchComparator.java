@@ -140,18 +140,20 @@ public final class PowerballMatchComparator {
 
         System.out.printf("Purchased line %d: group 1 %s | group 2 [%d]%n",
                 ticketNumber, sortedNumbers(ticket.whiteBalls), ticket.powerball);
-        System.out.println("Rank  Date        Group 1  Group 2  Total  Matching group 1 numbers");
+        System.out.println("Rank  Date        Group 1  Group 2  Total  "
+                + "Matching group 1 numbers  Actual group 1 numbers");
 
         int resultCount = Math.min(TOP_MATCHES, matches.size());
         for (int index = 0; index < resultCount; index++) {
             Match match = matches.get(index);
-            System.out.printf("%4d  %-10s  %d/5      %-3s      %d      %s%n",
+            System.out.printf("%4d  %-10s  %d/5      %-3s      %d      %-25s %s%n",
                     index + 1,
                     match.draw.date.format(DATE_FORMAT),
                     match.whiteMatchCount(),
                     match.powerballDisplay(),
                     match.totalMatches(),
-                    sortedNumbers(match.matchingWhiteBalls));
+                    sortedNumbers(match.matchingWhiteBalls),
+                    sortedNumbers(match.draw.whiteBalls()));
         }
         System.out.println();
     }
