@@ -24,11 +24,29 @@ public final class PowerballVisualBuilder {
     private static final DateTimeFormatter DRAW_DATE =
             DateTimeFormatter.ofPattern("M/d/yyyy");
 
+    private static final List<String> ASTRO_COLUMNS = Collections.unmodifiableList(Arrays.asList(
+            "Observation Date", "Day Of Week", "Moon Illum %",
+            "Sun House", "Sun Sign", "Sun Deg", "Sun Dignity",
+            "Moon House", "Moon Sign", "Moon Deg", "Moon Dignity",
+            "Mercury House", "Mercury Sign", "Mercury Deg", "Mercury Dignity",
+            "Venus House", "Venus Sign", "Venus Deg", "Venus Dignity",
+            "Mars House", "Mars Sign", "Mars Deg", "Mars Dignity",
+            "Jupiter House", "Jupiter Sign", "Jupiter Deg", "Jupiter Dignity",
+            "Saturn House", "Saturn Sign", "Saturn Deg", "Saturn Dignity",
+            "Rahu House", "Rahu Sign", "Rahu Deg", "Rahu Dignity"));
+
     private static final List<String> COLUMNS = Collections.unmodifiableList(Arrays.asList(
             "Date", "White Ball 1", "White Ball 2", "White Ball 3", "White Ball 4",
             "White Ball 5", "Powerball", "White Ball Sum", "White Ball Mean",
-            "Jackpot (Annuity)", "Day", "Time", "Moon %",
-            "Sun", "Moon", "Mercury", "Venus", "Mars", "Jupiter", "Saturn", "Rahu"));
+            "Jackpot (Annuity)", "Day Of Week", "Moon Illum %",
+            "Sun House", "Sun Sign", "Sun Deg", "Sun Dignity",
+            "Moon House", "Moon Sign", "Moon Deg", "Moon Dignity",
+            "Mercury House", "Mercury Sign", "Mercury Deg", "Mercury Dignity",
+            "Venus House", "Venus Sign", "Venus Deg", "Venus Dignity",
+            "Mars House", "Mars Sign", "Mars Deg", "Mars Dignity",
+            "Jupiter House", "Jupiter Sign", "Jupiter Deg", "Jupiter Dignity",
+            "Saturn House", "Saturn Sign", "Saturn Deg", "Saturn Dignity",
+            "Rahu House", "Rahu Sign", "Rahu Deg", "Rahu Dignity"));
 
     private PowerballVisualBuilder() {
     }
@@ -42,7 +60,7 @@ public final class PowerballVisualBuilder {
 
         Path dataDirectory = Paths.get("files", "pb_visual");
         Path draws = args.length == 5 ? Paths.get(args[0]) : dataDirectory.resolve("pb-sorted.txt");
-        Path astro = args.length == 5 ? Paths.get(args[1]) : dataDirectory.resolve("astro_dates.txt");
+        Path astro = args.length == 5 ? Paths.get(args[1]) : dataDirectory.resolve("astro_info.txt");
         Path rewards = args.length == 5 ? Paths.get(args[2]) : dataDirectory.resolve("reward.txt");
         Path csv = args.length == 5 ? Paths.get(args[3]) : dataDirectory.resolve("pb-merged.csv");
         Path html = args.length == 5 ? Paths.get(args[4]) : dataDirectory.resolve("pb-merged.html");
@@ -52,7 +70,7 @@ public final class PowerballVisualBuilder {
                     new TreeMap<>(Collections.reverseOrder());
             int conflictingDraws = readDraws(draws, rows);
             readPipeTable(rewards, rows, "reward");
-            readPipeTable(astro, rows, "astronomy");
+            readAstroInfo(astro, rows);
             createParent(csv);
             createParent(html);
             writeCsv(csv, rows);
@@ -167,6 +185,103 @@ public final class PowerballVisualBuilder {
         }
         if (headers == null) {
             throw new IllegalArgumentException(path + ": table is empty");
+        }
+    }
+
+    private static void readAstroInfo(Path path, Map<LocalDate, Map<String, String>> rows)
+            throws IOException {
+        String header = null;
+        try (BufferedReader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8)) {
+            String line;
+            int lineNumber = 0;
+            while ((line = reader.readLine()) != null) {
+                lineNumber++;
+                if (header == null) {
+                    if (line.startsWith("Observation Date")) {
+                        header = line;
+                        validateAstroHeader(path, header);
+                    }
+                    continue;
+                }
+
+                String trimmed = line.trim();
+                if (trimmed.isEmpty() || trimmed.startsWith("Process finished")) {
+                    continue;
+                }
+
+                List<String> fields = parseAstroRow(path, lineNumber, line);
+                LocalDate date;
+                try {
+                    date = LocalDate.parse(fields.get(0));
+                } catch (DateTimeParseException exception) {
+                    throw invalid(path, lineNumber, "invalid observation date: " + fields.get(0));
+                }
+
+                Map<String, String> row = rows.get(date);
+                if (row == null) {
+                    continue;
+                }
+                for (int index = 1; index < ASTRO_COLUMNS.size(); index++) {
+                    put(row, ASTRO_COLUMNS.get(index), fields.get(index), path, lineNumber);
+                }
+            }
+        }
+        if (header == null) {
+            throw new IllegalArgumentException(path + ": Observation Date header was not found");
+        }
+    }
+
+    private static void validateAstroHeader(Path path, String header) {
+        int searchFrom = 0;
+        for (String column : ASTRO_COLUMNS) {
+            int start = header.indexOf(column, searchFrom);
+            if (start < 0) {
+                throw new IllegalArgumentException(path + ": missing astronomy column: " + column);
+            }
+            searchFrom = start + column.length();
+        }
+    }
+
+    private static List<String> parseAstroRow(Path path, int lineNumber, String line) {
+        String[] tokens = line.trim().split("\\s+");
+        if (tokens.length < 27) {
+            throw invalid(path, lineNumber, "astronomy row has too few values");
+        }
+
+        List<String> fields = new ArrayList<>();
+        fields.add(tokens[0]);
+        fields.add(tokens[1]);
+        fields.add(tokens[2]);
+
+        int token = 3;
+        for (int planet = 0; planet < 8; planet++) {
+            if (token + 2 >= tokens.length
+                    || !isInteger(tokens[token]) || !isInteger(tokens[token + 2])) {
+                throw invalid(path, lineNumber,
+                        "invalid house/sign/degree values for " + ASTRO_COLUMNS.get(3 + planet * 4));
+            }
+            fields.add(tokens[token++]);
+            fields.add(tokens[token++]);
+            fields.add(tokens[token++]);
+
+            String dignity = "";
+            if (token < tokens.length && !isInteger(tokens[token])) {
+                dignity = tokens[token++];
+            }
+            fields.add(dignity);
+        }
+        if (token != tokens.length) {
+            throw invalid(path, lineNumber, "unexpected extra astronomy values");
+        }
+        return fields;
+    }
+
+    private static boolean isInteger(String value) {
+        try {
+            Integer.parseInt(value);
+            return true;
+        } catch (NumberFormatException exception) {
+            return false;
         }
     }
 
