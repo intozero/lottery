@@ -25,28 +25,30 @@ public final class PowerballVisualBuilder {
             DateTimeFormatter.ofPattern("M/d/yyyy");
 
     private static final List<String> ASTRO_COLUMNS = Collections.unmodifiableList(Arrays.asList(
-            "Observation Date", "Day Of Week", "Moon Illum %",
-            "Sun House", "Sun Sign", "Sun Deg", "Sun Dignity",
-            "Moon House", "Moon Sign", "Moon Deg", "Moon Dignity",
-            "Mercury House", "Mercury Sign", "Mercury Deg", "Mercury Dignity",
-            "Venus House", "Venus Sign", "Venus Deg", "Venus Dignity",
-            "Mars House", "Mars Sign", "Mars Deg", "Mars Dignity",
-            "Jupiter House", "Jupiter Sign", "Jupiter Deg", "Jupiter Dignity",
-            "Saturn House", "Saturn Sign", "Saturn Deg", "Saturn Dignity",
-            "Rahu House", "Rahu Sign", "Rahu Deg", "Rahu Dignity"));
+            "Observation Date", "Day Of Week", "Moon Illum %", "Moon Nakshatra",
+            "Moon Nakshatra (ML)", "Nakshatra No", "Pada",
+            "Sun Sign", "Sun Deg", "Sun House", "Sun Dignity",
+            "Moon Sign", "Moon Deg", "Moon House", "Moon Dignity",
+            "Mercury Sign", "Mercury Deg", "Mercury House", "Mercury Dignity",
+            "Venus Sign", "Venus Deg", "Venus House", "Venus Dignity",
+            "Mars Sign", "Mars Deg", "Mars House", "Mars Dignity",
+            "Jupiter Sign", "Jupiter Deg", "Jupiter House", "Jupiter Dignity",
+            "Saturn Sign", "Saturn Deg", "Saturn House", "Saturn Dignity",
+            "Rahu Sign", "Rahu Deg", "Rahu House", "Rahu Dignity"));
 
     private static final List<String> COLUMNS = Collections.unmodifiableList(Arrays.asList(
             "Date", "White Ball 1", "White Ball 2", "White Ball 3", "White Ball 4",
             "White Ball 5", "Powerball", "White Ball Sum", "White Ball Mean",
-            "Jackpot (Annuity)", "Day Of Week", "Moon Illum %",
-            "Sun House", "Sun Sign", "Sun Deg", "Sun Dignity",
-            "Moon House", "Moon Sign", "Moon Deg", "Moon Dignity",
-            "Mercury House", "Mercury Sign", "Mercury Deg", "Mercury Dignity",
-            "Venus House", "Venus Sign", "Venus Deg", "Venus Dignity",
-            "Mars House", "Mars Sign", "Mars Deg", "Mars Dignity",
-            "Jupiter House", "Jupiter Sign", "Jupiter Deg", "Jupiter Dignity",
-            "Saturn House", "Saturn Sign", "Saturn Deg", "Saturn Dignity",
-            "Rahu House", "Rahu Sign", "Rahu Deg", "Rahu Dignity"));
+            "Jackpot (Annuity)", "Day Of Week", "Moon Illum %", "Moon Nakshatra",
+            "Moon Nakshatra (ML)", "Nakshatra No", "Pada",
+            "Sun Sign", "Sun Deg", "Sun House", "Sun Dignity",
+            "Moon Sign", "Moon Deg", "Moon House", "Moon Dignity",
+            "Mercury Sign", "Mercury Deg", "Mercury House", "Mercury Dignity",
+            "Venus Sign", "Venus Deg", "Venus House", "Venus Dignity",
+            "Mars Sign", "Mars Deg", "Mars House", "Mars Dignity",
+            "Jupiter Sign", "Jupiter Deg", "Jupiter House", "Jupiter Dignity",
+            "Saturn Sign", "Saturn Deg", "Saturn House", "Saturn Dignity",
+            "Rahu Sign", "Rahu Deg", "Rahu House", "Rahu Dignity"));
 
     private PowerballVisualBuilder() {
     }
@@ -195,29 +197,28 @@ public final class PowerballVisualBuilder {
 
     private static void readAstroInfo(Path path, Map<LocalDate, Map<String, String>> rows)
             throws IOException {
-        String header = null;
+        List<String> headers = null;
         try (BufferedReader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8)) {
             String line;
             int lineNumber = 0;
             while ((line = reader.readLine()) != null) {
                 lineNumber++;
-                if (header == null) {
-                    if (line.startsWith("Observation Date")) {
-                        header = line;
-                        validateAstroHeader(path, header);
-                    }
+                if (line.trim().isEmpty()) {
                     continue;
                 }
-
-                String trimmed = line.trim();
-                if (trimmed.isEmpty() || trimmed.startsWith("Process finished")) {
+                List<String> fields = parseCsvLine(path, lineNumber, line);
+                if (headers == null) {
+                    headers = fields;
+                    validateAstroHeaders(path, headers);
                     continue;
                 }
-
-                List<String> fields = parseAstroRow(path, lineNumber, line);
+                if (fields.size() != headers.size()) {
+                    throw invalid(path, lineNumber, "expected " + headers.size()
+                            + " CSV fields but found " + fields.size());
+                }
                 LocalDate date;
                 try {
-                    date = LocalDate.parse(fields.get(0));
+                    date = LocalDate.parse(fields.get(headers.indexOf("Observation Date")));
                 } catch (DateTimeParseException exception) {
                     throw invalid(path, lineNumber, "invalid observation date: " + fields.get(0));
                 }
@@ -226,68 +227,56 @@ public final class PowerballVisualBuilder {
                 if (row == null) {
                     continue;
                 }
-                for (int index = 1; index < ASTRO_COLUMNS.size(); index++) {
-                    put(row, ASTRO_COLUMNS.get(index), fields.get(index), path, lineNumber);
+                for (int index = 0; index < headers.size(); index++) {
+                    String header = headers.get(index);
+                    if (!"Observation Date".equals(header)) {
+                        put(row, header, fields.get(index), path, lineNumber);
+                    }
                 }
             }
         }
-        if (header == null) {
-            throw new IllegalArgumentException(path + ": Observation Date header was not found");
+        if (headers == null) {
+            throw new IllegalArgumentException(path + ": CSV header was not found");
         }
     }
 
-    private static void validateAstroHeader(Path path, String header) {
-        int searchFrom = 0;
+    private static void validateAstroHeaders(Path path, List<String> headers) {
+        if (headers.size() != ASTRO_COLUMNS.size()) {
+            throw new IllegalArgumentException(path + ": expected " + ASTRO_COLUMNS.size()
+                    + " astronomy columns but found " + headers.size());
+        }
         for (String column : ASTRO_COLUMNS) {
-            int start = header.indexOf(column, searchFrom);
-            if (start < 0) {
+            if (!headers.contains(column)) {
                 throw new IllegalArgumentException(path + ": missing astronomy column: " + column);
             }
-            searchFrom = start + column.length();
         }
     }
 
-    private static List<String> parseAstroRow(Path path, int lineNumber, String line) {
-        String[] tokens = line.trim().split("\\s+");
-        if (tokens.length < 27) {
-            throw invalid(path, lineNumber, "astronomy row has too few values");
-        }
-
+    private static List<String> parseCsvLine(Path path, int lineNumber, String line) {
         List<String> fields = new ArrayList<>();
-        fields.add(tokens[0]);
-        fields.add(tokens[1]);
-        fields.add(tokens[2]);
-
-        int token = 3;
-        for (int planet = 0; planet < 8; planet++) {
-            if (token + 2 >= tokens.length
-                    || !isInteger(tokens[token]) || !isInteger(tokens[token + 2])) {
-                throw invalid(path, lineNumber,
-                        "invalid house/sign/degree values for " + ASTRO_COLUMNS.get(3 + planet * 4));
+        StringBuilder field = new StringBuilder();
+        boolean quoted = false;
+        for (int index = 0; index < line.length(); index++) {
+            char character = line.charAt(index);
+            if (character == '"') {
+                if (quoted && index + 1 < line.length() && line.charAt(index + 1) == '"') {
+                    field.append('"');
+                    index++;
+                } else {
+                    quoted = !quoted;
+                }
+            } else if (character == ',' && !quoted) {
+                fields.add(field.toString().trim());
+                field.setLength(0);
+            } else {
+                field.append(character);
             }
-            fields.add(tokens[token++]);
-            fields.add(tokens[token++]);
-            fields.add(tokens[token++]);
-
-            String dignity = "";
-            if (token < tokens.length && !isInteger(tokens[token])) {
-                dignity = tokens[token++];
-            }
-            fields.add(dignity);
         }
-        if (token != tokens.length) {
-            throw invalid(path, lineNumber, "unexpected extra astronomy values");
+        if (quoted) {
+            throw invalid(path, lineNumber, "unclosed quoted CSV field");
         }
+        fields.add(field.toString().trim());
         return fields;
-    }
-
-    private static boolean isInteger(String value) {
-        try {
-            Integer.parseInt(value);
-            return true;
-        } catch (NumberFormatException exception) {
-            return false;
-        }
     }
 
     private static boolean isMarkdownSeparator(String line) {
@@ -508,6 +497,8 @@ public final class PowerballVisualBuilder {
                     + "tr.filters th{background:#f8faff;padding:6px}tr.filters input{width:100%;min-width:82px;padding:6px 7px}"
                     + "tr.filters input.numeric{min-width:105px}tbody tr:nth-child(even){background:#fafcff}"
                     + "tbody tr:hover{background:#eaf6ff}td:nth-child(8),td:nth-child(9){font-weight:700;color:#244bbd}"
+                    + "thead th:first-child,tbody td:first-child{position:sticky;left:0;z-index:1;background:#fff;box-shadow:2px 0 0 #e5e9f2}"
+                    + "thead tr:first-child th:first-child{z-index:4;background:#e8eefb}thead tr.filters th:first-child{z-index:3;background:#f8faff}"
                     + ".empty{color:#bec5d2}@media(max-width:700px){.shell{padding:14px}.hero{padding:20px}h1{font-size:22px}}"
                     + "</style></head><body><main class=\"shell\">");
             writer.write("<section class=\"hero\"><h1>Powerball Data Explorer</h1>"
@@ -529,7 +520,7 @@ public final class PowerballVisualBuilder {
             }
             writer.write("</tr><tr class=\"filters\">");
             for (String column : COLUMNS) {
-                boolean numeric = "White Ball Sum".equals(column) || "White Ball Mean".equals(column);
+                boolean numeric = isNumericColumn(column);
                 writer.write("<th><input aria-label=\"Filter " + html(column)
                         + "\" class=\"" + (numeric ? "numeric" : "") + "\" placeholder=\""
                         + (numeric ? "> 100" : "Filter") + "\"></th>");
@@ -550,9 +541,9 @@ public final class PowerballVisualBuilder {
                     + "filters=[...document.querySelectorAll('.filters input')],visible=document.querySelector('#visibleCount'),"
                     + "total=document.querySelector('#totalCount'),active=document.querySelector('#activeCount'),"
                     + "selected=document.querySelector('#selectedCount'),headers=[...document.querySelectorAll('th.sortable')],"
-                    + "grid=document.querySelector('#columnGrid');let saved=null;try{saved=JSON.parse(localStorage.getItem('pb-visible-columns'));}catch(e){}"
+                    + "grid=document.querySelector('#columnGrid');let saved=null;try{saved=JSON.parse(localStorage.getItem('pb-visible-columns-v2'));}catch(e){}"
                     + "const columnChecks=headers.map((h,i)=>{const label=document.createElement('label'),box=document.createElement('input');"
-                    + "box.type='checkbox';box.checked=!Array.isArray(saved)||saved.includes(i);label.append(box,document.createTextNode(h.textContent));"
+                    + "box.type='checkbox';box.checked=!Array.isArray(saved)||saved.includes(h.textContent);label.append(box,document.createTextNode(h.textContent));"
                     + "grid.append(label);box.addEventListener('change',()=>applyColumns(true));return box;});"
                     + "total.textContent=rows.length;function matches(value,query){const q=query.trim().toLowerCase();if(!q)return true;"
                     + "const m=q.match(/^(>=|<=|>|<|=)\\s*(-?\\d+(?:\\.\\d+)?)$/);if(m){"
@@ -567,8 +558,8 @@ public final class PowerballVisualBuilder {
                     + "active.textContent=filters.filter((f,i)=>columnChecks[i].checked&&f.value.trim()).length+(search.value.trim()?1:0);}"
                     + "function applyColumns(save){columnChecks.forEach((box,i)=>{if(!box.checked)filters[i].value='';"
                     + "table.querySelectorAll('tr').forEach(r=>{if(r.cells[i])r.cells[i].hidden=!box.checked;});});"
-                    + "selected.textContent=columnChecks.filter(x=>x.checked).length;if(save){try{localStorage.setItem('pb-visible-columns',"
-                    + "JSON.stringify(columnChecks.map((x,i)=>x.checked?i:null).filter(i=>i!==null)));}catch(e){}}filter();}"
+                    + "selected.textContent=columnChecks.filter(x=>x.checked).length;if(save){try{localStorage.setItem('pb-visible-columns-v2',"
+                    + "JSON.stringify(columnChecks.map((x,i)=>x.checked?headers[i].textContent:null).filter(x=>x!==null)));}catch(e){}}filter();}"
                     + "search.addEventListener('input',filter);filters.forEach(f=>f.addEventListener('input',filter));"
                     + "document.querySelector('#reset').onclick=()=>{search.value='';filters.forEach(f=>f.value='');filter();};"
                     + "document.querySelector('#selectAll').onclick=()=>{columnChecks.forEach(x=>x.checked=true);applyColumns(true);};"
@@ -588,5 +579,12 @@ public final class PowerballVisualBuilder {
     private static String html(String value) {
         return value.replace("&", "&amp;").replace("<", "&lt;")
                 .replace(">", "&gt;").replace("\"", "&quot;").replace("'", "&#39;");
+    }
+
+    private static boolean isNumericColumn(String column) {
+        return column.startsWith("White Ball ") || "Powerball".equals(column)
+                || "Moon Illum %".equals(column) || "Nakshatra No".equals(column)
+                || "Pada".equals(column) || column.endsWith(" Deg")
+                || column.endsWith(" House");
     }
 }
