@@ -25,7 +25,8 @@ public final class PowerballVisualBuilder {
             DateTimeFormatter.ofPattern("M/d/yyyy");
 
     private static final List<String> ASTRO_COLUMNS = Collections.unmodifiableList(Arrays.asList(
-            "Observation Date", "Day Of Week", "Moon Illum %", "Moon Nakshatra",
+            "Observation Date", "Day Of Week", "Ascendant Sign", "Ascendant Deg",
+            "Moon Illum %", "Moon Phase", "Moon Nakshatra",
             "Moon Nakshatra (ML)", "Nakshatra No", "Pada",
             "Sun Sign", "Sun Deg", "Sun House", "Sun Dignity",
             "Moon Sign", "Moon Deg", "Moon House", "Moon Dignity",
@@ -39,7 +40,8 @@ public final class PowerballVisualBuilder {
     private static final List<String> COLUMNS = Collections.unmodifiableList(Arrays.asList(
             "Date", "White Ball 1", "White Ball 2", "White Ball 3", "White Ball 4",
             "White Ball 5", "Powerball", "White Ball Sum", "White Ball Mean",
-            "Jackpot (Annuity)", "Day Of Week", "Moon Illum %", "Moon Nakshatra",
+            "Jackpot (Annuity)", "Day Of Week", "Ascendant Sign", "Ascendant Deg",
+            "Moon Illum %", "Moon Phase", "Moon Nakshatra",
             "Moon Nakshatra (ML)", "Nakshatra No", "Pada",
             "Sun Sign", "Sun Deg", "Sun House", "Sun Dignity",
             "Moon Sign", "Moon Deg", "Moon House", "Moon Dignity",
