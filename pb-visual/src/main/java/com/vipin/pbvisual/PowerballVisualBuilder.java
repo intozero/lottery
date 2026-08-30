@@ -392,6 +392,8 @@ public final class PowerballVisualBuilder {
                     + "box-shadow:0 5px 18px rgba(32,52,105,.08)}.card strong{display:block;color:var(--blue);font-size:18px}"
                     + ".card span{font-size:11px;color:var(--muted)}.chart{position:relative;background:rgba(255,255,255,.95);"
                     + "border:1px solid #e4e8f1;border-radius:16px;padding:14px;box-shadow:0 14px 38px rgba(31,51,100,.11)}"
+                    + ".category{margin-top:20px}.category-head{display:flex;align-items:center;justify-content:space-between;"
+                    + "gap:12px;flex-wrap:wrap;margin:2px 10px 12px 52px}.category-head h2{margin:0;font-size:18px}"
                     + "canvas{display:block;width:100%;height:560px}.legend{display:flex;gap:18px;margin:2px 0 8px 52px;color:var(--muted)}"
                     + ".key:before{content:'';display:inline-block;width:22px;height:3px;margin-right:7px;vertical-align:middle;"
                     + "background:var(--blue);border-radius:3px}.key.trend:before{background:#ef7d32}.tooltip{position:absolute;display:none;"
@@ -411,7 +413,12 @@ public final class PowerballVisualBuilder {
                     + "<div class=\"card\"><strong id=\"maximum\">0</strong><span>Maximum</span></div></div></div>"
                     + "<section class=\"chart\"><div class=\"legend\"><span class=\"key\">White-ball sum</span>"
                     + "<span class=\"key trend\">20-draw average</span></div><canvas id=\"canvas\"></canvas>"
-                    + "<div id=\"tooltip\" class=\"tooltip\"></div></section></main><script>const all=[");
+                    + "<div id=\"tooltip\" class=\"tooltip\"></div></section>"
+                    + "<section class=\"chart category\"><div class=\"category-head\"><h2>Average Sum by Nakshatra</h2>"
+                    + "<label>Category <select id=\"categoryBy\"><option value=\"ml\">Malayalam Nakshatra</option>"
+                    + "<option value=\"number\">Nakshatra Number</option></select></label></div>"
+                    + "<canvas id=\"categoryCanvas\"></canvas><div id=\"categoryTooltip\" class=\"tooltip\"></div>"
+                    + "</section></main><script>const all=[");
 
             boolean first = true;
             for (Map<String, String> row : rows.values()) {
@@ -422,7 +429,9 @@ public final class PowerballVisualBuilder {
                 if (!first) {
                     writer.write(',');
                 }
-                writer.write("{d:\"" + row.get("Date") + "\",s:" + sum + "}");
+                writer.write("{d:\"" + js(row.get("Date")) + "\",s:" + sum
+                        + ",ml:\"" + js(row.getOrDefault("Moon Nakshatra (ML)", ""))
+                        + "\",number:\"" + js(row.getOrDefault("Nakshatra No", "")) + "\"}");
                 first = false;
             }
 
@@ -452,7 +461,31 @@ public final class PowerballVisualBuilder {
                     + "let best=coords[0];for(const c of coords)if(Math.abs(c.x-mx)<Math.abs(best.x-mx))best=c;tip.style.display='block';"
                     + "tip.style.left=best.x+'px';tip.style.top=best.y+'px';tip.innerHTML='<strong>'+best.d.d+'</strong><br>White-ball sum: '+best.d.s;});"
                     + "canvas.addEventListener('mouseleave',()=>tip.style.display='none');range.addEventListener('change',selectData);"
-                    + "trend.addEventListener('change',draw);addEventListener('resize',draw);selectData();</script></body></html>");
+                    + "trend.addEventListener('change',draw);"
+                    + "const categoryCanvas=document.querySelector('#categoryCanvas'),categoryCtx=categoryCanvas.getContext('2d'),"
+                    + "categoryBy=document.querySelector('#categoryBy'),categoryTip=document.querySelector('#categoryTooltip');let categoryCoords=[];"
+                    + "function categoryData(){const key=categoryBy.value,groups=new Map();all.forEach(d=>{const label=d[key];if(!label)return;"
+                    + "const g=groups.get(label)||{label,total:0,count:0};g.total+=d.s;g.count++;groups.set(label,g);});"
+                    + "const values=[...groups.values()].map(g=>({...g,average:g.total/g.count}));"
+                    + "values.sort((a,b)=>b.average-a.average||a.label.localeCompare(b.label,undefined,{numeric:true}));return values;}"
+                    + "function drawCategory(){const values=categoryData(),rect=categoryCanvas.getBoundingClientRect(),dpr=devicePixelRatio||1;"
+                    + "categoryCanvas.width=rect.width*dpr;categoryCanvas.height=rect.height*dpr;categoryCtx.setTransform(dpr,0,0,dpr,0,0);"
+                    + "const w=rect.width,h=rect.height,p={l:58,r:24,t:22,b:105};categoryCtx.clearRect(0,0,w,h);if(!values.length)return;"
+                    + "const averages=values.map(x=>x.average),minY=Math.floor((Math.min(...averages)-10)/20)*20,"
+                    + "maxY=Math.ceil((Math.max(...averages)+10)/20)*20,y=v=>p.t+(maxY-v)/(maxY-minY||1)*(h-p.t-p.b),"
+                    + "slot=(w-p.l-p.r)/values.length,bar=Math.max(5,Math.min(34,slot*.7));categoryCtx.font='12px system-ui';"
+                    + "categoryCtx.fillStyle='#667085';categoryCtx.strokeStyle='#e6eaf3';for(let i=0;i<=5;i++){const value=minY+(maxY-minY)*i/5,py=y(value);"
+                    + "categoryCtx.beginPath();categoryCtx.moveTo(p.l,py);categoryCtx.lineTo(w-p.r,py);categoryCtx.stroke();"
+                    + "categoryCtx.fillText(Math.round(value),12,py+4);}categoryCoords=[];values.forEach((d,i)=>{const x=p.l+slot*(i+.5),top=y(d.average);"
+                    + "categoryCtx.fillStyle='#4169e1';categoryCtx.fillRect(x-bar/2,top,bar,h-p.b-top);categoryCtx.save();"
+                    + "categoryCtx.translate(x+3,h-p.b+8);categoryCtx.rotate(-Math.PI/4);categoryCtx.fillStyle='#667085';"
+                    + "categoryCtx.textAlign='right';categoryCtx.fillText(d.label,0,0);categoryCtx.restore();categoryCoords.push({x,y:top,d});});}"
+                    + "categoryCanvas.addEventListener('mousemove',e=>{if(!categoryCoords.length)return;const r=categoryCanvas.getBoundingClientRect(),mx=e.clientX-r.left;"
+                    + "let best=categoryCoords[0];for(const c of categoryCoords)if(Math.abs(c.x-mx)<Math.abs(best.x-mx))best=c;"
+                    + "categoryTip.style.display='block';categoryTip.style.left=best.x+'px';categoryTip.style.top=best.y+'px';"
+                    + "categoryTip.innerHTML='<strong>'+best.d.label+'</strong><br>Average sum: '+best.d.average.toFixed(1)+'<br>Draws: '+best.d.count;});"
+                    + "categoryCanvas.addEventListener('mouseleave',()=>categoryTip.style.display='none');categoryBy.addEventListener('change',drawCategory);"
+                    + "addEventListener('resize',()=>{draw();drawCategory();});selectData();drawCategory();</script></body></html>");
         }
     }
 
@@ -581,6 +614,11 @@ public final class PowerballVisualBuilder {
     private static String html(String value) {
         return value.replace("&", "&amp;").replace("<", "&lt;")
                 .replace(">", "&gt;").replace("\"", "&quot;").replace("'", "&#39;");
+    }
+
+    private static String js(String value) {
+        return value.replace("\\", "\\\\").replace("\"", "\\\"")
+                .replace("\r", "\\r").replace("\n", "\\n").replace("<", "\\u003c");
     }
 
     private static boolean isNumericColumn(String column) {
