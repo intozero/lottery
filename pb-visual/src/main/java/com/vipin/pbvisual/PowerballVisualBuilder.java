@@ -522,6 +522,12 @@ public final class PowerballVisualBuilder {
                     + ".column-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:5px 12px}"
                     + ".column-grid label{display:flex;gap:7px;align-items:center;padding:5px;border-radius:6px;cursor:pointer}"
                     + ".column-grid label:hover{background:#eef4ff}.column-grid input{padding:0;margin:0;accent-color:var(--blue)}"
+                    + ".selection-chart{background:white;border:1px solid var(--line);border-radius:14px;padding:15px;margin:14px 0;"
+                    + "box-shadow:0 12px 35px rgba(31,52,110,.1)}.chart-head{display:flex;justify-content:space-between;"
+                    + "align-items:center;gap:12px;flex-wrap:wrap;margin:0 4px 10px}.chart-head h2{font-size:18px;margin:0}"
+                    + "#chartLegend{display:flex;gap:12px;flex-wrap:wrap;color:var(--muted);font-size:12px}.legend-item{white-space:nowrap}"
+                    + ".legend-item:before{content:'';display:inline-block;width:18px;height:3px;margin-right:5px;vertical-align:middle;"
+                    + "background:var(--series-color);border-radius:2px}#selectionCanvas{display:block;width:100%;height:430px}"
                     + ".hint{color:var(--muted);font-size:12px}.wrap{overflow:auto;max-height:72vh;border:1px solid var(--line);"
                     + "border-radius:14px;background:white;box-shadow:0 12px 35px rgba(31,52,110,.1)}table{border-collapse:separate;"
                     + "border-spacing:0;white-space:nowrap;width:100%}th,td{padding:9px 11px;border-bottom:1px solid var(--line);"
@@ -549,9 +555,13 @@ public final class PowerballVisualBuilder {
                     + "<button id=\"selectNone\" type=\"button\">Select none</button></div>"
                     + "<div id=\"columnGrid\" class=\"column-grid\"></div></div></details>"
                     + "<span class=\"hint\">Numeric filters support &gt; 100, &gt;= 150, &lt; 200, or = 175</span></div>");
+            writer.write("<section class=\"selection-chart\"><div class=\"chart-head\">"
+                    + "<h2>Selected Numeric Columns by Date</h2><div id=\"chartLegend\"></div></div>"
+                    + "<canvas id=\"selectionCanvas\"></canvas></section>");
             writer.write("<div class=\"wrap\"><table id=\"data\"><thead><tr>");
             for (String column : COLUMNS) {
-                writer.write("<th class=\"sortable\">" + html(column) + "</th>");
+                writer.write("<th class=\"sortable\" data-numeric=\""
+                        + isNumericColumn(column) + "\">" + html(column) + "</th>");
             }
             writer.write("</tr><tr class=\"filters\">");
             for (String column : COLUMNS) {
@@ -576,7 +586,9 @@ public final class PowerballVisualBuilder {
                     + "filters=[...document.querySelectorAll('.filters input')],visible=document.querySelector('#visibleCount'),"
                     + "total=document.querySelector('#totalCount'),active=document.querySelector('#activeCount'),"
                     + "selected=document.querySelector('#selectedCount'),headers=[...document.querySelectorAll('th.sortable')],"
-                    + "grid=document.querySelector('#columnGrid');let saved=null;try{saved=JSON.parse(localStorage.getItem('pb-visible-columns-v2'));}catch(e){}"
+                    + "grid=document.querySelector('#columnGrid'),selectionCanvas=document.querySelector('#selectionCanvas'),"
+                    + "chartCtx=selectionCanvas.getContext('2d'),chartLegend=document.querySelector('#chartLegend');"
+                    + "let saved=null;try{saved=JSON.parse(localStorage.getItem('pb-visible-columns-v2'));}catch(e){}"
                     + "const columnChecks=headers.map((h,i)=>{const label=document.createElement('label'),box=document.createElement('input');"
                     + "box.type='checkbox';box.checked=!Array.isArray(saved)||saved.includes(h.textContent);label.append(box,document.createTextNode(h.textContent));"
                     + "grid.append(label);box.addEventListener('change',()=>applyColumns(true));return box;});"
@@ -590,11 +602,35 @@ public final class PowerballVisualBuilder {
                     + "const ok=searchable.includes(q)&&filters.every((f,i)=>!columnChecks[i].checked||matches(cells[i],f.value));"
                     + "r.hidden=!ok;if(ok)shown++;});filters.forEach(f=>f.classList.toggle('active',!!f.value.trim()));"
                     + "search.classList.toggle('active',!!search.value.trim());visible.textContent=shown;"
-                    + "active.textContent=filters.filter((f,i)=>columnChecks[i].checked&&f.value.trim()).length+(search.value.trim()?1:0);}"
+                    + "active.textContent=filters.filter((f,i)=>columnChecks[i].checked&&f.value.trim()).length+(search.value.trim()?1:0);"
+                    + "drawSelectionChart();}"
                     + "function applyColumns(save){columnChecks.forEach((box,i)=>{if(!box.checked)filters[i].value='';"
                     + "table.querySelectorAll('tr').forEach(r=>{if(r.cells[i])r.cells[i].hidden=!box.checked;});});"
                     + "selected.textContent=columnChecks.filter(x=>x.checked).length;if(save){try{localStorage.setItem('pb-visible-columns-v2',"
                     + "JSON.stringify(columnChecks.map((x,i)=>x.checked?headers[i].textContent:null).filter(x=>x!==null)));}catch(e){}}filter();}"
+                    + "function drawSelectionChart(){const rect=selectionCanvas.getBoundingClientRect(),dpr=devicePixelRatio||1;"
+                    + "selectionCanvas.width=rect.width*dpr;selectionCanvas.height=rect.height*dpr;chartCtx.setTransform(dpr,0,0,dpr,0,0);"
+                    + "const w=rect.width,h=rect.height,p={l:62,r:24,t:22,b:48},colors=['#3157d5','#e76f51','#20a39e','#8e5ad7',"
+                    + "'#f4a261','#2a9d8f','#d6409f','#6979f8','#7a9e2f','#b5651d'];chartCtx.clearRect(0,0,w,h);"
+                    + "const series=headers.map((x,i)=>({i,name:x.textContent})).filter(x=>columnChecks[x.i].checked&&headers[x.i].dataset.numeric==='true'),"
+                    + "chartRows=rows.filter(r=>!r.hidden).slice().sort((a,b)=>a.cells[0].textContent.localeCompare(b.cells[0].textContent));"
+                    + "chartLegend.innerHTML='';series.forEach((s,i)=>{const item=document.createElement('span');item.className='legend-item';"
+                    + "item.style.setProperty('--series-color',colors[i%colors.length]);item.textContent=s.name;chartLegend.append(item);});"
+                    + "chartCtx.font='12px system-ui';chartCtx.fillStyle='#667085';if(!series.length||!chartRows.length){"
+                    + "chartCtx.textAlign='center';chartCtx.fillText(!series.length?'Select at least one numeric column':'No rows match the filters',w/2,h/2);return;}"
+                    + "const parsed=v=>{const n=Number(v.replace(/[$,%]/g,''));return v.trim()!==''&&!Number.isNaN(n)?n:null;},"
+                    + "values=[];series.forEach(s=>chartRows.forEach(r=>{const v=parsed(r.cells[s.i].textContent);if(v!==null)values.push(v);}));"
+                    + "if(!values.length){chartCtx.textAlign='center';chartCtx.fillText('No numeric values to graph',w/2,h/2);return;}"
+                    + "let minY=Math.min(...values),maxY=Math.max(...values);if(minY===maxY){minY-=1;maxY+=1;}const pad=(maxY-minY)*.08;"
+                    + "minY-=pad;maxY+=pad;const x=i=>p.l+i/Math.max(1,chartRows.length-1)*(w-p.l-p.r),"
+                    + "y=v=>p.t+(maxY-v)/(maxY-minY)*(h-p.t-p.b);chartCtx.strokeStyle='#e5e9f2';chartCtx.textAlign='right';"
+                    + "for(let i=0;i<=5;i++){const value=minY+(maxY-minY)*i/5,py=y(value);chartCtx.beginPath();chartCtx.moveTo(p.l,py);"
+                    + "chartCtx.lineTo(w-p.r,py);chartCtx.stroke();chartCtx.fillStyle='#667085';chartCtx.fillText(value.toLocaleString(undefined,{maximumFractionDigits:1}),p.l-8,py+4);}"
+                    + "chartCtx.textAlign='center';for(let i=0;i<=5;i++){const index=Math.round((chartRows.length-1)*i/5),label=chartRows[index].cells[0].textContent;"
+                    + "chartCtx.fillText(label,p.l+(w-p.l-p.r)*i/5,h-15);}series.forEach((s,si)=>{chartCtx.beginPath();let started=false;"
+                    + "chartRows.forEach((r,i)=>{const value=parsed(r.cells[s.i].textContent);if(value===null){started=false;return;}"
+                    + "const px=x(i),py=y(value);if(started)chartCtx.lineTo(px,py);else{chartCtx.moveTo(px,py);started=true;}});"
+                    + "chartCtx.strokeStyle=colors[si%colors.length];chartCtx.lineWidth=2;chartCtx.lineJoin='round';chartCtx.stroke();});}"
                     + "search.addEventListener('input',filter);filters.forEach(f=>f.addEventListener('input',filter));"
                     + "document.querySelector('#reset').onclick=()=>{search.value='';filters.forEach(f=>f.value='');filter();};"
                     + "document.querySelector('#selectAll').onclick=()=>{columnChecks.forEach(x=>x.checked=true);applyColumns(true);};"
@@ -606,7 +642,8 @@ public final class PowerballVisualBuilder {
                     + "const parsed=v=>{const n=Number(v.replace(/[$,%]/g,''));return v!==''&&!Number.isNaN(n)?n:v;};"
                     + "rows.sort((a,b)=>{const x=parsed(value(a)),y=parsed(value(b));let c;"
                     + "if(typeof x==='number'&&typeof y==='number')c=x-y;else c=String(x).localeCompare(String(y),undefined,{numeric:true});"
-                    + "return ascending?c:-c;}).forEach(r=>body.appendChild(r));filter();});applyColumns(false);");
+                    + "return ascending?c:-c;}).forEach(r=>body.appendChild(r));filter();});"
+                    + "addEventListener('resize',drawSelectionChart);applyColumns(false);");
             writer.write("</script></body></html>");
         }
     }
