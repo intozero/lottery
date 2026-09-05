@@ -4,4 +4,6 @@
 *.class
 */.idea/*
 *.xml
+!/pom.xml
+!/powerball-sync/pom.xml
 *shelved.patch*
