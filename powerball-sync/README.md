@@ -27,7 +27,13 @@ bash powerball-sync/test.sh
 Live validation requires internet access. Check that both `java -version` and
 `javac -version` work; the script needs a JDK, not just a Java runtime.
 
-Default input: `files/pb_visual/pb-sorted.txt`. Use `--file PATH` for another file; relative paths are resolved from the repository root by the script. The module is also registered in the root Maven POM. Its regression tests run through `test.sh`.
+Default input: `files/pb_visual/pb-sorted.txt`. Use `--file PATH` for another file; relative paths are resolved from the repository root by the script. The module is also registered in the root Maven POM. Its regression tests run through `test.sh` or automatically during `mvn clean install` through a JUnit adapter (one Maven test executing all 19 checks).
+
+To build and install every module, use JDK 17 and run `mvn clean install` from the
+repository root. To build just this module and its parent, run
+`mvn -pl powerball-sync -am clean install`. Maven builds do not download lottery
+results or modify the numbers file. See the root README for the bundled IntelliJ
+Maven command if `mvn` is not on your PATH.
 
 ## Run the Java class in IntelliJ
 
