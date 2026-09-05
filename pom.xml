@@ -37,7 +37,6 @@
         <module>deviation-mean-sum-eachlot</module>
         <module>groupingrangecomparewithsuperset</module>
         <module>production</module>
-        <module>pb-visual</module>
         <module>powerball-sync</module>
     </modules>
 
