@@ -27,12 +27,9 @@
         <module>groupingrange</module>
         <module>maxmindiffoccurence</module>
         <module>occurencestudy</module>
-        <module>sortfile</module>
         <module>sumapplication</module>
         <module>totsincecombined</module>
-        <module>db-connection-lottery</module>
         <module>range-occurence-study</module>
-        <module>level-one-intelligence</module>
         <module>deviation-mean-sum-eachlot</module>
         <module>groupingrangecomparewithsuperset</module>
         <module>powerball-sync</module>

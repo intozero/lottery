@@ -10,4 +10,35 @@
     </parent>
     <groupId>com.vipin.lottery.asnumbers</groupId>
     <artifactId>as-number</artifactId>
+    <description>Reports repeated lottery combinations and digit substring frequencies.</description>
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.2</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration><proc>none</proc></configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.2.5</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.4.1</version>
+                <configuration>
+                    <archive><manifest><mainClass>asnumber.AsNumber</mainClass></manifest></archive>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

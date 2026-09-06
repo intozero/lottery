@@ -1,124 +1,37 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package asnumber;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
-/**
- * @author vipin
- */
-public class LineDto {
-    private Integer numberone;
-    private Integer numbertwo;
-    private Integer numberthree;
-    private Integer numberfour;
-    private Integer numberfive;
-    private Integer numbersix;
-    private Date lotDate;
+/** One dated draw: five distinct white balls followed by the special ball. */
+public final class LineDto {
+    private final LocalDate date;
+    private final int[] numbers;
 
-    /**
-     * @return the numberone
-     */
-    public Integer getNumberone() {
-        return numberone;
+    public LineDto(LocalDate date, int[] numbers) {
+        this.date = Objects.requireNonNull(date, "date");
+        if (numbers.length != 6) throw new IllegalArgumentException("Expected six balls");
+        this.numbers = numbers.clone();
+        for (int number : this.numbers) {
+            if (number < 1 || number > 99) throw new IllegalArgumentException("Balls must be between 1 and 99");
+        }
+        Arrays.sort(this.numbers, 0, 5);
+        for (int i = 1; i < 5; i++) {
+            if (this.numbers[i] == this.numbers[i - 1]) throw new IllegalArgumentException("Repeated white ball");
+        }
     }
 
-    /**
-     * @param numberone the numberone to set
-     */
-    public void setNumberone(Integer numberone) {
-        this.numberone = numberone;
+    public LocalDate getDate() { return date; }
+
+    /** Delimiters prevent different combinations with the same digits from colliding. */
+    public String combination() {
+        return Arrays.stream(numbers).mapToObj(Integer::toString).collect(Collectors.joining(" "));
     }
 
-    /**
-     * @return the numbertwo
-     */
-    public Integer getNumbertwo() {
-        return numbertwo;
+    /** Preserve the original analysis's unpadded digit representation. */
+    public String digits() {
+        return Arrays.stream(numbers).mapToObj(Integer::toString).collect(Collectors.joining());
     }
-
-    /**
-     * @param numbertwo the numbertwo to set
-     */
-    public void setNumbertwo(Integer numbertwo) {
-        this.numbertwo = numbertwo;
-    }
-
-    /**
-     * @return the numberthree
-     */
-    public Integer getNumberthree() {
-        return numberthree;
-    }
-
-    /**
-     * @param numberthree the numberthree to set
-     */
-    public void setNumberthree(Integer numberthree) {
-        this.numberthree = numberthree;
-    }
-
-    /**
-     * @return the numberfour
-     */
-    public Integer getNumberfour() {
-        return numberfour;
-    }
-
-    /**
-     * @param numberfour the numberfour to set
-     */
-    public void setNumberfour(Integer numberfour) {
-        this.numberfour = numberfour;
-    }
-
-    /**
-     * @return the numberfive
-     */
-    public Integer getNumberfive() {
-        return numberfive;
-    }
-
-    /**
-     * @param numberfive the numberfive to set
-     */
-    public void setNumberfive(Integer numberfive) {
-        this.numberfive = numberfive;
-    }
-
-    /**
-     * @return the numbersix
-     */
-    public Integer getNumbersix() {
-        return numbersix;
-    }
-
-    /**
-     * @param numbersix the numbersix to set
-     */
-    public void setNumbersix(Integer numbersix) {
-        this.numbersix = numbersix;
-    }
-
-    /**
-     * @return the lotDate
-     */
-    public Date getLotDate() {
-        return lotDate;
-    }
-
-    /**
-     * @param lotDate the lotDate to set
-     */
-    public void setLotDate(Date lotDate) {
-        this.lotDate = lotDate;
-    }
-
-    /**
-     * @return the numberone
-     */
-
-
 }

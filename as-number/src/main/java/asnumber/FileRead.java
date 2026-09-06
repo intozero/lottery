@@ -1,104 +1,58 @@
-
 package asnumber;
 
-import java.io.*;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.ResolverStyle;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Set;
 
+/** Reads UTF-8 draw files without changing them. */
+public final class FileRead {
+    private static final DateTimeFormatter DATE = DateTimeFormatter.ofPattern("M/d/uuuu")
+            .withResolverStyle(ResolverStyle.STRICT);
 
-/**
- * @author vipin
- */
-public class FileRead {
-
-    private Scanner s;
-
-    List<String> temps = new ArrayList<String>();
-    SimpleDateFormat sdformat = new SimpleDateFormat("MM/dd/yyyy");
-
-    int i = 0;
-
-
-    void openFile(String fp) {
-        try {
-
-            s = new Scanner(new File(fp));
-
-
-        } catch (FileNotFoundException ex) {
-            System.out.println("File Not Found" + ex);
-
-
+    public List<LineDto> read(Path input) throws IOException {
+        List<LineDto> draws = new ArrayList<>();
+        Set<LocalDate> dates = new HashSet<>();
+        try (BufferedReader reader = Files.newBufferedReader(input, StandardCharsets.UTF_8)) {
+            String line;
+            int lineNumber = 0;
+            while ((line = reader.readLine()) != null) {
+                lineNumber++;
+                if (lineNumber == 1 && line.startsWith("\uFEFF")) line = line.substring(1);
+                if (line.trim().isEmpty()) continue;
+                try {
+                    LineDto draw = parse(line);
+                    if (!dates.add(draw.getDate())) throw new IllegalArgumentException("Duplicate draw date " + draw.getDate());
+                    draws.add(draw);
+                } catch (RuntimeException e) {
+                    throw new IOException(input + ": line " + lineNumber + ": " + e.getMessage(), e);
+                }
+            }
         }
-
+        if (draws.isEmpty()) throw new IOException("No draws found in " + input);
+        draws.sort(Comparator.comparing(LineDto::getDate));
+        return draws;
     }
 
-
-    public List<LineDto> readFile() throws ParseException {
-
-        //s.useDelimiter("  |\\n");
-        s.useDelimiter("\\n");
-        List<LineDto> listlinedto = new ArrayList<LineDto>();
-        while (s.hasNext()) {
-            String a = s.next();
-            //System.out.println (a);
-
-            //arraystyle[i] = s.next();
-
-
-            LineDto linedto = setLineDto(a);
-            //System.out.println(i);
-
-            listlinedto.add(i, linedto);
-            //System.out.println (i);
-            i = i + 1;
-
+    static LineDto parse(String line) {
+        String[] fields = line.trim().split("\\s+");
+        if (fields.length != 7) throw new IllegalArgumentException("Expected date and six balls (M/d/yyyy W1 W2 W3 W4 W5 RED)");
+        if (!fields[0].matches("\\d{1,2}/\\d{1,2}/\\d{4}")) throw new IllegalArgumentException("Invalid date format");
+        LocalDate date = LocalDate.parse(fields[0], DATE);
+        int[] balls = new int[6];
+        for (int i = 0; i < balls.length; i++) {
+            if (!fields[i + 1].matches("[0-9]{1,2}")) throw new IllegalArgumentException("Invalid ball: " + fields[i + 1]);
+            balls[i] = Integer.parseInt(fields[i + 1]);
         }
-
-//System.out.println("Listlinedto' " + listlinedto.get(0).getLotDate());
-//System.out.println("Listlinedto' " + listlinedto.get(1).getLotDate());
-//System.out.println("Listlinedto' " + listlinedto.get(1).getNumberfive());
-//System.out.println("Listlinedto' " + listlinedto.get(0).getNumberfive());
-        s.close();
-        return listlinedto;
-
+        return new LineDto(date, balls);
     }
-
-
-    public LineDto setLineDto(String x) throws ParseException {
-
-
-        String[] temp = x.split("  ");
-
-
-        // System.out.println("Is x correct? \n"+ x);
-        java.util.Date dt = sdformat.parse(temp[0]);
-
-        LineDto ldto = new LineDto();
-
-        ldto.setLotDate(dt);
-        //System.out.println("Debugging the linedto" + Integer.valueOf(temp[1]) );
-        //System.out.println("Debugging the linedto \n" + temp[1] + "\n temp' values");
-        ldto.setNumberone(Integer.valueOf(temp[1]));
-        ldto.setNumbertwo(Integer.valueOf(temp[2]));
-        ldto.setNumberthree(Integer.valueOf(temp[3]));
-        ldto.setNumberfour(Integer.valueOf(temp[4]));
-        ldto.setNumberfive(Integer.valueOf(temp[5]));
-        if (temp.length == 6) {
-            ldto.setNumbersix(99);
-        } else ldto.setNumbersix(Integer.valueOf(temp[6]));
-        //System.out.println("String Date from Dto" + ldto.getLotDate());
-
-        //System.out.println(ldto);
-        return ldto;
-
-    }
-
-
 }
