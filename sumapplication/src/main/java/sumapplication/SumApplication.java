@@ -1,111 +1,63 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package sumapplication;
 
-
-import java.text.ParseException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.*;
 import java.util.*;
 
+/** Console entry point; saved IDE program arguments are intentionally ignored. */
+public final class SumApplication {
+    private SumApplication() { }
 
-/**
- * @author vipin
- * This module gives the total sum of balls at each lot and the total sum after all lots grouped and sorted by number of occurrence.
- */
-public class SumApplication {
-    public static String filePath = System.getProperty("user.home") + "/Documents/may-2024-documents/Projects/JavaProjects/General/lottery/";
-
-    HashMap<Integer, Integer> hm = new HashMap<>();
-    public static int i = 0;
-
-    public static void main(String[] args) throws ParseException {
-
-        Scanner scannerInput = new Scanner(System.in);
-
-
-        if (scannerInput.next().equalsIgnoreCase("MM")) {
-            filePath = filePath + "mm-sorted.txt";
-        } else if (scannerInput.next().equalsIgnoreCase("PB")) {
-            filePath = filePath + "pb-sorted.txt";
-        } else {
-            System.out.println("invalid argument");
-        }
-
-
-        new SumApplication().sumStart(filePath);
+    public static void main(String[] args) {
+        int status = run(new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8)), System.out, System.err);
+        if (status != 0) System.exit(status);
     }
 
-
-    public void sumStart(String fp) throws ParseException {
-        FileRead fileRead = new FileRead();
-        fileRead.openFile(fp);
-        List<LineDTO> lineDTOs = fileRead.readFile();
-        double TOTAL = getSum(lineDTOs);
-        System.out.println("Total after  : " + "\t" + TOTAL);
-    }
-
-    public double getSum(List<LineDTO> lineDTOs) {
-        int total = 0;
-        int i = 0;
-        int sum = 0;
-        double av = 0;
-        System.out.println("*************************************************************\tSum at each lot " + "\t*************************************************************");
-        for (LineDTO ld : lineDTOs) {
-            i++;
-            sum = ld.getNumberone() + ld.getNumbertwo() + ld.getNumberthree()
-                    + ld.getNumberfour() + ld.getNumberfive();
-            total = total + sum;
-            av = (total / i);
-
-            System.out.println("Sum at the " + i + "th lot : " + sum + "  Average is " + av);
-            arrangeSum(sum);
-        }
-        HashMap<Integer, Integer> hmap = sortByValues(hm);
-
-        System.out.println("*************************************************************\t All sum arranged and sorted" + "\t*************************************************************");
-        for (Integer key : hmap.keySet()) {
-            System.out.println(key + "  : " + hmap.get(key));
-
-        }
-
-        return total;
-    }
-
-    public void arrangeSum(int sum) {
-        int a = sum;
-        if (!hm.containsKey(a)) {
-            hm.put(a, 1);
-        } else {
-            Integer count = hm.get(a);
-            count = count + 1;
-            hm.put(a, count);
-
-        }
-
-    }
-
-    private static HashMap sortByValues(HashMap map) {
-        List list = new LinkedList(map.entrySet());
-        Collections.sort(list, new Comparator() {
-            public int compare(Object o1, Object o2) {
-                return ((Comparable) ((Map.Entry) (o1)).getValue())
-                        .compareTo(((Map.Entry) (o2)).getValue());
+    static int run(BufferedReader console, PrintStream out, PrintStream err) {
+        try {
+            String game = prompt(console, out, "Lottery PB or MM", "PB").toUpperCase(Locale.ROOT);
+            if (!game.equals("PB") && !game.equals("MM")) throw new IllegalArgumentException("Choose PB or MM");
+            Path input = Paths.get(prompt(console, out, "Input file",
+                    game.equals("PB") ? "files/pb/pb-sorted.txt" : "files/archive/mm-sorted.txt"));
+            List<LineDTO> draws = new FileRead().read(input, game.equals("PB") ? 69 : 75);
+            Path output = Paths.get("sumapplication/target/" + game.toLowerCase(Locale.ROOT) + "-sums.txt");
+            writeReport(input, output, draws);
+            out.println();
+            try (BufferedReader report = Files.newBufferedReader(output, StandardCharsets.UTF_8)) {
+                String line;
+                while ((line = report.readLine()) != null) out.println(line);
             }
-        });
-
-        HashMap sortedHashMap = new LinkedHashMap();
-        for (Iterator it = list.iterator(); it.hasNext(); ) {
-            Map.Entry entry = (Map.Entry) it.next();
-            sortedHashMap.put(entry.getKey(), entry.getValue());
+            out.println("Report: " + output.toAbsolutePath().normalize());
+            return 0;
+        } catch (IOException | IllegalArgumentException e) {
+            err.println("sumapplication: " + e.getMessage());
+            return 1;
         }
-        return sortedHashMap;
-
     }
 
+    private static String prompt(BufferedReader console, PrintStream out, String label, String defaultValue) throws IOException {
+        out.print(label + " [" + defaultValue + "]: ");
+        out.flush();
+        String value = console.readLine();
+        if (value == null) throw new IOException("Console input ended while reading " + label);
+        return value.trim().isEmpty() ? defaultValue : value.trim();
+    }
+
+    static void writeReport(Path input, Path output, List<LineDTO> draws) throws IOException {
+        if (input.toAbsolutePath().normalize().equals(output.toAbsolutePath().normalize())
+                || (Files.exists(output) && Files.isSameFile(input, output)))
+            throw new IOException("Report path must differ from input");
+        Path absolute = output.toAbsolutePath();
+        Files.createDirectories(absolute.getParent());
+        Path temporary = Files.createTempFile(absolute.getParent(), ".sumapplication-", ".tmp");
+        try {
+            try (BufferedWriter writer = Files.newBufferedWriter(temporary, StandardCharsets.UTF_8)) {
+                new SumReport().write(draws, writer);
+            }
+            Files.move(temporary, absolute, StandardCopyOption.ATOMIC_MOVE, StandardCopyOption.REPLACE_EXISTING);
+        } finally {
+            Files.deleteIfExists(temporary);
+        }
+    }
 }
-
-
-
-
-

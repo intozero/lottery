@@ -1,75 +1,53 @@
-
 package sumapplication;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.*;
+import java.time.LocalDate;
+import java.time.format.*;
+import java.util.*;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+/** Reads once, validates rows, and sorts by draw date. */
+public final class FileRead {
+    private static final DateTimeFormatter DATE = DateTimeFormatter.ofPattern("M/d/uuuu")
+            .withResolverStyle(ResolverStyle.STRICT);
 
-
-/**
- * @author vipin
- */
-public class FileRead {
-
-    private Scanner s;
-
-    SimpleDateFormat sdformat = new SimpleDateFormat("MM/dd/yyyy");
-
-    int i = 0;
-
-
-    void openFile(String fp) {
-        try {
-            s = new Scanner(new File(fp));
-
-        } catch (FileNotFoundException ex) {
-            System.out.println("File Not Found" + ex);
-
+    public List<LineDTO> read(Path path, int maximum) throws IOException {
+        List<LineDTO> draws = new ArrayList<>();
+        Set<LocalDate> dates = new HashSet<>();
+        try (BufferedReader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8)) {
+            int lineNumber = 0;
+            String line;
+            while ((line = reader.readLine()) != null) {
+                lineNumber++;
+                if (lineNumber == 1 && line.startsWith("\uFEFF")) line = line.substring(1);
+                if (line.trim().isEmpty()) continue;
+                try {
+                    String[] fields = line.trim().split("\\s+");
+                    if (fields.length != 6 && fields.length != 7)
+                        throw new IllegalArgumentException("Expected date, five white balls, and optional special ball");
+                    if (!fields[0].matches("\\d{1,2}/\\d{1,2}/\\d{4}"))
+                        throw new IllegalArgumentException("Expected M/d/yyyy date");
+                    LocalDate date = LocalDate.parse(fields[0], DATE);
+                    if (!dates.add(date)) throw new IllegalArgumentException("Duplicate date " + date);
+                    int[] balls = new int[5];
+                    for (int i = 0; i < 5; i++) balls[i] = ball(fields[i + 1], maximum);
+                    if (fields.length == 7) ball(fields[6], 99); // Structural check only; not counted.
+                    draws.add(new LineDTO(date, balls));
+                } catch (RuntimeException e) {
+                    throw new IOException(path + ": line " + lineNumber + ": " + e.getMessage(), e);
+                }
+            }
         }
-
+        if (draws.isEmpty()) throw new IOException("No draws in " + path);
+        draws.sort(Comparator.comparing(LineDTO::getDate));
+        return draws;
     }
 
-
-    public List<LineDTO> readFile() throws ParseException {
-        s.useDelimiter("\\n");
-        List<LineDTO> listlinedto = new ArrayList<>();
-        while (s.hasNext()) {
-            String a = s.next();
-            LineDTO linedto = setLineDto(a);
-            listlinedto.add(i, linedto);
-
-            i = i + 1;
-
-        }
-        s.close();
-        return listlinedto;
-
+    private static int ball(String token, int maximum) {
+        if (!token.matches("[0-9]{1,2}")) throw new IllegalArgumentException("Invalid ball: " + token);
+        int value = Integer.parseInt(token);
+        if (value < 1 || value > maximum) throw new IllegalArgumentException("Ball outside 1-" + maximum + ": " + token);
+        return value;
     }
-
-
-    public LineDTO setLineDto(String x) throws ParseException {
-
-        String[] temp = x.split("  ");
-        java.util.Date dt = sdformat.parse(temp[0]);
-
-        LineDTO lineDTO = new LineDTO();
-        lineDTO.setLotDate(dt);
-        lineDTO.setNumberone(Integer.valueOf(temp[1]));
-        lineDTO.setNumbertwo(Integer.valueOf(temp[2]));
-        lineDTO.setNumberthree(Integer.valueOf(temp[3]));
-        lineDTO.setNumberfour(Integer.valueOf(temp[4]));
-        lineDTO.setNumberfive(Integer.valueOf(temp[5]));
-        lineDTO.setNumbersix(Integer.valueOf(temp[6]));
-
-        return lineDTO;
-
-    }
-
-
 }
