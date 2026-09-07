@@ -55,8 +55,12 @@ rejected; this rewrite supports PB and MM.
 
 Reports are written to `totsincecombined/target/<game>-<mode>.txt`, for example
 `pb-last.txt`. They are replaced on successful reruns, never appended. The console
-prints the analyzed date range, draw count, and report path. `SIM` and `RAN` can
-produce large reports because they include every historical snapshot. Reports in
+prints the complete report and its saved path. Both outputs use bordered,
+automatically sized plain-text tables: labels and dates align left, numeric values
+align right, and percentages show two decimal places and a percent sign. Use a
+monospaced font when viewing the text files. `SIM` and `RAN` can
+produce large reports and substantial console output because they include every
+historical snapshot. Reports in
 `target/` are removed by `mvn clean`; copy a report elsewhere to retain it.
 
 ## Definitions

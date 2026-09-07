@@ -29,8 +29,11 @@ public final class AllNumbers {
             Path output = Paths.get("totsincecombined/target/" + game.toLowerCase(Locale.ROOT) + "-" + action.name().toLowerCase(Locale.ROOT) + ".txt");
             List<Draw> draws = new DrawReader().read(input, maximum);
             writeReport(input, output, draws, maximum, action);
-            out.println("Analyzed " + draws.size() + " draws (" + draws.get(0).getDate() + " through "
-                    + draws.get(draws.size() - 1).getDate() + ").");
+            out.println();
+            try (BufferedReader report = Files.newBufferedReader(output, StandardCharsets.UTF_8)) {
+                String line;
+                while ((line = report.readLine()) != null) out.println(line);
+            }
             out.println("Report: " + output.toAbsolutePath().normalize());
             return 0;
         } catch (IOException | IllegalArgumentException e) {

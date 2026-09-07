@@ -12,12 +12,17 @@ public final class ReportWriter {
         List<Draw> draws = new ArrayList<>(input);
         draws.sort(Comparator.comparing(Draw::getDate));
         Statistics stats = new Statistics(maximum);
-        output.write("White-ball total and since analysis\nMode: " + action + "\nInput draws: " + draws.size()
-                + "\nDates: " + draws.get(0).getDate() + " through " + draws.get(draws.size() - 1).getDate()
-                + "\nWhite-ball universe: 1-" + maximum
-                + "\nSince = completed draws after last appearance; never seen = snapshot draw count."
-                + "\nGaps = distance between successive appearance draw indices; NA = fewer than two appearances."
-                + "\nSpecial balls excluded. History is analyzed as supplied, without official-results verification.\n");
+        output.write("WHITE-BALL TOTAL AND SINCE ANALYSIS\n\n");
+        new TextTable(new String[]{"Setting", "Value"}, false, false)
+                .row("Mode", action)
+                .row("Input draws", draws.size())
+                .row("First draw", draws.get(0).getDate())
+                .row("Last draw", draws.get(draws.size() - 1).getDate())
+                .row("White-ball universe", "1-" + maximum)
+                .write(output);
+        output.write("Since: draws after last appearance; never seen = snapshot draw count.\n"
+                + "Gaps: distance between appearance draw indices; NA = fewer than two appearances.\n"
+                + "Special balls excluded. Local history is not verified against official results.\n");
         for (Draw draw : draws) {
             stats.accept(draw);
             if (action != Action.LAST) snapshot(stats, action, output);
@@ -46,31 +51,39 @@ public final class ReportWriter {
         } else if (action == Action.SIM) {
             numberTable("Numbers in numerical order", numbers, out);
         }
-        out.write("Range\tTotal appearances\tSum of since\n");
+        out.write("Range totals\n");
+        TextTable ranges = new TextTable(new String[]{"Range", "Total appearances", "Sum of since"}, false, true, true);
         for (int bucket = 0; bucket <= stats.getMaximum() / 10; bucket++) {
             long total = 0, since = 0;
             for (NumberStats number : numbers) {
                 if (number.getNumber() / 10 == bucket) { total += number.getTotal(); since += number.getSince(); }
             }
-            out.write(stats.rangeLabel(bucket) + "\t" + total + "\t" + since + "\n");
+            ranges.row(stats.rangeLabel(bucket), total, since);
         }
+        ranges.write(out);
     }
 
     private void numberTable(String heading, List<NumberStats> numbers, Writer out) throws IOException {
-        out.write(heading + "\nNumber\tTotal\tSince\tLast date\tMin gap\tMax gap\n");
+        out.write(heading + "\n");
+        TextTable table = new TextTable(
+                new String[]{"Number", "Total", "Since", "Last date", "Min gap", "Max gap"},
+                true, true, true, false, true, true);
         for (NumberStats n : numbers) {
-            out.write(n.getNumber() + "\t" + n.getTotal() + "\t" + n.getSince() + "\t"
-                    + (n.getLastDate() == null ? "NEVER" : n.getLastDate()) + "\t"
-                    + (n.getMinGap() == null ? "NA" : n.getMinGap()) + "\t"
-                    + (n.getMaxGap() == null ? "NA" : n.getMaxGap()) + "\n");
+            table.row(n.getNumber(), n.getTotal(), n.getSince(),
+                    n.getLastDate() == null ? "NEVER" : n.getLastDate(),
+                    n.getMinGap() == null ? "NA" : n.getMinGap(),
+                    n.getMaxGap() == null ? "NA" : n.getMaxGap());
         }
+        table.write(out);
     }
 
     private void frequencies(String heading, Map<String, Integer> values, long denominator, Writer out) throws IOException {
-        out.write(heading + " (percent denominator: " + denominator + ")\nCategory\tCount\tPercent\n");
+        out.write(heading + " (percent denominator: " + denominator + ")\n");
+        TextTable table = new TextTable(new String[]{"Category", "Count", "Percent"}, false, true, true);
         List<Map.Entry<String, Integer>> rows = new ArrayList<>(values.entrySet());
         rows.sort(Map.Entry.<String, Integer>comparingByValue().reversed().thenComparing(Map.Entry.comparingByKey()));
         for (Map.Entry<String, Integer> row : rows)
-            out.write(row.getKey() + "\t" + row.getValue() + "\t" + String.format(Locale.ROOT, "%.2f", 100.0 * row.getValue() / denominator) + "\n");
+            table.row(row.getKey(), row.getValue(), String.format(Locale.ROOT, "%.2f%%", 100.0 * row.getValue() / denominator));
+        table.write(out);
     }
 }

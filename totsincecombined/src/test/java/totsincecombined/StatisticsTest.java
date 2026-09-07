@@ -94,9 +94,9 @@ public class StatisticsTest {
             List<Draw> reversed = new ArrayList<>(history()); Collections.reverse(reversed);
             assertEquals(report, report(reversed,action));
         }
-        assertTrue(report(history(),ReportWriter.Action.LAST).contains("1-9\t12\t10\n"));
-        assertFalse(report(history(),ReportWriter.Action.NUM_OCCUR).contains("Number\tTotal\tSince"));
-        assertTrue(report(history(),ReportWriter.Action.RAN).contains("5\t2\t66.67"));
+        assertTrue(report(history(),ReportWriter.Action.LAST).matches("(?s).*\\| 1-9 +\\| +12 +\\| +10 +\\|.*"));
+        assertFalse(report(history(),ReportWriter.Action.NUM_OCCUR).contains("| Number"));
+        assertTrue(report(history(),ReportWriter.Action.RAN).matches("(?s).*\\| 5 +\\| +2 +\\| +66\\.67% +\\|.*"));
     }
 
     @Test public void atomicReportPreservesInputAndPreviousOutputOnFailure() throws Exception {
