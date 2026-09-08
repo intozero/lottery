@@ -11,7 +11,7 @@ import java.util.*;
 
 public class GroupTheRangeMmNewLine {
 
-    public static String filePath = System.getProperty("user.home") + "/Documents/may-2024-documents/Projects/JavaProjects/General/lottery/";
+    public static String filePath = System.getProperty("user.home") + "/Documents/Projects/JavaProjects/General/lottery/files/pb/";
 
     HashMap<Integer, Integer> hmaprange = new HashMap<Integer, Integer>();
     int range;
