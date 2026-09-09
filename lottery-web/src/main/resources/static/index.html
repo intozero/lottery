@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lottery Workbench</title><meta name="description" content="Your local workspace for lottery history and analysis.">
+<link rel="stylesheet" href="/app.css"><script defer src="/app.js"></script>
+</head>
+<body>
+<a class="skip" href="#content">Skip to analysis</a>
+<aside>
+ <a class="brand" href="#overview"><span class="brandmark">L<span>·</span></span><span>LOTTERY<br><b>Workbench</b></span></a>
+ <div class="navlabel">YOUR WORKSPACE</div>
+ <nav aria-label="Main navigation">
+  <button data-view="overview" class="active"><span>◫</span> Overview</button>
+  <button data-view="history"><span>▤</span> Draw history</button>
+  <button data-view="numbers"><span>◎</span> Number statistics</button>
+  <button data-view="sums"><span>∑</span> Sums & deviation</button>
+  <button data-view="ranges"><span>▦</span> Range explorer</button>
+  <button data-view="digits"><span>⋮</span> Digit patterns</button>
+  <button data-view="combinations"><span>⤨</span> Combinations</button>
+  <button data-view="data"><span>⇅</span> Data manager</button>
+ </nav>
+ <div class="asidefoot"><span class="dot"></span> Local workspace<p>Your history, on your computer.</p></div>
+</aside>
+<div class="workspace">
+ <header><div><span class="eyebrow">HISTORY / ANALYSIS</span><h1 id="title">Overview</h1></div><span class="localbadge">LOCAL DATABASE</span></header>
+ <form id="filters" class="filterbar">
+  <label>Lottery<select id="game"><option value="PB">Powerball</option><option value="MM">Mega Millions</option></select></label>
+  <label>From<input type="date" id="from"></label><span class="datearrow">→</span><label>Through<input type="date" id="to"></label>
+  <button type="submit" class="primary">Apply range</button><button type="button" id="reset" class="quiet">All history</button>
+  <span id="scope" class="scope"></span>
+ </form>
+ <div id="notice" class="notice" role="status" hidden></div>
+ <main id="content" tabindex="-1"><div class="empty">Loading your draw history…</div></main>
+ <footer>Descriptive analysis of recorded draws. Past patterns do not predict future results.</footer>
+</div>
+</body></html>
