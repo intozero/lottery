@@ -1,0 +1,91 @@
+WHITE-BALL TOTAL AND SINCE ANALYSIS
+
++---------------------+------------+
+| Setting             | Value      |
++---------------------+------------+
+| Mode                | RAN        |
+| Input draws         | 3          |
+| First draw          | 2026-01-01 |
+| Last draw           | 2026-01-03 |
+| White-ball universe | 1-69       |
++---------------------+------------+
+
+Since: draws after last appearance; never seen = snapshot draw count.
+Gaps: distance between appearance draw indices; NA = fewer than two appearances.
+Special balls excluded. Local history is not verified against official results.
+
+=== Draw 1 | 2026-01-01 ===
+Pattern bucket order: 1-9, 10-19, 20-29, 30-39, 40-49, 50-59, 60-69
+Range patterns (percent denominator: 1)
++---------------+-------+---------+
+| Category      | Count | Percent |
++---------------+-------+---------+
+| 5-0-0-0-0-0-0 |     1 | 100.00% |
++---------------+-------+---------+
+
+Occupancy shapes (e.g. 3+2) (percent denominator: 1)
++----------+-------+---------+
+| Category | Count | Percent |
++----------+-------+---------+
+| 5        |     1 | 100.00% |
++----------+-------+---------+
+
+Occupied range/count categories (percent denominator: 1)
++--------------+-------+---------+
+| Category     | Count | Percent |
++--------------+-------+---------+
+| 1-9: 5 balls |     1 | 100.00% |
++--------------+-------+---------+
+
+
+=== Draw 2 | 2026-01-02 ===
+Pattern bucket order: 1-9, 10-19, 20-29, 30-39, 40-49, 50-59, 60-69
+Range patterns (percent denominator: 2)
++---------------+-------+---------+
+| Category      | Count | Percent |
++---------------+-------+---------+
+| 5-0-0-0-0-0-0 |     2 | 100.00% |
++---------------+-------+---------+
+
+Occupancy shapes (e.g. 3+2) (percent denominator: 2)
++----------+-------+---------+
+| Category | Count | Percent |
++----------+-------+---------+
+| 5        |     2 | 100.00% |
++----------+-------+---------+
+
+Occupied range/count categories (percent denominator: 2)
++--------------+-------+---------+
+| Category     | Count | Percent |
++--------------+-------+---------+
+| 1-9: 5 balls |     2 | 100.00% |
++--------------+-------+---------+
+
+
+=== Draw 3 | 2026-01-03 ===
+Pattern bucket order: 1-9, 10-19, 20-29, 30-39, 40-49, 50-59, 60-69
+Range patterns (percent denominator: 3)
++---------------+-------+---------+
+| Category      | Count | Percent |
++---------------+-------+---------+
+| 5-0-0-0-0-0-0 |     2 |  66.67% |
+| 2-3-0-0-0-0-0 |     1 |  33.33% |
++---------------+-------+---------+
+
+Occupancy shapes (e.g. 3+2) (percent denominator: 3)
++----------+-------+---------+
+| Category | Count | Percent |
++----------+-------+---------+
+| 5        |     2 |  66.67% |
+| 3+2      |     1 |  33.33% |
++----------+-------+---------+
+
+Occupied range/count categories (percent denominator: 4)
++----------------+-------+---------+
+| Category       | Count | Percent |
++----------------+-------+---------+
+| 1-9: 5 balls   |     2 |  50.00% |
+| 1-9: 2 balls   |     1 |  25.00% |
+| 10-19: 3 balls |     1 |  25.00% |
++----------------+-------+---------+
+

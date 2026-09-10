@@ -1,5 +1,4 @@
-*/target/*
-/as-number/target/
+**/target/
 *.iml
 *.class
 */.idea/*

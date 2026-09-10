@@ -1,0 +1,36 @@
+WHITE-BALL SUM ANALYSIS
+
++------------------------+------------+
+| Metric                 | Value      |
++------------------------+------------+
+| Draws                  | 3          |
+| First draw             | 2026-01-01 |
+| Last draw              | 2026-01-03 |
+| Total of all draw sums | 83         |
+| Average draw sum       | 27.67      |
+| Minimum draw sum       | 15         |
+| Maximum draw sum       | 36         |
+| Distinct sums          | 3          |
++------------------------+------------+
+
+Only the five white balls are summed; special balls are excluded.
+Averages are per draw, displayed to two decimal places.
+
+Per-draw sums (chronological order)
++------+------------+--------------+-----+---------------+-----------------+
+| Draw | Date       | White balls  | Sum | Running total | Running average |
++------+------------+--------------+-----+---------------+-----------------+
+|    1 | 2026-01-01 | 1 2 3 4 5    |  15 |            15 |           15.00 |
+|    2 | 2026-01-02 | 2 6 7 8 9    |  32 |            47 |           23.50 |
+|    3 | 2026-01-03 | 1 2 10 11 12 |  36 |            83 |           27.67 |
++------+------------+--------------+-----+---------------+-----------------+
+
+Sum frequencies (count ascending, ties by sum ascending)
++-----+------------+---------+
+| Sum | Draw count | Percent |
++-----+------------+---------+
+|  15 |          1 |  33.33% |
+|  32 |          1 |  33.33% |
+|  36 |          1 |  33.33% |
++-----+------------+---------+
+

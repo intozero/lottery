@@ -32,9 +32,8 @@ java -jar lottery-web/target/lottery-web-1.0-SNAPSHOT.jar
 
 In IntelliJ, reload the root Maven project, select JDK 17, and run
 `com.vipin.lottery.web.WebApplication` with the **repository root as working
-directory** and the `lottery-web` module classpath. The web module uses its own
-Spring Boot parent; it does not change the Java 8 configuration of the console
-modules. Use Maven **Lifecycle → install**, not the install plugin directly.
+directory** and the `lottery-web` module classpath. Both modules inherit Java 17, Spring Boot dependency management, and formatting
+checks from the root POM. Use Maven **Lifecycle → install**, not the install plugin directly.
 
 On first startup, each empty game's database history is seeded from:
 
@@ -183,14 +182,15 @@ cookie, and send the returned header/token pair on mutations. The UI does this
 automatically.
 
 The data service uses parameterized SQL and transactions. Calculation services
-have no shared per-request mutable state. Existing `totsincecombined.Statistics`
-and sum/combined report writers are reused directly; stateless web-native adapters
-cover the older console-only modules.
+have no shared per-request mutable state. The `lottery-core` dependency owns the shared model, parser, source validation,
+analysis services, and report writers. The web module contains only API,
+persistence, and application configuration packages; it has no dependency on
+the retired console projects.
 
 ## Verification
 
 ```bash
-# Backend and repository build (10 web integration tests included)
+# Build both modules, including core and web integration tests
 mvn clean install
 
 # Optional frontend behavior tests; Node is only needed for these tests
@@ -199,10 +199,10 @@ npm ci
 npm test
 ```
 
-Web integration tests use isolated in-memory H2 and no external network. They
-cover transactions, rollback, corrections, special-ball filling, parser errors,
-CSRF, uploads, calculations, date filters, exports, range counts, combinations,
-and official-source rejection cases.
+Core tests cover parser errors, calculations, range counts, combinations,
+official-source rejection cases, and byte-for-byte report fixtures. Web integration
+tests use isolated in-memory H2 and no external network; they cover transactions,
+rollback, corrections, special-ball filling, CSRF, uploads, date filters, and exports.
 
 Five jsdom tests exercise all pages, search/pagination, date filters, analysis
 forms, import/sync CSRF handling, and visible failures. These test DOM behavior,

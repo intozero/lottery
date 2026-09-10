@@ -1,21 +1,24 @@
-# Repository review and web capability mapping
+# Consolidation and capability mapping
 
-The root reactor contained eleven analysis/update modules before the web module
-was added. They read variations of dated text files. Several older programs use
-hard-coded paths, raw collections, static state, or mutable file readers; running
-their main methods inside HTTP requests would be unsafe and difficult to control.
+The repository now has two Maven modules: `lottery-core` and `lottery-web`.
+The eleven console modules listed below were removed after migrating their useful
+functionality. Their main classes, duplicate models/parsers, Lombok dependency,
+and individual launch/build scripts are no longer maintained.
 
-The web application therefore uses a database as the canonical working copy,
-reuses the already-refined public calculation/report classes, and implements
-stateless equivalents of basic workflows from the remaining console scripts.
-Original modules remain available and their source files were not rewritten for
-this integration.
+The web UI remains the application entry point. Core is plain Java and owns
+calculations, parsing, official-source validation, and reports. Web owns HTTP,
+Spring configuration, and H2 persistence. Dependency direction is web → core;
+core does not depend on Spring or the database.
 
-| Existing module | Original purpose / findings | Web treatment |
+This cleanup preserves the existing web outputs and database schema. Golden
+fixtures compare all five analysis report formats against pre-consolidation
+outputs. The original text files and stored database remain in place.
+
+| Retired module | Original purpose / findings | Web treatment |
 | --- | --- | --- |
 | as-number | Concatenates unpadded draw values; counts overlapping digit windows and repeated combinations. | Digit patterns with a bounded configurable window; exact repeats on Draw history. Missing special balls produce a clear error. |
-| sumapplication | Per-draw sums, running average and total, frequency distribution; recently refined stateless report writer. | Sums & deviation page; reuse SumReport for text export. |
-| totsincecombined | Total/since/gaps per number, cumulative range totals, range patterns and occupancy shapes; refined incremental Statistics. | Reuse Statistics for overview/numbers/ranges and existing LAST/SIM/NUM_OCCUR/RAN exporters. Number timeline exposes individual historical snapshots interactively. |
+| sumapplication | Per-draw sums, running average and total, frequency distribution; recently refined stateless report writer. | Sums & deviation page; use core SumReport for text export. |
+| totsincecombined | Total/since/gaps per number, cumulative range totals, range patterns and occupancy shapes; refined incremental Statistics. | Use core Statistics for overview/numbers/ranges and existing LAST/SIM/NUM_OCCUR/RAN exporters. Number timeline exposes individual historical snapshots interactively. |
 | maxmindiffoccurence | First/last occurrence, min/max gaps, recency; older implementation counts ball positions and carries mutable state. | Correct draw-index-based gaps and since in Number statistics; last appearance date, per-number timeline. |
 | occurencestudy | Occurrence points, gaps, first/last sorted white-ball studies, smallest+largest sums. | Number timeline plus smallest/largest/end-sum frequency tables. |
 | deviation-mean-sum-eachlot | Draw sum, mean and deviation, distributions; legacy integer truncation loses precision. | Exact mean/population standard deviation and distributions; deviation floor for grouping/search, explicitly documented. |
@@ -25,7 +28,7 @@ this integration.
 | all-combinations | Exhaustive five-ball combinations, sums/deviation filters, range forms and counts. | Bounded sum/deviation combination search; exact per-range combinatorial counts and square scores. Results disclose the 500-row cap. Exhaustive unbounded batch exports are not run in HTTP requests. |
 | powerball-sync | Validates file history against official Texas CSV; corrects duplicates/mismatches and missing draws with file backup/audit. | Manual DB synchronization using the same official source and completeness rules; unique dates, transactional updates and stored old/new values. Original files stay untouched; export when wanted. |
 
-## Deliberate behavior changes
+## Behavior established by the web application
 
 - The web database has a unique game/date key; ordinary imports never silently
   overwrite a known conflicting result.

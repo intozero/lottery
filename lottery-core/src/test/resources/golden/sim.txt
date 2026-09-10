@@ -1,0 +1,285 @@
+WHITE-BALL TOTAL AND SINCE ANALYSIS
+
++---------------------+------------+
+| Setting             | Value      |
++---------------------+------------+
+| Mode                | SIM        |
+| Input draws         | 3          |
+| First draw          | 2026-01-01 |
+| Last draw           | 2026-01-03 |
+| White-ball universe | 1-69       |
++---------------------+------------+
+
+Since: draws after last appearance; never seen = snapshot draw count.
+Gaps: distance between appearance draw indices; NA = fewer than two appearances.
+Special balls excluded. Local history is not verified against official results.
+
+=== Draw 1 | 2026-01-01 ===
+Numbers in numerical order
++--------+-------+-------+------------+---------+---------+
+| Number | Total | Since | Last date  | Min gap | Max gap |
++--------+-------+-------+------------+---------+---------+
+|      1 |     1 |     0 | 2026-01-01 |      NA |      NA |
+|      2 |     1 |     0 | 2026-01-01 |      NA |      NA |
+|      3 |     1 |     0 | 2026-01-01 |      NA |      NA |
+|      4 |     1 |     0 | 2026-01-01 |      NA |      NA |
+|      5 |     1 |     0 | 2026-01-01 |      NA |      NA |
+|      6 |     0 |     1 | NEVER      |      NA |      NA |
+|      7 |     0 |     1 | NEVER      |      NA |      NA |
+|      8 |     0 |     1 | NEVER      |      NA |      NA |
+|      9 |     0 |     1 | NEVER      |      NA |      NA |
+|     10 |     0 |     1 | NEVER      |      NA |      NA |
+|     11 |     0 |     1 | NEVER      |      NA |      NA |
+|     12 |     0 |     1 | NEVER      |      NA |      NA |
+|     13 |     0 |     1 | NEVER      |      NA |      NA |
+|     14 |     0 |     1 | NEVER      |      NA |      NA |
+|     15 |     0 |     1 | NEVER      |      NA |      NA |
+|     16 |     0 |     1 | NEVER      |      NA |      NA |
+|     17 |     0 |     1 | NEVER      |      NA |      NA |
+|     18 |     0 |     1 | NEVER      |      NA |      NA |
+|     19 |     0 |     1 | NEVER      |      NA |      NA |
+|     20 |     0 |     1 | NEVER      |      NA |      NA |
+|     21 |     0 |     1 | NEVER      |      NA |      NA |
+|     22 |     0 |     1 | NEVER      |      NA |      NA |
+|     23 |     0 |     1 | NEVER      |      NA |      NA |
+|     24 |     0 |     1 | NEVER      |      NA |      NA |
+|     25 |     0 |     1 | NEVER      |      NA |      NA |
+|     26 |     0 |     1 | NEVER      |      NA |      NA |
+|     27 |     0 |     1 | NEVER      |      NA |      NA |
+|     28 |     0 |     1 | NEVER      |      NA |      NA |
+|     29 |     0 |     1 | NEVER      |      NA |      NA |
+|     30 |     0 |     1 | NEVER      |      NA |      NA |
+|     31 |     0 |     1 | NEVER      |      NA |      NA |
+|     32 |     0 |     1 | NEVER      |      NA |      NA |
+|     33 |     0 |     1 | NEVER      |      NA |      NA |
+|     34 |     0 |     1 | NEVER      |      NA |      NA |
+|     35 |     0 |     1 | NEVER      |      NA |      NA |
+|     36 |     0 |     1 | NEVER      |      NA |      NA |
+|     37 |     0 |     1 | NEVER      |      NA |      NA |
+|     38 |     0 |     1 | NEVER      |      NA |      NA |
+|     39 |     0 |     1 | NEVER      |      NA |      NA |
+|     40 |     0 |     1 | NEVER      |      NA |      NA |
+|     41 |     0 |     1 | NEVER      |      NA |      NA |
+|     42 |     0 |     1 | NEVER      |      NA |      NA |
+|     43 |     0 |     1 | NEVER      |      NA |      NA |
+|     44 |     0 |     1 | NEVER      |      NA |      NA |
+|     45 |     0 |     1 | NEVER      |      NA |      NA |
+|     46 |     0 |     1 | NEVER      |      NA |      NA |
+|     47 |     0 |     1 | NEVER      |      NA |      NA |
+|     48 |     0 |     1 | NEVER      |      NA |      NA |
+|     49 |     0 |     1 | NEVER      |      NA |      NA |
+|     50 |     0 |     1 | NEVER      |      NA |      NA |
+|     51 |     0 |     1 | NEVER      |      NA |      NA |
+|     52 |     0 |     1 | NEVER      |      NA |      NA |
+|     53 |     0 |     1 | NEVER      |      NA |      NA |
+|     54 |     0 |     1 | NEVER      |      NA |      NA |
+|     55 |     0 |     1 | NEVER      |      NA |      NA |
+|     56 |     0 |     1 | NEVER      |      NA |      NA |
+|     57 |     0 |     1 | NEVER      |      NA |      NA |
+|     58 |     0 |     1 | NEVER      |      NA |      NA |
+|     59 |     0 |     1 | NEVER      |      NA |      NA |
+|     60 |     0 |     1 | NEVER      |      NA |      NA |
+|     61 |     0 |     1 | NEVER      |      NA |      NA |
+|     62 |     0 |     1 | NEVER      |      NA |      NA |
+|     63 |     0 |     1 | NEVER      |      NA |      NA |
+|     64 |     0 |     1 | NEVER      |      NA |      NA |
+|     65 |     0 |     1 | NEVER      |      NA |      NA |
+|     66 |     0 |     1 | NEVER      |      NA |      NA |
+|     67 |     0 |     1 | NEVER      |      NA |      NA |
+|     68 |     0 |     1 | NEVER      |      NA |      NA |
+|     69 |     0 |     1 | NEVER      |      NA |      NA |
++--------+-------+-------+------------+---------+---------+
+
+Range totals
++-------+-------------------+--------------+
+| Range | Total appearances | Sum of since |
++-------+-------------------+--------------+
+| 1-9   |                 5 |            4 |
+| 10-19 |                 0 |           10 |
+| 20-29 |                 0 |           10 |
+| 30-39 |                 0 |           10 |
+| 40-49 |                 0 |           10 |
+| 50-59 |                 0 |           10 |
+| 60-69 |                 0 |           10 |
++-------+-------------------+--------------+
+
+
+=== Draw 2 | 2026-01-02 ===
+Numbers in numerical order
++--------+-------+-------+------------+---------+---------+
+| Number | Total | Since | Last date  | Min gap | Max gap |
++--------+-------+-------+------------+---------+---------+
+|      1 |     1 |     1 | 2026-01-01 |      NA |      NA |
+|      2 |     2 |     0 | 2026-01-02 |       1 |       1 |
+|      3 |     1 |     1 | 2026-01-01 |      NA |      NA |
+|      4 |     1 |     1 | 2026-01-01 |      NA |      NA |
+|      5 |     1 |     1 | 2026-01-01 |      NA |      NA |
+|      6 |     1 |     0 | 2026-01-02 |      NA |      NA |
+|      7 |     1 |     0 | 2026-01-02 |      NA |      NA |
+|      8 |     1 |     0 | 2026-01-02 |      NA |      NA |
+|      9 |     1 |     0 | 2026-01-02 |      NA |      NA |
+|     10 |     0 |     2 | NEVER      |      NA |      NA |
+|     11 |     0 |     2 | NEVER      |      NA |      NA |
+|     12 |     0 |     2 | NEVER      |      NA |      NA |
+|     13 |     0 |     2 | NEVER      |      NA |      NA |
+|     14 |     0 |     2 | NEVER      |      NA |      NA |
+|     15 |     0 |     2 | NEVER      |      NA |      NA |
+|     16 |     0 |     2 | NEVER      |      NA |      NA |
+|     17 |     0 |     2 | NEVER      |      NA |      NA |
+|     18 |     0 |     2 | NEVER      |      NA |      NA |
+|     19 |     0 |     2 | NEVER      |      NA |      NA |
+|     20 |     0 |     2 | NEVER      |      NA |      NA |
+|     21 |     0 |     2 | NEVER      |      NA |      NA |
+|     22 |     0 |     2 | NEVER      |      NA |      NA |
+|     23 |     0 |     2 | NEVER      |      NA |      NA |
+|     24 |     0 |     2 | NEVER      |      NA |      NA |
+|     25 |     0 |     2 | NEVER      |      NA |      NA |
+|     26 |     0 |     2 | NEVER      |      NA |      NA |
+|     27 |     0 |     2 | NEVER      |      NA |      NA |
+|     28 |     0 |     2 | NEVER      |      NA |      NA |
+|     29 |     0 |     2 | NEVER      |      NA |      NA |
+|     30 |     0 |     2 | NEVER      |      NA |      NA |
+|     31 |     0 |     2 | NEVER      |      NA |      NA |
+|     32 |     0 |     2 | NEVER      |      NA |      NA |
+|     33 |     0 |     2 | NEVER      |      NA |      NA |
+|     34 |     0 |     2 | NEVER      |      NA |      NA |
+|     35 |     0 |     2 | NEVER      |      NA |      NA |
+|     36 |     0 |     2 | NEVER      |      NA |      NA |
+|     37 |     0 |     2 | NEVER      |      NA |      NA |
+|     38 |     0 |     2 | NEVER      |      NA |      NA |
+|     39 |     0 |     2 | NEVER      |      NA |      NA |
+|     40 |     0 |     2 | NEVER      |      NA |      NA |
+|     41 |     0 |     2 | NEVER      |      NA |      NA |
+|     42 |     0 |     2 | NEVER      |      NA |      NA |
+|     43 |     0 |     2 | NEVER      |      NA |      NA |
+|     44 |     0 |     2 | NEVER      |      NA |      NA |
+|     45 |     0 |     2 | NEVER      |      NA |      NA |
+|     46 |     0 |     2 | NEVER      |      NA |      NA |
+|     47 |     0 |     2 | NEVER      |      NA |      NA |
+|     48 |     0 |     2 | NEVER      |      NA |      NA |
+|     49 |     0 |     2 | NEVER      |      NA |      NA |
+|     50 |     0 |     2 | NEVER      |      NA |      NA |
+|     51 |     0 |     2 | NEVER      |      NA |      NA |
+|     52 |     0 |     2 | NEVER      |      NA |      NA |
+|     53 |     0 |     2 | NEVER      |      NA |      NA |
+|     54 |     0 |     2 | NEVER      |      NA |      NA |
+|     55 |     0 |     2 | NEVER      |      NA |      NA |
+|     56 |     0 |     2 | NEVER      |      NA |      NA |
+|     57 |     0 |     2 | NEVER      |      NA |      NA |
+|     58 |     0 |     2 | NEVER      |      NA |      NA |
+|     59 |     0 |     2 | NEVER      |      NA |      NA |
+|     60 |     0 |     2 | NEVER      |      NA |      NA |
+|     61 |     0 |     2 | NEVER      |      NA |      NA |
+|     62 |     0 |     2 | NEVER      |      NA |      NA |
+|     63 |     0 |     2 | NEVER      |      NA |      NA |
+|     64 |     0 |     2 | NEVER      |      NA |      NA |
+|     65 |     0 |     2 | NEVER      |      NA |      NA |
+|     66 |     0 |     2 | NEVER      |      NA |      NA |
+|     67 |     0 |     2 | NEVER      |      NA |      NA |
+|     68 |     0 |     2 | NEVER      |      NA |      NA |
+|     69 |     0 |     2 | NEVER      |      NA |      NA |
++--------+-------+-------+------------+---------+---------+
+
+Range totals
++-------+-------------------+--------------+
+| Range | Total appearances | Sum of since |
++-------+-------------------+--------------+
+| 1-9   |                10 |            4 |
+| 10-19 |                 0 |           20 |
+| 20-29 |                 0 |           20 |
+| 30-39 |                 0 |           20 |
+| 40-49 |                 0 |           20 |
+| 50-59 |                 0 |           20 |
+| 60-69 |                 0 |           20 |
++-------+-------------------+--------------+
+
+
+=== Draw 3 | 2026-01-03 ===
+Numbers in numerical order
++--------+-------+-------+------------+---------+---------+
+| Number | Total | Since | Last date  | Min gap | Max gap |
++--------+-------+-------+------------+---------+---------+
+|      1 |     2 |     0 | 2026-01-03 |       2 |       2 |
+|      2 |     3 |     0 | 2026-01-03 |       1 |       1 |
+|      3 |     1 |     2 | 2026-01-01 |      NA |      NA |
+|      4 |     1 |     2 | 2026-01-01 |      NA |      NA |
+|      5 |     1 |     2 | 2026-01-01 |      NA |      NA |
+|      6 |     1 |     1 | 2026-01-02 |      NA |      NA |
+|      7 |     1 |     1 | 2026-01-02 |      NA |      NA |
+|      8 |     1 |     1 | 2026-01-02 |      NA |      NA |
+|      9 |     1 |     1 | 2026-01-02 |      NA |      NA |
+|     10 |     1 |     0 | 2026-01-03 |      NA |      NA |
+|     11 |     1 |     0 | 2026-01-03 |      NA |      NA |
+|     12 |     1 |     0 | 2026-01-03 |      NA |      NA |
+|     13 |     0 |     3 | NEVER      |      NA |      NA |
+|     14 |     0 |     3 | NEVER      |      NA |      NA |
+|     15 |     0 |     3 | NEVER      |      NA |      NA |
+|     16 |     0 |     3 | NEVER      |      NA |      NA |
+|     17 |     0 |     3 | NEVER      |      NA |      NA |
+|     18 |     0 |     3 | NEVER      |      NA |      NA |
+|     19 |     0 |     3 | NEVER      |      NA |      NA |
+|     20 |     0 |     3 | NEVER      |      NA |      NA |
+|     21 |     0 |     3 | NEVER      |      NA |      NA |
+|     22 |     0 |     3 | NEVER      |      NA |      NA |
+|     23 |     0 |     3 | NEVER      |      NA |      NA |
+|     24 |     0 |     3 | NEVER      |      NA |      NA |
+|     25 |     0 |     3 | NEVER      |      NA |      NA |
+|     26 |     0 |     3 | NEVER      |      NA |      NA |
+|     27 |     0 |     3 | NEVER      |      NA |      NA |
+|     28 |     0 |     3 | NEVER      |      NA |      NA |
+|     29 |     0 |     3 | NEVER      |      NA |      NA |
+|     30 |     0 |     3 | NEVER      |      NA |      NA |
+|     31 |     0 |     3 | NEVER      |      NA |      NA |
+|     32 |     0 |     3 | NEVER      |      NA |      NA |
+|     33 |     0 |     3 | NEVER      |      NA |      NA |
+|     34 |     0 |     3 | NEVER      |      NA |      NA |
+|     35 |     0 |     3 | NEVER      |      NA |      NA |
+|     36 |     0 |     3 | NEVER      |      NA |      NA |
+|     37 |     0 |     3 | NEVER      |      NA |      NA |
+|     38 |     0 |     3 | NEVER      |      NA |      NA |
+|     39 |     0 |     3 | NEVER      |      NA |      NA |
+|     40 |     0 |     3 | NEVER      |      NA |      NA |
+|     41 |     0 |     3 | NEVER      |      NA |      NA |
+|     42 |     0 |     3 | NEVER      |      NA |      NA |
+|     43 |     0 |     3 | NEVER      |      NA |      NA |
+|     44 |     0 |     3 | NEVER      |      NA |      NA |
+|     45 |     0 |     3 | NEVER      |      NA |      NA |
+|     46 |     0 |     3 | NEVER      |      NA |      NA |
+|     47 |     0 |     3 | NEVER      |      NA |      NA |
+|     48 |     0 |     3 | NEVER      |      NA |      NA |
+|     49 |     0 |     3 | NEVER      |      NA |      NA |
+|     50 |     0 |     3 | NEVER      |      NA |      NA |
+|     51 |     0 |     3 | NEVER      |      NA |      NA |
+|     52 |     0 |     3 | NEVER      |      NA |      NA |
+|     53 |     0 |     3 | NEVER      |      NA |      NA |
+|     54 |     0 |     3 | NEVER      |      NA |      NA |
+|     55 |     0 |     3 | NEVER      |      NA |      NA |
+|     56 |     0 |     3 | NEVER      |      NA |      NA |
+|     57 |     0 |     3 | NEVER      |      NA |      NA |
+|     58 |     0 |     3 | NEVER      |      NA |      NA |
+|     59 |     0 |     3 | NEVER      |      NA |      NA |
+|     60 |     0 |     3 | NEVER      |      NA |      NA |
+|     61 |     0 |     3 | NEVER      |      NA |      NA |
+|     62 |     0 |     3 | NEVER      |      NA |      NA |
+|     63 |     0 |     3 | NEVER      |      NA |      NA |
+|     64 |     0 |     3 | NEVER      |      NA |      NA |
+|     65 |     0 |     3 | NEVER      |      NA |      NA |
+|     66 |     0 |     3 | NEVER      |      NA |      NA |
+|     67 |     0 |     3 | NEVER      |      NA |      NA |
+|     68 |     0 |     3 | NEVER      |      NA |      NA |
+|     69 |     0 |     3 | NEVER      |      NA |      NA |
++--------+-------+-------+------------+---------+---------+
+
+Range totals
++-------+-------------------+--------------+
+| Range | Total appearances | Sum of since |
++-------+-------------------+--------------+
+| 1-9   |                12 |           10 |
+| 10-19 |                 3 |           21 |
+| 20-29 |                 0 |           30 |
+| 30-39 |                 0 |           30 |
+| 40-49 |                 0 |           30 |
+| 50-59 |                 0 |           30 |
+| 60-69 |                 0 |           30 |
++-------+-------------------+--------------+
+

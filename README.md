@@ -1,55 +1,74 @@
-# Lottery Java modules
+# Lottery Workbench
 
-## Web application
+A Java 17 application for exploring lottery history, validating and updating
+Powerball results, and exporting tabular reports through a local web UI.
 
-The Spring Boot **Lottery Workbench** provides a local web UI and persistent H2
-database for draw history, sums/deviation, occurrence/recency, ranges, digit
-patterns, combinations, imports, and official Powerball updates.
+## Project structure
 
-```bash
-mvn -pl lottery-web -am clean install
-bash lottery-web/run.sh
-```
+| Module | Responsibility |
+| --- | --- |
+| `lottery-core` | Shared draw model, history parsing, official Powerball source validation, statistics, range/digit/combination analysis, and text reports. No runtime framework dependencies. |
+| `lottery-web` | Spring Boot application: web UI, REST API, transactional H2 storage, imports, and correction audit. Depends only on core and its web/database libraries. |
 
-Open **http://127.0.0.1:8080**. See [lottery-web/README.md](lottery-web/README.md)
-for IntelliJ setup, the bundled Maven command, database backups, tests, and API
-details. [Module analysis](lottery-web/MODULE-ANALYSIS.md) maps the existing tools
-to their web equivalents.
+The eleven standalone console projects have been retired. Their useful analysis
+and reporting capabilities are consolidated into these two modules. Use the web
+UI for inputs and results; old console main classes and launch scripts are no
+longer entry points. See the [capability mapping](lottery-web/MODULE-ANALYSIS.md).
 
+`files/` retains the original history and reference files. `data/` holds your
+local database; neither is deleted by a clean build. The consolidation preserves
+the web UI, API routes, database schema, and text report layouts.
 
-Build from this repository's root with JDK 17 and Maven 3.9.x:
+## Build and run
+
+Use **JDK 17** and **Maven 3.9.x**, from this repository root:
 
 ```bash
 mvn clean install
+bash lottery-web/run.sh
 ```
 
-This compiles, tests, packages, and installs the parent project and all modules listed in the root POM
-into the local Maven repository (`~/.m2/repository`). Each module's JAR is also
-written to its `target/` directory. No lottery applications are started and no
-lottery data files are modified by the build.
+Open **http://127.0.0.1:8080**. Stop with Ctrl+C. No Node.js, login, or separately
+installed database is needed to run the application.
 
-On this Mac, Maven is bundled with IntelliJ IDEA CE but is not on the shell PATH.
-Use the following command to select the installed JDK and bundled Maven:
+On this Mac, if Maven is not on PATH, use IntelliJ's bundled Maven:
 
 ```bash
 JAVA_HOME="$(/usr/libexec/java_home -v 17)" \
   '/Applications/IntelliJ IDEA CE.app/Contents/plugins/maven/lib/maven3/bin/mvn' clean install
+bash lottery-web/run.sh
 ```
 
-If Maven reports that `JAVA_HOME` is invalid, select JDK 17 as above. The full
-reactor requires JDK 17 for the Spring Boot web application. The console modules
-retain their existing Java 8 compilation targets. Lombok is configured
-centrally in the parent, using 1.18.22, which supports JDK 17.
+In IntelliJ, open/reload the root `pom.xml`, select JDK 17, and run
+`com.vipin.lottery.web.WebApplication` with the repository root as its working
+directory. Use Maven **Lifecycle → install**, or `mvn install`, rather than
+`mvn install:install`: the lifecycle compiles and packages the JAR before
+installing it.
 
-A successful build ends with `BUILD SUCCESS` and `SUCCESS` for all reactor
-entries in the root POM. The Powerball regression suite runs as one
-JUnit test executing 19 checks; failures stop the install. The refined analysis modules and web module also run their own regression tests.
+The root POM manages Java, dependency versions, and Java formatting consistently
+for both modules. A successful build shows three reactor entries: the parent,
+Lottery Core, and Lottery Web. The executable JAR is
+`lottery-web/target/lottery-web-1.0-SNAPSHOT.jar`.
 
-To build only the Powerball module and its parent:
+## Development checks
 
 ```bash
-mvn -pl powerball-sync -am clean install
+mvn clean install       # compile, test, check formatting, package, install both modules
+mvn spotless:apply      # format Java after editing
+mvn -pl lottery-core test
 ```
 
-For running the Powerball validator/updater, checking its audit output, and
-running it in IntelliJ, see [powerball-sync/README.md](powerball-sync/README.md).
+Core tests cover calculations, parsing, official-source validation, and exact
+report output fixtures captured before consolidation. Web integration tests use
+an isolated in-memory database and cover API behavior, transactions and CSRF.
+
+Optional UI behavior tests need Node.js:
+
+```bash
+cd lottery-web
+npm ci
+npm test
+```
+
+See the [web guide](lottery-web/README.md) for features, configuration, data rules,
+backups, and API details, or the [core guide](lottery-core/README.md) for Java reuse.

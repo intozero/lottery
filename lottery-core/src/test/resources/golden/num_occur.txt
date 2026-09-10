@@ -1,0 +1,60 @@
+WHITE-BALL TOTAL AND SINCE ANALYSIS
+
++---------------------+------------+
+| Setting             | Value      |
++---------------------+------------+
+| Mode                | NUM_OCCUR  |
+| Input draws         | 3          |
+| First draw          | 2026-01-01 |
+| Last draw           | 2026-01-03 |
+| White-ball universe | 1-69       |
++---------------------+------------+
+
+Since: draws after last appearance; never seen = snapshot draw count.
+Gaps: distance between appearance draw indices; NA = fewer than two appearances.
+Special balls excluded. Local history is not verified against official results.
+
+=== Draw 1 | 2026-01-01 ===
+Range totals
++-------+-------------------+--------------+
+| Range | Total appearances | Sum of since |
++-------+-------------------+--------------+
+| 1-9   |                 5 |            4 |
+| 10-19 |                 0 |           10 |
+| 20-29 |                 0 |           10 |
+| 30-39 |                 0 |           10 |
+| 40-49 |                 0 |           10 |
+| 50-59 |                 0 |           10 |
+| 60-69 |                 0 |           10 |
++-------+-------------------+--------------+
+
+
+=== Draw 2 | 2026-01-02 ===
+Range totals
++-------+-------------------+--------------+
+| Range | Total appearances | Sum of since |
++-------+-------------------+--------------+
+| 1-9   |                10 |            4 |
+| 10-19 |                 0 |           20 |
+| 20-29 |                 0 |           20 |
+| 30-39 |                 0 |           20 |
+| 40-49 |                 0 |           20 |
+| 50-59 |                 0 |           20 |
+| 60-69 |                 0 |           20 |
++-------+-------------------+--------------+
+
+
+=== Draw 3 | 2026-01-03 ===
+Range totals
++-------+-------------------+--------------+
+| Range | Total appearances | Sum of since |
++-------+-------------------+--------------+
+| 1-9   |                12 |           10 |
+| 10-19 |                 3 |           21 |
+| 20-29 |                 0 |           30 |
+| 30-39 |                 0 |           30 |
+| 40-49 |                 0 |           30 |
+| 50-59 |                 0 |           30 |
+| 60-69 |                 0 |           30 |
++-------+-------------------+--------------+
+
