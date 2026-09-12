@@ -36,9 +36,18 @@ public class HistoryStore {
     }
 
     public List<DrawRecord> selected(String game, LocalDate from, LocalDate to) {
+        return selected(game, from, to, 1);
+    }
+
+    public List<DrawRecord> selected(String game, LocalDate from, LocalDate to, int rowStep) {
+        if (rowStep < 1)
+            throw new IllegalArgumentException("Row step must be a positive whole number");
         if (from != null && to != null && from.isAfter(to))
             throw new IllegalArgumentException("Start date must be before end date");
-        return all(game).stream()
+        var source = all(game);
+        return java.util.stream.IntStream.range(0, source.size())
+                .filter(i -> i % rowStep == 0)
+                .mapToObj(source::get)
                 .filter(
                         d ->
                                 (from == null || !d.date().isBefore(from))

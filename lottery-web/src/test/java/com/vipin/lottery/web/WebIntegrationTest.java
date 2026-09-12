@@ -108,6 +108,100 @@ class WebIntegrationTest {
     }
 
     @Test
+    void rowStepSelectsSourceRowsBeforeDatesAndPreservesStoredHistory() throws Exception {
+        var rows = new ArrayList<DrawRecord>();
+        for (int day = 1; day <= 11; day++)
+            rows.add(
+                    new DrawRecord(
+                            java.time.LocalDate.of(2026, 1, day),
+                            List.of(1, 2, 3, 4, day + 4),
+                            day));
+        store.save("PB", rows, "test", false);
+        assertEquals(rows, store.selected("PB", null, null, 1));
+        assertEquals(
+                List.of(rows.get(0), rows.get(5), rows.get(10)),
+                store.selected("PB", null, null, 5));
+        assertEquals(List.of(rows.get(0)), store.selected("PB", null, null, Integer.MAX_VALUE));
+        assertEquals(List.of(), store.selected("MM", null, null, 2));
+        mvc.perform(
+                        get("/api/history")
+                                .param("rowStep", "2")
+                                .param("from", "2026-01-02")
+                                .param("to", "2026-01-07"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(3))
+                .andExpect(jsonPath("$[0].date").value("2026-01-03"))
+                .andExpect(jsonPath("$[2].date").value("2026-01-07"));
+        assertEquals(rows, store.all("PB"));
+    }
+
+    @Test
+    void everyHistoryResultAndExportUsesTheSameSteppedRows() throws Exception {
+        var rows = new ArrayList<DrawRecord>();
+        for (int day = 1; day <= 11; day++)
+            rows.add(
+                    new DrawRecord(
+                            java.time.LocalDate.of(2026, 1, day),
+                            List.of(1, 2, 3, 4, day + 4),
+                            day));
+        var endpoints =
+                List.of(
+                        "history",
+                        "analysis",
+                        "timeline",
+                        "digits",
+                        "ranges",
+                        "export?report=history",
+                        "export?report=sums",
+                        "export?report=last",
+                        "export?report=sim",
+                        "export?report=num_occur",
+                        "export?report=ran");
+        for (int step : List.of(2, 5)) {
+            clean();
+            store.save("PB", rows, "test", false);
+            var actual = new ArrayList<String>();
+            for (String endpoint : endpoints)
+                actual.add(
+                        mvc.perform(
+                                        get("/api/" + endpoint)
+                                                .param("game", "PB")
+                                                .param("rowStep", String.valueOf(step))
+                                                .param("number", "5")
+                                                .param("window", "2"))
+                                .andExpect(status().isOk())
+                                .andReturn()
+                                .getResponse()
+                                .getContentAsString());
+            var selected = store.selected("PB", null, null, step);
+            clean();
+            store.save("PB", selected, "test", false);
+            for (int i = 0; i < endpoints.size(); i++)
+                mvc.perform(
+                                get("/api/" + endpoints.get(i))
+                                        .param("game", "PB")
+                                        .param("number", "5")
+                                        .param("window", "2"))
+                        .andExpect(status().isOk())
+                        .andExpect(content().string(actual.get(i)));
+        }
+    }
+
+    @Test
+    void invalidRowStepsAreRejectedOnEveryHistoryEndpoint() throws Exception {
+        for (String endpoint :
+                List.of("history", "analysis", "timeline", "digits", "ranges", "export"))
+            for (String step : List.of("0", "-1", "1.5", "abc", "2147483648"))
+                mvc.perform(
+                                get("/api/" + endpoint)
+                                        .param("game", "PB")
+                                        .param("rowStep", step)
+                                        .param("number", "1")
+                                        .param("window", "2"))
+                        .andExpect(status().isBadRequest());
+    }
+
+    @Test
     void csrfIsRequiredAndMultipartWorks() throws Exception {
         String body = "{\"game\":\"PB\",\"text\":\"1/1/2026 1 2 3 4 5 1\"}";
         mvc.perform(post("/api/import-text").contentType(MediaType.APPLICATION_JSON).content(body))

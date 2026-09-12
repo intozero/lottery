@@ -99,3 +99,29 @@ test('network failures produce a visible error instead of an empty workspace',as
   assert.match(doc.querySelector('#notice').textContent,/Invalid date range/);
  }finally{dom.window.close();}
 });
+
+test('row step applies to every history request and export, stays applied until submit, and resets',async()=>{
+ const {dom,doc,calls}=await setup();
+ try{
+  doc.querySelector('#rowStep').value='5';submit(dom,doc.querySelector('#filters'));await settle();
+  assert.match(doc.querySelector('#scope').textContent,/row step 5/);
+  doc.querySelector('#rowStep').value='2';
+  for(const [view,form] of [['history',null],['numbers','numberForm'],['digits','digitForm'],['ranges',null],['sums',null],['data',null]]){
+   doc.querySelector('[data-view="'+view+'"]').click();await settle();
+   if(form){submit(dom,doc.getElementById(form));await settle();}
+   for(const a of doc.querySelectorAll('a[href^="/api/export"]'))assert.equal(new URL(a.href).searchParams.get('rowStep'),'5');
+  }
+  for(const endpoint of ['history','analysis','timeline','digits','ranges']){
+   const call=calls.filter(c=>c.url.startsWith('/api/'+endpoint+'?')).at(-1);
+   assert.equal(new URL(call.url,'http://localhost').searchParams.get('rowStep'),'5',endpoint);
+  }
+  doc.querySelector('#reset').click();await settle();
+  assert.equal(doc.querySelector('#rowStep').value,'1');
+  assert.match(doc.querySelector('#scope').textContent,/row step 1/);
+  const count=calls.length;
+  for(const value of ['0','-1','1.5','']){
+   doc.querySelector('#rowStep').value=value;submit(dom,doc.querySelector('#filters'));await settle();
+   assert.equal(calls.length,count);
+  }
+ }finally{dom.window.close();}
+});

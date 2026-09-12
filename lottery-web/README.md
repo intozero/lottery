@@ -170,7 +170,12 @@ GET:
 `/api/history`, `/api/analysis`, `/api/timeline`, `/api/ranges`, `/api/digits`,
 `/api/combinations`, `/api/export`, `/api/imports`, `/api/changes`, `/api/csrf`.
 
-History-derived endpoints accept `game`, optional ISO `from` and `to` dates.
+History-derived endpoints accept `game`, optional ISO `from` and `to` dates, and
+`rowStep` (positive integer, default `1`). The global Row step input selects rows
+1, 1 + step, 1 + 2 × step, etc., counted oldest first across the game’s full stored
+history, before date filtering. It applies to every history-based result and export.
+All history resets both dates and row step. Imports, audit logs, and the independent
+mathematical combination search are unaffected.
 Timeline requires `number`; digits requires `window`. Combinations requires
 `maximum`, `sum`, optional `deviation`. Export supports
 `history|sums|last|sim|num_occur|ran`.

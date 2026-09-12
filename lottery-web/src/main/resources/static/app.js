@@ -2,12 +2,13 @@
 const $=s=>document.querySelector(s);
 const esc=v=>String(v??'—').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fmt=(n,d=0)=>Number(n).toLocaleString(undefined,{minimumFractionDigits:d,maximumFractionDigits:d});
-const state={view:'overview',history:[],analysis:null,token:null,version:0};
+const state={view:'overview',history:[],analysis:null,token:null,version:0,selection:null};
 const titles={overview:'Overview',history:'Draw history',numbers:'Number statistics',sums:'Sums & deviation',ranges:'Range explorer',digits:'Digit patterns',combinations:'Combinations',data:'Data manager'};
 const balls=(whites,special)=>whites.map(n=>'<span class="ball">'+esc(n)+'</span>').join('')+(special==null?'':'<span class="ball red">'+esc(special)+'</span>');
 const panel=(title,note,id)=>'<section class="panel"><h2>'+esc(title)+'</h2><p class="muted">'+esc(note)+'</p><div id="'+id+'"></div></section>';
 const entries=obj=>Object.entries(obj).map(([value,count])=>({value,count}));
-const query=()=>{const p=new URLSearchParams({game:$('#game').value});if($('#from').value)p.set('from',$('#from').value);if($('#to').value)p.set('to',$('#to').value);return p};
+const filterQuery=()=>{const p=new URLSearchParams({rowStep:$('#rowStep').value,game:$('#game').value});if($('#from').value)p.set('from',$('#from').value);if($('#to').value)p.set('to',$('#to').value);return p};
+const query=()=>new URLSearchParams(state.selection||filterQuery());
 function notify(message,error=false){const n=$('#notice');n.textContent=message;n.className='notice'+(error?' error':'');n.hidden=false;}
 async function api(path,options={}){
  if(options.method&&options.method!=='GET'){
@@ -45,13 +46,15 @@ function histogram(data,key,value,label){
  return '<svg class="chart" viewBox="0 0 680 220" role="img" aria-label="'+esc(label)+'"><line x1="15" x2="665" y1="185" y2="185" stroke="#dce5e1"/>'+rows.map((r,i)=>{const h=r[value]/max*height;return '<rect x="'+(15+i*step)+'" y="'+(185-h)+'" width="'+Math.max(1,step-2)+'" height="'+h+'" rx="2" fill="#4b9c84"><title>'+esc(r[key])+': '+esc(r[value])+'</title></rect>'+(i%Math.max(1,Math.floor(rows.length/10))===0?'<text x="'+(15+i*step)+'" y="206">'+esc(r[key])+'</text>':'')}).join('')+'</svg>';
 }
 async function reload(){
+ if(!$('#filters').reportValidity())return;
+ state.selection=filterQuery().toString();
  const version=++state.version;
  $('#notice').hidden=true;$('#content').classList.add('loader');
  try {
   const [history,analysis]=await Promise.all([api('/api/history?'+query()),api('/api/analysis?'+query())]);
   if(version!==state.version)return;
   state.history=history;state.analysis=analysis;
-  $('#scope').textContent=fmt(history.length)+' draws selected';
+  $('#scope').textContent=fmt(history.length)+' draws selected · row step '+query().get('rowStep');
   await render();
  }catch(error){if(version===state.version){notify(error.message,true);$('#content').innerHTML='<div class="empty">Could not load this selection. Adjust the date range or refresh to retry.</div>';}}
  finally{if(version===state.version)$('#content').classList.remove('loader');}
@@ -66,7 +69,7 @@ async function render(){
  case 'overview':{
   const latest=a.latest, frequent=[...a.numbers].sort((a,b)=>b.total-a.total).slice(0,5);
   root.innerHTML=empty+'<div class="metrics">'+[
-    ['Recorded draws',fmt(a.count),'In the selected date range'],
+    ['Recorded draws',fmt(a.count),'In the selected history'],
     ['Average white-ball sum',fmt(a.averageSum,2),'Five white balls per draw'],
     ['Latest recorded draw',latest?latest.date:'—','Stored history, not a live feed'],
     ['Repeated combinations',fmt(a.repeated.length),'Exact white + special ball matches']
@@ -110,11 +113,11 @@ async function render(){
   root.innerHTML=empty+'<section class="panel"><h2>Search the digit stream</h2><p class="muted">Sorted white balls, then special ball, without padding or separators. Overlapping windows include draw boundaries. Missing special balls must be filled before this analysis.</p><form id="digitForm" class="formrow"><label>Window length<input id="window" type="number" min="1" max="100" value="10" required></label><button class="primary">Analyze windows</button></form><div id="digitStats"></div><div id="digitTable"></div></section>';
   $('#digitForm').onsubmit=async ev=>{ev.preventDefault();await task(ev.submitter,async()=>{const p=query();p.set('window',$('#window').value);const d=await api('/api/digits?'+p);$('#digitStats').textContent=fmt(d.digits)+' digits · '+fmt(d.windows)+' windows · '+fmt(d.unique)+' unique patterns'+(d.truncated?' · Showing the top 1,000':'');table('digitTable',[col('pattern','Pattern'),col('count','Count',true)],d.rows);})};break;
  case 'combinations':
-  root.innerHTML='<section class="panel"><h2>Find five-ball combinations</h2><p class="muted">A mathematical search independent of the selected history dates. Results are unique ascending white-ball sets, not recommendations.</p><form id="comboForm" class="formrow"><label>Maximum white ball<input id="maximum" type="number" min="5" max="75" value="'+($('#game').value==='PB'?69:75)+'" required></label><label>Target sum<input id="targetSum" type="number" min="15" max="365" value="188" required></label><label>Deviation floor (optional)<input id="deviation" type="number" min="0" max="40" placeholder="Any"></label><button class="primary">Find combinations</button></form><p id="comboStatus" class="muted">Results are limited to 500; narrow the filters for a smaller set.</p><div id="comboTable"></div></section>';
+  root.innerHTML='<section class="panel"><h2>Find five-ball combinations</h2><p class="muted">A mathematical search independent of history and row-step filters. Results are unique ascending white-ball sets, not recommendations.</p><form id="comboForm" class="formrow"><label>Maximum white ball<input id="maximum" type="number" min="5" max="75" value="'+($('#game').value==='PB'?69:75)+'" required></label><label>Target sum<input id="targetSum" type="number" min="15" max="365" value="188" required></label><label>Deviation floor (optional)<input id="deviation" type="number" min="0" max="40" placeholder="Any"></label><button class="primary">Find combinations</button></form><p id="comboStatus" class="muted">Results are limited to 500; narrow the filters for a smaller set.</p><div id="comboTable"></div></section>';
   $('#comboForm').onsubmit=async ev=>{ev.preventDefault();await task(ev.submitter,async()=>{const p=new URLSearchParams({maximum:$('#maximum').value,sum:$('#targetSum').value});if($('#deviation').value!=='')p.set('deviation',$('#deviation').value);const d=await api('/api/combinations?'+p);$('#comboStatus').textContent=d.truncated?'Showing the first 500 matches; additional matches exist.':d.rows.length+' matching combinations.';table('comboTable',[col('index','#',true),col('balls','White balls',false,r=>balls(r.balls,null)),col('sum','Sum',true)],d.rows.map((b,i)=>({index:i+1,balls:b,sum:b.reduce((a,b)=>a+b,0)})));})};break;
  case 'data':
-  root.innerHTML='<div class="grid"><section class="panel"><h2>Import draw history</h2><p class="muted">Import into '+esc($('#game').value)+'. Date filters do not restrict imports. Existing identical draws are skipped; conflicting known results reject the whole import.</p><form id="uploadForm"><label>Text file · up to 3 MB<input type="file" id="upload" accept=".txt,text/plain" required></label><div class="actions"><button class="primary">Import file</button></div></form><div class="separator"></div><form id="pasteForm"><label>Or paste dated draws<textarea id="paste" placeholder="10/17/2015  48  49  57  62  69  19" required maxlength="3000000"></textarea></label><div class="actions"><button class="secondary">Import pasted text</button></div></form></section>'+
-   '<section class="panel accentpanel"><span class="eyebrow">OFFICIAL HISTORY</span><h2>Validate & update Powerball</h2><p class="muted">Checks every stored Powerball draw against the Texas Lottery history, repairs mismatches, and adds missing published draws. Corrections are recorded below. This updates the database only.</p><button id="sync" class="primary">Sync Powerball results</button><div class="separator"></div><h3>Take a copy of your data</h3><p class="muted">Exports use the current game and date selection. Original repository files are never changed.</p>'+exportLink('history','Download history')+'<div class="separator"></div><p class="muted">PB analysis uses 1–69. MM uses a historical 1–75 universe. Imports check structure, not date-specific rules or official results.</p></section></div>'+
+  root.innerHTML='<div class="grid"><section class="panel"><h2>Import draw history</h2><p class="muted">Import into '+esc($('#game').value)+'. Date and row-step filters do not restrict imports. Existing identical draws are skipped; conflicting known results reject the whole import.</p><form id="uploadForm"><label>Text file · up to 3 MB<input type="file" id="upload" accept=".txt,text/plain" required></label><div class="actions"><button class="primary">Import file</button></div></form><div class="separator"></div><form id="pasteForm"><label>Or paste dated draws<textarea id="paste" placeholder="10/17/2015  48  49  57  62  69  19" required maxlength="3000000"></textarea></label><div class="actions"><button class="secondary">Import pasted text</button></div></form></section>'+
+   '<section class="panel accentpanel"><span class="eyebrow">OFFICIAL HISTORY</span><h2>Validate & update Powerball</h2><p class="muted">Checks every stored Powerball draw against the Texas Lottery history, repairs mismatches, and adds missing published draws. Corrections are recorded below. This updates the database only.</p><button id="sync" class="primary">Sync Powerball results</button><div class="separator"></div><h3>Take a copy of your data</h3><p class="muted">Exports use the current game, dates, and row step. Original repository files are never changed.</p>'+exportLink('history','Download history')+'<div class="separator"></div><p class="muted">PB analysis uses 1–69. MM uses a historical 1–75 universe. Imports check structure, not date-specific rules or official results.</p></section></div>'+
    panel('Import activity','Successful imports and official updates, newest first.','importLog')+panel('Correction history','Previous values are retained when an official update repairs a draw or an import fills a missing special ball.','changeLog');
   $('#uploadForm').onsubmit=async ev=>{ev.preventDefault();await task(ev.submitter,async()=>{const file=$('#upload').files[0];if(!file||file.size>3000000)throw new Error('Choose a text file up to 3 MB.');const data=new FormData();data.append('game',$('#game').value);data.append('file',file);await imported(await api('/api/import',{method:'POST',body:data}));})};
   $('#pasteForm').onsubmit=async ev=>{ev.preventDefault();await task(ev.submitter,async()=>await imported(await api('/api/import-text',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({game:$('#game').value,text:$('#paste').value})})))};
@@ -135,7 +138,7 @@ function navigate(view){if(!titles[view])view='overview';state.view=view;locatio
 document.querySelectorAll('[data-view]').forEach(b=>b.onclick=()=>navigate(b.dataset.view));
 $('#filters').onsubmit=ev=>{ev.preventDefault();reload()};
 $('#game').onchange=()=>reload();
-$('#reset').onclick=()=>{$('#from').value='';$('#to').value='';reload()};
+$('#reset').onclick=()=>{$('#from').value='';$('#to').value='';$('#rowStep').value='1';reload()};
 window.addEventListener('hashchange',()=>{const view=location.hash.slice(1);if(view!==state.view)navigate(view)});
 state.view=titles[location.hash.slice(1)]?location.hash.slice(1):'overview';
 reload();
