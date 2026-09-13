@@ -43,6 +43,36 @@ class CoreTest {
     }
 
     @Test
+    void pairSumCountsAndRecencyUseSortedPositionsAndSelectedDraws() {
+        var draws =
+                parser.parse(
+                        "1/1/2026 9 4 3 2 1 99\n1/2/2026 2 3 4 6 8 99\n1/3/2026 1 2 3 7 9 99\n1/4/2026 3 4 5 6 9 99",
+                        "PB");
+        var result = analysis.analyze(draws, "PB");
+        assertEquals(
+                List.of(
+                        Map.of("sum", 10, "count", 3, "since", 1),
+                        Map.of("sum", 12, "count", 1, "since", 0)),
+                result.get("endSumStats"));
+        assertEquals(
+                List.of(
+                        Map.of("sum", 6, "count", 1, "since", 3),
+                        Map.of("sum", 9, "count", 2, "since", 1),
+                        Map.of("sum", 10, "count", 1, "since", 0)),
+                result.get("innerSumStats"));
+        var selected = analysis.analyze(List.of(draws.get(0), draws.get(2)), "PB");
+        assertEquals(
+                List.of(Map.of("sum", 10, "count", 2, "since", 0)), selected.get("endSumStats"));
+        assertEquals(
+                List.of(
+                        Map.of("sum", 6, "count", 1, "since", 1),
+                        Map.of("sum", 9, "count", 1, "since", 0)),
+                selected.get("innerSumStats"));
+        assertEquals(List.of(), analysis.analyze(List.of(), "PB").get("endSumStats"));
+        assertEquals(List.of(), analysis.analyze(List.of(), "PB").get("innerSumStats"));
+    }
+
+    @Test
     void totalsRecencyGapsAndUnseenValuesArePreserved() {
         var stats = new Statistics(69);
         history().forEach(stats::accept);

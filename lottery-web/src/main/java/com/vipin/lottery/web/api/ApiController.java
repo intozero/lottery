@@ -114,6 +114,107 @@ public class ApiController {
                 store.selected(game, from, to, rowStep, startDraw, lastDraw), game);
     }
 
+    @GetMapping("/next-draw-candidates")
+    public Map<String, Object> nextDrawCandidates(
+            @RequestParam(defaultValue = "PB") String game,
+            @RequestParam(required = false) LocalDate from,
+            @RequestParam(required = false) LocalDate to,
+            @RequestParam(defaultValue = "1") int rowStep,
+            @RequestParam(defaultValue = "1") int startDraw,
+            @RequestParam(required = false) Integer lastDraw) {
+        int available = store.lastDraw(game);
+        int end = lastDraw == null ? available : lastDraw;
+        if (end < 1 || end > available)
+            throw new IllegalArgumentException("Choose a last draw within the available history");
+        var selected = store.selected(game, from, to, rowStep, startDraw, end);
+        var all = store.all(game);
+        var later =
+                java.util.stream.IntStream.range(end, all.size())
+                        .mapToObj(
+                                i ->
+                                        new com.vipin.lottery.core.analysis.NextDrawCandidates
+                                                .LaterDraw(i + 1, all.get(i)))
+                        .toList();
+        var result =
+                new com.vipin.lottery.core.analysis.NextDrawCandidates()
+                        .generate(selected, game, later, end, null);
+        return Map.of(
+                "startDraw",
+                startDraw,
+                "lastDraw",
+                end,
+                "targetDraw",
+                end + 1,
+                "trainingFrom",
+                selected.get(0).date(),
+                "trainingThrough",
+                selected.get(selected.size() - 1).date(),
+                "result",
+                result);
+    }
+
+    @GetMapping("/next-draw-candidates/export")
+    public ResponseEntity<
+                    org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody>
+            exportCandidates(
+                    @RequestParam(defaultValue = "PB") String game,
+                    @RequestParam(required = false) LocalDate from,
+                    @RequestParam(required = false) LocalDate to,
+                    @RequestParam(defaultValue = "1") int rowStep,
+                    @RequestParam(defaultValue = "1") int startDraw,
+                    @RequestParam(required = false) Integer lastDraw) {
+        int available = store.lastDraw(game);
+        int end = lastDraw == null ? available : lastDraw;
+        if (end < 1 || end > available)
+            throw new IllegalArgumentException("Choose a last draw within the available history");
+        var selected = store.selected(game, from, to, rowStep, startDraw, end);
+        if (selected.isEmpty())
+            throw new IllegalArgumentException("Select at least one training draw");
+        return ResponseEntity.ok()
+                .contentType(new MediaType("text", "plain", StandardCharsets.UTF_8))
+                .header(
+                        HttpHeaders.CONTENT_DISPOSITION,
+                        "attachment; filename=next-draw-candidates.txt")
+                .body(
+                        output -> {
+                            Writer writer =
+                                    new BufferedWriter(
+                                            new OutputStreamWriter(output, StandardCharsets.UTF_8));
+                            writer.write(
+                                    "White balls\tSum\tDeviation\tDeviation floor\tUnseen range pattern\n");
+                            new com.vipin.lottery.core.analysis.NextDrawCandidates()
+                                    .generate(
+                                            selected,
+                                            game,
+                                            List.of(),
+                                            end,
+                                            row -> {
+                                                try {
+                                                    writer.write(
+                                                            String.join(
+                                                                            " ",
+                                                                            row.whites().stream()
+                                                                                    .map(
+                                                                                            Object
+                                                                                                    ::toString)
+                                                                                    .toList())
+                                                                    + "\t"
+                                                                    + row.sum()
+                                                                    + "\t"
+                                                                    + row.deviation()
+                                                                    + "\t"
+                                                                    + row.deviationFloor()
+                                                                    + "\t"
+                                                                    + row.pattern()
+                                                                    + "\n");
+                                                } catch (IOException e) {
+                                                    throw new UncheckedIOException(e);
+                                                }
+                                            });
+                            writer.flush();
+                        });
+    }
+
     @GetMapping("/combinations")
     public Map<String, Object> combinations(
             @RequestParam int maximum,

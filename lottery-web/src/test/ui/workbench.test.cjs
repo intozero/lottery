@@ -9,6 +9,7 @@ const analysis={
  count:2,latest:draws[1],totalSum:31,averageSum:15.5,
  numbers:Array.from({length:69},(_,i)=>({number:i+1,total:i<4?2:i<6?1:0,since:i===4?1:i<6?0:2,lastDate:i<6?'2026-01-02':null,minGap:i<4?1:null,maxGap:i<4?1:null})),
  sums:draws.map((d,i)=>({...d,sum:15+i,mean:(15+i)/5,deviation:1.5,runningTotal:i?31:15,runningAverage:i?15.5:15})),
+ endSumStats:[{sum:6,count:1,since:1},{sum:7,count:1,since:0}],innerSumStats:[{sum:6,count:2,since:0}],
  sumCounts:{15:1,16:1},deviations:{1:2},first:{1:2},last:{5:1,6:1},endSums:{6:1,7:1},
  ranges:[{range:'1-9',total:10,since:6}],patterns:{'5-0-0-0-0-0-0':2},shapes:{5:2},occupancies:{'1-9: 5 balls':2},repeated:[]
 };
@@ -27,6 +28,7 @@ async function setup(analysisData=analysis,historyData=draws){
    case '/api/ranges':data=[{pattern:'5-0-0-0-0-0-0',observed:2,combinations:126,square:25},{pattern:'0-5-0-0-0-0-0',observed:0,combinations:252,square:25}];break;
    case '/api/digits':data={digits:12,windows:3,unique:3,rows:[{pattern:'12345',count:2}],truncated:false};break;
    case '/api/timeline':data=[{date:'2026-01-01',draw:1,appeared:true,total:1,since:0}];break;
+   case '/api/next-draw-candidates':data={lastDraw:2,targetDraw:3,trainingFrom:'2026-01-01',trainingThrough:'2026-01-02',result:{trainingCount:2,sumModes:[{value:15,count:1},{value:16,count:1}],deviationModes:[{value:1,count:2}],unseenPatterns:400,rows:[],truncated:false,totalCandidates:0,backtest:{checkedDraws:0,exactMatches:0,closestMatchedBalls:0,exact:[],closest:[],perDraw:[]}}};break;
    case '/api/combinations':data={rows:[[1,2,3,4,5]],truncated:false};break;
    case '/api/imports':case '/api/changes':data=[];break;
    case '/api/import-text':case '/api/import':case '/api/powerball/sync':data={added:1,corrected:0,unchanged:1};break;
@@ -46,7 +48,7 @@ function submit(dom,form){
 test('all workspace pages render with live-data-shaped responses',async()=>{
  const {dom,doc,errors}=await setup();
  try{
-  for(const view of ['overview','history','numbers','occurrences','sums','ranges','digits','combinations','data']){
+  for(const view of ['overview','history','numbers','occurrences','sums','ranges','digits','candidates','combinations','data']){
    doc.querySelector('[data-view="'+view+'"]').click();await settle();
    assert.ok(doc.querySelector('#content').textContent.trim().length>30,view);
    assert.equal(doc.querySelector('[data-view="'+view+'"]').getAttribute('aria-current'),'page');
@@ -75,7 +77,8 @@ test('analysis forms, unseen filter, and timeline work',async()=>{
    assert.ok(doc.getElementById(result).querySelector('tbody tr'),view);
   }
   doc.querySelector('[data-view="ranges"]').click();await settle();
-  const box=doc.querySelector('#unseen');box.checked=true;box.dispatchEvent(new dom.window.Event('change'));
+  assert.equal(doc.querySelector('#unseen'),null);
+  const shape=doc.querySelector('#rangeShape');shape.value='5';shape.dispatchEvent(new dom.window.Event('change'));
   assert.equal(doc.querySelectorAll('#universe tbody tr').length,1);
   assert.ok(calls.some(c=>c.url.startsWith('/api/digits')));
  }finally{dom.window.close();}
@@ -284,5 +287,92 @@ test('last draw defaults to latest, scopes requests and exports, and resets afte
   for(const value of ['0','-1','1.5']){
    doc.querySelector('#lastDraw').value=value;submit(dom,doc.querySelector('#filters'));await settle();assert.equal(calls.length,count);
   }
+ }finally{dom.window.close();}
+});
+
+test('first and last ball study separates all four tables with pair counts and recency',async()=>{
+ const {dom,doc}=await setup();
+ try{
+  doc.querySelector('[data-view="sums"]').click();await settle();
+  const rows=id=>Array.from(doc.querySelectorAll('#'+id+' tbody tr'),r=>Array.from(r.cells,c=>c.textContent));
+  assert.deepEqual(rows('firstBallTable'),[['1','2']]);
+  assert.deepEqual(rows('lastBallTable'),[['5','1'],['6','1']]);
+  assert.deepEqual(rows('endSumTable'),[['6','1','1'],['7','1','0']]);
+  assert.deepEqual(rows('innerSumTable'),[['6','2','0']]);
+  assert.equal(doc.querySelector('#endTable'),null);
+  doc.querySelector('#endSumTable [data-sort="since"]').click();
+  assert.deepEqual(rows('endSumTable')[0],['7','1','0']);
+ }finally{dom.window.close();}
+});
+
+test('range explorer shows only unseen patterns and matches occupancy shapes regardless of range positions',async()=>{
+ const {dom,doc}=await setup();
+ const patterns=[
+  {pattern:'2-1-1-1-0-0-0',observed:3,combinations:100,square:7},
+  {pattern:'0-2-0-1-1-0-1',observed:0,combinations:200,square:7},
+  {pattern:'1-0-1-0-0-2-1',observed:0,combinations:300,square:7},
+  {pattern:'2-2-1-0-0-0-0',observed:0,combinations:400,square:9},
+  {pattern:'0-0-1-0-1-1-0-2',observed:0,combinations:500,square:7}
+ ];
+ const fetch=dom.window.fetch;
+ dom.window.fetch=async(url,options)=>url.startsWith('/api/ranges?')?{ok:true,json:async()=>patterns}:fetch(url,options);
+ try{
+  doc.querySelector('[data-view="ranges"]').click();await settle();
+  const visible=()=>Array.from(doc.querySelectorAll('#universe tbody tr'),r=>r.cells[0].textContent);
+  assert.equal(visible().length,4);
+  assert.ok(!visible().includes(patterns[0].pattern));
+  assert.equal(doc.querySelector('#patternTable tbody tr').cells[0].textContent,'5-0-0-0-0-0-0');
+  assert.equal(doc.querySelector('#patternTable tbody tr').cells[1].textContent,'2');
+  assert.equal(doc.querySelector('#shapeTable tbody tr').cells[1].textContent,'2');
+  const shape=doc.querySelector('#rangeShape');shape.value='2+1+1+1';shape.dispatchEvent(new dom.window.Event('change'));
+  assert.deepEqual(visible(),[patterns[1].pattern,patterns[2].pattern,patterns[4].pattern]);
+  assert.equal(doc.querySelector('#patternTable tbody tr').cells[1].textContent,'2');
+  assert.equal(doc.querySelector('#shapeTable tbody tr').cells[1].textContent,'2');
+  submit(dom,doc.querySelector('#filters'));await settle();
+  assert.equal(doc.querySelector('#rangeShape').value,'2+1+1+1');
+  assert.equal(visible().length,3);
+  doc.querySelector('#rangeShape').value='3+2';doc.querySelector('#rangeShape').dispatchEvent(new dom.window.Event('change'));
+  assert.equal(visible().length,0);
+  doc.querySelector('#rangeShape').value='all';doc.querySelector('#rangeShape').dispatchEvent(new dom.window.Event('change'));
+  assert.equal(visible().length,4);
+ }finally{dom.window.close();}
+});
+
+test('candidate tab explains training, forwards filters and reports an empty strict match',async()=>{
+ const {dom,doc,calls}=await setup();
+ try{
+  doc.querySelector('#lastDraw').value='1';submit(dom,doc.querySelector('#filters'));await settle();
+  doc.querySelector('[data-view="candidates"]').click();await settle();
+  assert.match(doc.querySelector('#content h2').textContent,/draw #2/);
+  doc.querySelector('#generateCandidates').click();await settle();
+  const call=calls.find(c=>c.url.startsWith('/api/next-draw-candidates?'));
+  assert.equal(new URL(call.url,'http://localhost').searchParams.get('lastDraw'),'1');
+  assert.match(doc.querySelector('#candidateStatus').textContent,/No combinations match all three/);
+  assert.equal(doc.querySelectorAll('#candidateSums tbody tr').length,2);
+  assert.equal(doc.querySelectorAll('#candidateDeviations tbody tr').length,1);
+  assert.match(doc.querySelector('#content').textContent,/not winning probabilities/);
+  doc.querySelector('#reset').click();await settle();
+  assert.equal(doc.querySelector('#candidateTable').textContent,'');
+ }finally{dom.window.close();}
+});
+
+test('candidate backtest displays exact and closest matches and downloads the complete set',async()=>{
+ const {dom,doc}=await setup();
+ const match={drawNumber:4,date:'2026-01-04',drawsAfterCutoff:2,actual:[1,2,3,4,5],candidate:[1,2,3,4,5],shared:[1,2,3,4,5],matchedBalls:5};
+ const fetch=dom.window.fetch;
+ dom.window.fetch=async(url,options)=>{
+  if(url.startsWith('/api/next-draw-candidates?'))return {ok:true,json:async()=>({lastDraw:2,targetDraw:3,trainingFrom:'2026-01-01',trainingThrough:'2026-01-02',result:{trainingCount:2,sumModes:[{value:15,count:2}],deviationModes:[{value:1,count:2}],unseenPatterns:10,totalCandidates:1234,truncated:true,rows:[{whites:[1,2,3,4,5],sum:15,deviation:1.41,deviationFloor:1,pattern:'5-0-0-0-0-0-0'}],backtest:{checkedDraws:8,exactMatches:1,closestMatchedBalls:5,exact:[match],closest:[match],perDraw:[match]}}})};
+  return fetch(url,options);
+ };
+ try{
+  doc.querySelector('[data-view="candidates"]').click();await settle();
+  doc.querySelector('#generateCandidates').click();await settle();
+  assert.match(doc.querySelector('#candidateStatus').textContent,/1,234 matching combinations/);
+  assert.match(doc.querySelector('#candidateBacktest').textContent,/all 8 later draws/);
+  assert.match(doc.querySelector('#candidateBacktest').textContent,/First exact match: draw #4/);
+  for(const id of ['candidateExact','candidateClosest','candidatePerDraw'])assert.equal(doc.querySelector('#'+id+' tbody tr').cells[0].textContent,'4');
+  const download=new URL(doc.querySelector('#candidateBacktest a').href);
+  assert.equal(download.pathname,'/api/next-draw-candidates/export');
+  assert.equal(download.searchParams.get('lastDraw'),'2');
  }finally{dom.window.close();}
 });

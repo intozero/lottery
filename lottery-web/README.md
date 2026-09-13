@@ -56,7 +56,7 @@ responsive navigation, error/loading/empty states, and keyboard-accessible contr
 | Draw history | Dated white/special balls, draw sums, repeated combinations, text export. |
 | Number statistics | Total, since, last appearance, min/max draw gap; individual-number timeline; LAST/SIM/NUM_OCCUR exports. |
 | Sums & deviation | Draw sums, running total/average, exact mean and population standard deviation, distributions, smallest/largest white-ball studies. |
-| Range explorer | Cumulative range totals, observed patterns and shapes; all mathematically possible range patterns, unseen filtering, combination counts; RAN export. |
+| Range explorer | Cumulative range totals, observed pattern and shape counts, plus a separate unseen-pattern list with combination counts and an occupancy-shape selector (e.g. 2+1+1+1). Shapes match regardless of range position and ignore empty ranges. |
 | Digit patterns | Configurable 1–100 digit windows, overlapping counts across draw boundaries, top 1,000 patterns. |
 | Combinations | Ascending five-white-ball combinations filtered by maximum, target sum, and optional deviation floor. First 500 matches; truncation is explicit. |
 | Data manager | Text upload/paste, official Powerball sync, exports, import activity, correction audit. |
@@ -148,8 +148,10 @@ The first match has no gap, and special-ball-only matches are excluded.
   of binomial choices within each bucket. Unseen patterns mean absent from the
   selected history, not increased future likelihood.
 - **Occupancy shapes:** nonempty bucket counts sorted descending.
-- **First/last studies:** smallest/largest sorted white-ball frequencies and their
-  sum. Number timelines provide cumulative per-draw occurrence/recency.
+- **First/last studies:** separate smallest/largest sorted white-ball frequency
+  tables, plus first + fifth and second + fourth sum tables. Pair-sum tables show
+  occurrence counts and selected draws since the latest occurrence (0 for the
+  latest selected draw); only observed sums are listed. Number timelines provide cumulative per-draw occurrence/recency.
 
 Large exhaustive enumerations from the legacy scripts are represented by bounded
 combination searches and exact range-universe counts; the app does not start
@@ -231,3 +233,34 @@ surface was available.
 Live checks also exercise the packaged JAR, seeded history, exports, an idempotent
 import, and real official sync. Use the latest import activity in the UI to see
 what is stored and when it was updated.
+
+
+## Next draw candidates
+
+Use the global Starting draw and Last draw inputs, apply filters, then open Next
+draw candidates and click Generate candidates. The target is Last draw + 1;
+only selected history is used, including the date and row-step filters. No target
+or later results are included in training. The endpoint is
+`GET /api/next-draw-candidates` with the same history filters.
+
+The search retains every tied most-frequent exact white-ball sum and floored
+population deviation, and requires a range pattern absent from the training
+selection. It enumerates the complete set of matching five-white-ball combinations,
+in sum then lexicographic order, and previews the first 200 without relaxing
+constraints. Download the complete set from the result link. Training frequencies are not next-draw probabilities, and
+candidate ordering is not a likelihood ranking. Special balls are not generated.
+PB uses 1–69; MM uses the existing historical 1–75 analysis universe. These are
+historical-pattern candidates, not validated predictions or current-rule picks.
+
+
+The candidate check compares the full set against every stored draw after Last
+draw, ignoring date and row-step filters for the later comparison only. Training
+remains restricted to the original selection. Exact matches mean all five white
+balls, irrespective of the special ball. Closest means highest overlap in white
+balls. Every tied closest draw is shown, with the first candidate in search order
+breaking candidate ties. The per-draw table covers every later draw when at least
+one candidate exists, including zero-overlap cases. Dates and original draw-number
+distance from the cutoff show when each match happened. Empty candidate sets and
+no-later-history cases are explicitly reported. This retrospective check is not a
+validation of future predictive ability. `/api/next-draw-candidates/export` streams
+the full candidate set as tab-separated text using the same training filters.

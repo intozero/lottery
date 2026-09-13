@@ -73,6 +73,8 @@ public class AnalysisService {
         result.put("first", first);
         result.put("last", last);
         result.put("endSums", ends);
+        result.put("endSumStats", pairSumStats(draws, 0, 4));
+        result.put("innerSumStats", pairSumStats(draws, 1, 3));
         result.put("ranges", ranges);
         result.put("patterns", stats.patterns());
         result.put("shapes", stats.shapes());
@@ -84,6 +86,28 @@ public class AnalysisService {
                         .map(e -> Map.of("balls", e.getKey(), "dates", e.getValue()))
                         .toList());
         return result;
+    }
+
+    private List<Map<String, Integer>> pairSumStats(List<DrawRecord> draws, int first, int second) {
+        Map<Integer, Integer> counts = new TreeMap<>();
+        Map<Integer, Integer> lastSeen = new HashMap<>();
+        for (int i = 0; i < draws.size(); i++) {
+            var whites = draws.get(i).whites();
+            int sum = whites.get(first) + whites.get(second);
+            counts.merge(sum, 1, Integer::sum);
+            lastSeen.put(sum, i);
+        }
+        return counts.entrySet().stream()
+                .map(
+                        entry ->
+                                Map.of(
+                                        "sum",
+                                        entry.getKey(),
+                                        "count",
+                                        entry.getValue(),
+                                        "since",
+                                        draws.size() - 1 - lastSeen.get(entry.getKey())))
+                .toList();
     }
 
     public Map<String, Object> digits(List<DrawRecord> draws, int window) {

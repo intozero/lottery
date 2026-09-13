@@ -252,6 +252,97 @@ class WebIntegrationTest {
     }
 
     @Test
+    void nextDrawCandidatesNeverTrainOnTheTargetOrLaterDraws() throws Exception {
+        store.save("PB", fixture(), "test", false);
+        var request = get("/api/next-draw-candidates").param("game", "PB").param("lastDraw", "1");
+        String before =
+                mvc.perform(request)
+                        .andExpect(status().isOk())
+                        .andExpect(jsonPath("$.targetDraw").value(2))
+                        .andExpect(jsonPath("$.result.trainingCount").value(1))
+                        .andExpect(jsonPath("$.result.sumModes[0].value").value(15))
+                        .andReturn()
+                        .getResponse()
+                        .getContentAsString();
+        store.save("PB", parser.parse("1/3/2026 5 15 25 45 60", "PB"), "later", false);
+        String after =
+                mvc.perform(
+                                get("/api/next-draw-candidates")
+                                        .param("game", "PB")
+                                        .param("lastDraw", "1"))
+                        .andExpect(jsonPath("$.result.backtest.checkedDraws").value(2))
+                        .andReturn()
+                        .getResponse()
+                        .getContentAsString();
+        var mapper = new com.fasterxml.jackson.databind.ObjectMapper();
+        var beforeTree = mapper.readTree(before);
+        var afterTree = mapper.readTree(after);
+        ((com.fasterxml.jackson.databind.node.ObjectNode) beforeTree.get("result"))
+                .remove("backtest");
+        ((com.fasterxml.jackson.databind.node.ObjectNode) afterTree.get("result"))
+                .remove("backtest");
+        assertEquals(beforeTree, afterTree);
+        mvc.perform(
+                        get("/api/next-draw-candidates")
+                                .param("lastDraw", "3")
+                                .param("startDraw", "2")
+                                .param("rowStep", "2"))
+                .andExpect(jsonPath("$.targetDraw").value(4))
+                .andExpect(jsonPath("$.result.trainingCount").value(1))
+                .andExpect(jsonPath("$.result.sumModes[0].value").value(16));
+        mvc.perform(
+                        get("/api/next-draw-candidates")
+                                .param("lastDraw", "3")
+                                .param("to", "2026-01-01"))
+                .andExpect(jsonPath("$.targetDraw").value(4))
+                .andExpect(jsonPath("$.result.trainingCount").value(1));
+        mvc.perform(get("/api/next-draw-candidates").param("lastDraw", "4"))
+                .andExpect(status().isBadRequest());
+        mvc.perform(get("/api/next-draw-candidates").param("game", "MM"))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void completeCandidateDownloadAndLaterComparisonIgnoreTrainingDateAndStepFilters()
+            throws Exception {
+        var training = parser.parse("1/1/2026 5 15 25 45 60", "PB");
+        var candidates =
+                new ArrayList<com.vipin.lottery.core.analysis.NextDrawCandidates.Candidate>();
+        new com.vipin.lottery.core.analysis.NextDrawCandidates()
+                .generate(training, "PB", List.of(), 1, candidates::add);
+        var exact =
+                new DrawRecord(
+                        java.time.LocalDate.of(2026, 1, 2),
+                        candidates.get(candidates.size() - 1).whites(),
+                        1);
+        store.save("PB", List.of(training.get(0), exact), "test", false);
+        mvc.perform(
+                        get("/api/next-draw-candidates")
+                                .param("lastDraw", "1")
+                                .param("to", "2026-01-01")
+                                .param("rowStep", "5"))
+                .andExpect(jsonPath("$.result.totalCandidates").value(candidates.size()))
+                .andExpect(jsonPath("$.result.backtest.checkedDraws").value(1))
+                .andExpect(jsonPath("$.result.backtest.exactMatches").value(1))
+                .andExpect(jsonPath("$.result.backtest.exact[0].drawNumber").value(2));
+        var download =
+                mvc.perform(get("/api/next-draw-candidates/export").param("lastDraw", "1"))
+                        .andExpect(request().asyncStarted())
+                        .andReturn();
+        var content =
+                mvc.perform(asyncDispatch(download))
+                        .andExpect(status().isOk())
+                        .andReturn()
+                        .getResponse()
+                        .getContentAsString();
+        assertEquals(candidates.size() + 1, content.lines().count());
+        assertTrue(
+                content.contains(
+                        String.join(" ", exact.whites().stream().map(Object::toString).toList())
+                                + "\t"));
+    }
+
+    @Test
     void csrfIsRequiredAndMultipartWorks() throws Exception {
         String body = "{\"game\":\"PB\",\"text\":\"1/1/2026 1 2 3 4 5 1\"}";
         mvc.perform(post("/api/import-text").contentType(MediaType.APPLICATION_JSON).content(body))

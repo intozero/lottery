@@ -5,3 +5,7 @@
 .sum-chart-scroll{overflow-x:auto}.chart.sum-chart{height:auto;min-width:640px}.sum-chart text{font-size:12px;fill:var(--muted)}.sum-bin:hover .sum-bar,.sum-bin:focus .sum-bar{fill:var(--accent)}.sum-bin:focus{outline:1px solid var(--accent)}
 
 .number-chart-scroll{overflow-x:auto;margin-bottom:12px}.chart.number-chart{height:auto;min-width:1285px}.number-chart text{font-size:11px;fill:var(--muted)}.total-bar,.total-key{fill:#14786c;background:#14786c}.since-bar,.since-key{fill:#b16b25;background:#b16b25}.number-legend{display:flex;gap:20px;flex-wrap:wrap;font-size:12px;color:var(--muted)}.number-legend i{display:inline-block;width:10px;height:10px;margin-right:5px}.number-bin{cursor:pointer}.number-bin:hover .number-hit,.number-bin:focus .number-hit{fill:#14786c;fill-opacity:.08}.number-bin[aria-pressed=true] .number-hit{stroke:var(--ink);stroke-width:1}.number-bin:focus{outline:1px solid var(--accent)}
+
+.study-grid{grid-template-columns:repeat(2,minmax(0,1fr))}@media(max-width:1100px){.study-grid{grid-template-columns:1fr}}
+
+#deviationTable table{table-layout:fixed}#deviationTable th,#deviationTable td{width:50%;text-align:center;padding:12px;white-space:normal}
