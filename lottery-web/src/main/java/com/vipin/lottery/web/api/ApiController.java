@@ -38,13 +38,31 @@ public class ApiController {
         return Map.of("token", token.getToken(), "header", token.getHeaderName());
     }
 
+    public record HistoryDraw(
+            int drawNumber, LocalDate date, List<Integer> whites, Integer special) {}
+
+    @GetMapping("/history-bounds")
+    public Map<String, Integer> historyBounds(@RequestParam(defaultValue = "PB") String game) {
+        return Map.of("lastDraw", store.lastDraw(game));
+    }
+
     @GetMapping("/history")
-    public List<DrawRecord> history(
+    public List<HistoryDraw> history(
             @RequestParam(defaultValue = "PB") String game,
             @RequestParam(required = false) LocalDate from,
             @RequestParam(required = false) LocalDate to,
-            @RequestParam(defaultValue = "1") int rowStep) {
-        return store.selected(game, from, to, rowStep);
+            @RequestParam(defaultValue = "1") int rowStep,
+            @RequestParam(defaultValue = "1") int startDraw,
+            @RequestParam(required = false) Integer lastDraw) {
+        return store.selectedNumbered(game, from, to, rowStep, startDraw, lastDraw).stream()
+                .map(
+                        row ->
+                                new HistoryDraw(
+                                        row.drawNumber(),
+                                        row.draw().date(),
+                                        row.draw().whites(),
+                                        row.draw().special()))
+                .toList();
     }
 
     @GetMapping("/analysis")
@@ -52,8 +70,10 @@ public class ApiController {
             @RequestParam(defaultValue = "PB") String game,
             @RequestParam(required = false) LocalDate from,
             @RequestParam(required = false) LocalDate to,
-            @RequestParam(defaultValue = "1") int rowStep) {
-        return analysis.analyze(store.selected(game, from, to, rowStep), game);
+            @RequestParam(defaultValue = "1") int rowStep,
+            @RequestParam(defaultValue = "1") int startDraw,
+            @RequestParam(required = false) Integer lastDraw) {
+        return analysis.analyze(store.selected(game, from, to, rowStep, startDraw, lastDraw), game);
     }
 
     @GetMapping("/digits")
@@ -62,8 +82,11 @@ public class ApiController {
             @RequestParam int window,
             @RequestParam(required = false) LocalDate from,
             @RequestParam(required = false) LocalDate to,
-            @RequestParam(defaultValue = "1") int rowStep) {
-        return analysis.digits(store.selected(game, from, to, rowStep), window);
+            @RequestParam(defaultValue = "1") int rowStep,
+            @RequestParam(defaultValue = "1") int startDraw,
+            @RequestParam(required = false) Integer lastDraw) {
+        return analysis.digits(
+                store.selected(game, from, to, rowStep, startDraw, lastDraw), window);
     }
 
     @GetMapping("/timeline")
@@ -72,8 +95,11 @@ public class ApiController {
             @RequestParam int number,
             @RequestParam(required = false) LocalDate from,
             @RequestParam(required = false) LocalDate to,
-            @RequestParam(defaultValue = "1") int rowStep) {
-        return analysis.timeline(store.selected(game, from, to, rowStep), number, game);
+            @RequestParam(defaultValue = "1") int rowStep,
+            @RequestParam(defaultValue = "1") int startDraw,
+            @RequestParam(required = false) Integer lastDraw) {
+        return analysis.timeline(
+                store.selected(game, from, to, rowStep, startDraw, lastDraw), number, game);
     }
 
     @GetMapping("/ranges")
@@ -81,8 +107,11 @@ public class ApiController {
             @RequestParam String game,
             @RequestParam(required = false) LocalDate from,
             @RequestParam(required = false) LocalDate to,
-            @RequestParam(defaultValue = "1") int rowStep) {
-        return analysis.rangeUniverse(store.selected(game, from, to, rowStep), game);
+            @RequestParam(defaultValue = "1") int rowStep,
+            @RequestParam(defaultValue = "1") int startDraw,
+            @RequestParam(required = false) Integer lastDraw) {
+        return analysis.rangeUniverse(
+                store.selected(game, from, to, rowStep, startDraw, lastDraw), game);
     }
 
     @GetMapping("/combinations")
@@ -150,9 +179,11 @@ public class ApiController {
             @RequestParam(defaultValue = "history") String report,
             @RequestParam(required = false) LocalDate from,
             @RequestParam(required = false) LocalDate to,
-            @RequestParam(defaultValue = "1") int rowStep)
+            @RequestParam(defaultValue = "1") int rowStep,
+            @RequestParam(defaultValue = "1") int startDraw,
+            @RequestParam(required = false) Integer lastDraw)
             throws IOException {
-        var draws = store.selected(game, from, to, rowStep);
+        var draws = store.selected(game, from, to, rowStep, startDraw, lastDraw);
         StringWriter out = new StringWriter();
         if (report.equals("history")) {
             for (DrawRecord d : draws)

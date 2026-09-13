@@ -131,7 +131,54 @@ class WebIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(3))
                 .andExpect(jsonPath("$[0].date").value("2026-01-03"))
+                .andExpect(jsonPath("$[0].drawNumber").value(3))
+                .andExpect(jsonPath("$[2].drawNumber").value(7))
                 .andExpect(jsonPath("$[2].date").value("2026-01-07"));
+        mvc.perform(get("/api/history").param("game", "PB"))
+                .andExpect(jsonPath("$[0].drawNumber").value(1))
+                .andExpect(jsonPath("$[10].drawNumber").value(11));
+        mvc.perform(
+                        get("/api/history")
+                                .param("game", "PB")
+                                .param("startDraw", "2")
+                                .param("rowStep", "5"))
+                .andExpect(jsonPath("$.length()").value(2))
+                .andExpect(jsonPath("$[0].drawNumber").value(2))
+                .andExpect(jsonPath("$[1].drawNumber").value(7));
+        mvc.perform(
+                        get("/api/history")
+                                .param("game", "PB")
+                                .param("startDraw", "2")
+                                .param("rowStep", "5")
+                                .param("from", "2026-01-03"))
+                .andExpect(jsonPath("$.length()").value(1))
+                .andExpect(jsonPath("$[0].drawNumber").value(7));
+        mvc.perform(get("/api/history").param("game", "PB").param("startDraw", "2147483647"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(0));
+        mvc.perform(get("/api/history-bounds").param("game", "PB"))
+                .andExpect(jsonPath("$.lastDraw").value(11));
+        mvc.perform(get("/api/history-bounds").param("game", "MM"))
+                .andExpect(jsonPath("$.lastDraw").value(0));
+        mvc.perform(
+                        get("/api/history")
+                                .param("startDraw", "2")
+                                .param("lastDraw", "7")
+                                .param("rowStep", "5"))
+                .andExpect(jsonPath("$.length()").value(2))
+                .andExpect(jsonPath("$[1].drawNumber").value(7));
+        mvc.perform(
+                        get("/api/history")
+                                .param("startDraw", "2")
+                                .param("lastDraw", "6")
+                                .param("rowStep", "5"))
+                .andExpect(jsonPath("$.length()").value(1))
+                .andExpect(jsonPath("$[0].drawNumber").value(2));
+        mvc.perform(get("/api/history").param("startDraw", "5").param("lastDraw", "5"))
+                .andExpect(jsonPath("$.length()").value(1))
+                .andExpect(jsonPath("$[0].drawNumber").value(5));
+        mvc.perform(get("/api/history").param("startDraw", "5").param("lastDraw", "4"))
+                .andExpect(status().isBadRequest());
         assertEquals(rows, store.all("PB"));
     }
 
@@ -146,7 +193,6 @@ class WebIntegrationTest {
                             day));
         var endpoints =
                 List.of(
-                        "history",
                         "analysis",
                         "timeline",
                         "digits",
@@ -157,48 +203,52 @@ class WebIntegrationTest {
                         "export?report=sim",
                         "export?report=num_occur",
                         "export?report=ran");
-        for (int step : List.of(2, 5)) {
-            clean();
-            store.save("PB", rows, "test", false);
-            var actual = new ArrayList<String>();
-            for (String endpoint : endpoints)
-                actual.add(
-                        mvc.perform(
-                                        get("/api/" + endpoint)
-                                                .param("game", "PB")
-                                                .param("rowStep", String.valueOf(step))
-                                                .param("number", "5")
-                                                .param("window", "2"))
-                                .andExpect(status().isOk())
-                                .andReturn()
-                                .getResponse()
-                                .getContentAsString());
-            var selected = store.selected("PB", null, null, step);
-            clean();
-            store.save("PB", selected, "test", false);
-            for (int i = 0; i < endpoints.size(); i++)
-                mvc.perform(
-                                get("/api/" + endpoints.get(i))
-                                        .param("game", "PB")
-                                        .param("number", "5")
-                                        .param("window", "2"))
-                        .andExpect(status().isOk())
-                        .andExpect(content().string(actual.get(i)));
-        }
+        for (int startDraw : List.of(1, 2, 3))
+            for (int step : List.of(2, 5)) {
+                clean();
+                store.save("PB", rows, "test", false);
+                var actual = new ArrayList<String>();
+                for (String endpoint : endpoints)
+                    actual.add(
+                            mvc.perform(
+                                            get("/api/" + endpoint)
+                                                    .param("game", "PB")
+                                                    .param("rowStep", String.valueOf(step))
+                                                    .param("startDraw", String.valueOf(startDraw))
+                                                    .param("lastDraw", "8")
+                                                    .param("number", "5")
+                                                    .param("window", "2"))
+                                    .andExpect(status().isOk())
+                                    .andReturn()
+                                    .getResponse()
+                                    .getContentAsString());
+                var selected = store.selected("PB", null, null, step, startDraw, 8);
+                clean();
+                store.save("PB", selected, "test", false);
+                for (int i = 0; i < endpoints.size(); i++)
+                    mvc.perform(
+                                    get("/api/" + endpoints.get(i))
+                                            .param("game", "PB")
+                                            .param("number", "5")
+                                            .param("window", "2"))
+                            .andExpect(status().isOk())
+                            .andExpect(content().string(actual.get(i)));
+            }
     }
 
     @Test
     void invalidRowStepsAreRejectedOnEveryHistoryEndpoint() throws Exception {
         for (String endpoint :
                 List.of("history", "analysis", "timeline", "digits", "ranges", "export"))
-            for (String step : List.of("0", "-1", "1.5", "abc", "2147483648"))
-                mvc.perform(
-                                get("/api/" + endpoint)
-                                        .param("game", "PB")
-                                        .param("rowStep", step)
-                                        .param("number", "1")
-                                        .param("window", "2"))
-                        .andExpect(status().isBadRequest());
+            for (String parameter : List.of("rowStep", "startDraw", "lastDraw"))
+                for (String step : List.of("0", "-1", "1.5", "abc", "2147483648"))
+                    mvc.perform(
+                                    get("/api/" + endpoint)
+                                            .param("game", "PB")
+                                            .param(parameter, step)
+                                            .param("number", "1")
+                                            .param("window", "2"))
+                            .andExpect(status().isBadRequest());
     }
 
     @Test

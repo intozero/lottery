@@ -121,6 +121,14 @@ the update. Missing draws are added from the earliest stored PB date, or October
 without changing stored history. Retry later if publication is delayed. Sync is
 manual; there is no scheduled background update.
 
+## Ball occurrences
+
+The Ball occurrences tab accepts a white-ball number and lists matching dates,
+original Draw #, the drawn balls, the gap between consecutive matching draw numbers,
+and the cumulative match count. It uses the current game, dates, starting draw,
+and row step. Gaps use original draw numbers; totals count only selected matches.
+The first match has no gap, and special-ball-only matches are excluded.
+
 ## Calculation definitions
 
 - **Since:** completed draws after the most recent appearance, zero for a latest-draw
@@ -171,10 +179,15 @@ GET:
 `/api/combinations`, `/api/export`, `/api/imports`, `/api/changes`, `/api/csrf`.
 
 History-derived endpoints accept `game`, optional ISO `from` and `to` dates, and
-`rowStep` (positive integer, default `1`). The global Row step input selects rows
-1, 1 + step, 1 + 2 × step, etc., counted oldest first across the game’s full stored
+`rowStep` and `startDraw` (positive integers, both default to `1`), plus optional
+`lastDraw` (positive integer, inclusive; defaults to the actual last available draw). The global Row step input selects rows
+startDraw, startDraw + step, startDraw + 2 × step, etc., counted oldest first across the game’s full stored
 history, before date filtering. It applies to every history-based result and export.
-All history resets both dates and row step. Imports, audit logs, and the independent
+Starting draw uses the original Draw #, so start 2 with step 5 selects draws 2, 7, 12.
+The Last draw input displays the actual latest draw number by default. Clear it
+to follow the latest again; an earlier endpoint stays fixed. `/api/history-bounds`
+returns the full game’s `lastDraw` (0 for empty history).
+All history resets dates, starting draw, last draw, and row step. Imports, audit logs, and the independent
 mathematical combination search are unaffected.
 Timeline requires `number`; digits requires `window`. Combinations requires
 `maximum`, `sum`, optional `deviation`. Export supports

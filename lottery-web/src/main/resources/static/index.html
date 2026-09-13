@@ -14,6 +14,7 @@
   <button data-view="overview" class="active"><span>◫</span> Overview</button>
   <button data-view="history"><span>▤</span> Draw history</button>
   <button data-view="numbers"><span>◎</span> Number statistics</button>
+  <button data-view="occurrences"><span>◉</span> Ball occurrences</button>
   <button data-view="sums"><span>∑</span> Sums & deviation</button>
   <button data-view="ranges"><span>▦</span> Range explorer</button>
   <button data-view="digits"><span>⋮</span> Digit patterns</button>
@@ -27,10 +28,12 @@
  <form id="filters" class="filterbar">
   <label>Lottery<select id="game"><option value="PB">Powerball</option><option value="MM">Mega Millions</option></select></label>
   <label>From<input type="date" id="from"></label><span class="datearrow">→</span><label>Through<input type="date" id="to"></label>
+  <label>Starting draw<input type="number" id="startDraw" min="1" max="2147483647" step="1" value="1" required aria-describedby="rowStepHelp"></label>
+  <label>Last draw<input type="number" id="lastDraw" min="1" max="2147483647" step="1" placeholder="Latest available" aria-describedby="rowStepHelp"></label>
   <label>Row step<input type="number" id="rowStep" min="1" max="2147483647" step="1" value="1" required aria-describedby="rowStepHelp"></label>
   <button type="submit" class="primary">Apply filters</button><button type="button" id="reset" class="quiet">All history</button>
   <span id="scope" class="scope"></span>
-  <small id="rowStepHelp" class="filterhelp">Rows counted oldest first across the game’s full history, before date filters. 1 = all rows; 2 = rows 1, 3, 5; 5 = rows 1, 6, 11.</small>
+  <small id="rowStepHelp" class="filterhelp">Draws counted oldest first across the game’s full history, before date filters. Start 1, step 2 = draws 1, 3, 5; start 2, step 5 = draws 2, 7, 12. Last draw is inclusive and defaults to the latest available draw; clear it to use the latest. Start 1, step 1 = all draws.</small>
  </form>
  <div id="notice" class="notice" role="status" hidden></div>
  <main id="content" tabindex="-1"><div class="empty">Loading your draw history…</div></main>

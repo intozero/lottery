@@ -40,19 +40,60 @@ public class HistoryStore {
     }
 
     public List<DrawRecord> selected(String game, LocalDate from, LocalDate to, int rowStep) {
+        return selected(game, from, to, rowStep, 1);
+    }
+
+    public List<DrawRecord> selected(
+            String game, LocalDate from, LocalDate to, int rowStep, int startDraw) {
+        return selected(game, from, to, rowStep, startDraw, null);
+    }
+
+    public List<DrawRecord> selected(
+            String game,
+            LocalDate from,
+            LocalDate to,
+            int rowStep,
+            int startDraw,
+            Integer lastDraw) {
+        return selectedNumbered(game, from, to, rowStep, startDraw, lastDraw).stream()
+                .map(NumberedDraw::draw)
+                .toList();
+    }
+
+    public record NumberedDraw(int drawNumber, DrawRecord draw) {}
+
+    public List<NumberedDraw> selectedNumbered(
+            String game,
+            LocalDate from,
+            LocalDate to,
+            int rowStep,
+            int startDraw,
+            Integer lastDraw) {
+        if (lastDraw != null && (lastDraw < 1 || lastDraw < startDraw))
+            throw new IllegalArgumentException(
+                    "Last draw must be a positive whole number at or after starting draw");
+        if (startDraw < 1)
+            throw new IllegalArgumentException("Starting draw must be a positive whole number");
         if (rowStep < 1)
             throw new IllegalArgumentException("Row step must be a positive whole number");
         if (from != null && to != null && from.isAfter(to))
             throw new IllegalArgumentException("Start date must be before end date");
         var source = all(game);
-        return java.util.stream.IntStream.range(0, source.size())
-                .filter(i -> i % rowStep == 0)
-                .mapToObj(source::get)
+        return java.util.stream.IntStream.range(
+                        startDraw - 1,
+                        lastDraw == null ? source.size() : Math.min(lastDraw, source.size()))
+                .filter(i -> (i - (startDraw - 1)) % rowStep == 0)
+                .mapToObj(i -> new NumberedDraw(i + 1, source.get(i)))
                 .filter(
                         d ->
-                                (from == null || !d.date().isBefore(from))
-                                        && (to == null || !d.date().isAfter(to)))
+                                (from == null || !d.draw().date().isBefore(from))
+                                        && (to == null || !d.draw().date().isAfter(to)))
                 .toList();
+    }
+
+    public int lastDraw(String game) {
+        DrawRecord.maximum(game);
+        return db.queryForObject("SELECT COUNT(*) FROM draws WHERE game=?", Integer.class, game);
     }
 
     public record ImportResult(int added, int corrected, int unchanged) {}
