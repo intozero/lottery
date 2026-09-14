@@ -1,0 +1,10 @@
+random-forest: -P 100 -I 30 -num-slots 1 -K 0 -M 1.0 -V 0.001 -S 1 -depth 8
+logistic: -R 1.0E-4 -M 100 -num-decimal-places 4
+naive-bayes: 
+j48: -C 0.25 -M 10
+rep-tree: -M 10 -V 0.001 -N 3 -S 1 -L 8 -I 0.0
+random-tree: -K 0 -M 10.0 -V 0.001 -S 1 -depth 8
+knn: -K 15 -W 0 -A weka.core.neighboursearch.LinearNNSearch -A "weka.core.EuclideanDistance -R first-last"
+adaboost: -P 100 -S 1 -I 20 -W weka.classifiers.trees.DecisionStump
+logitboost: -P 100 -L -1.7976931348623157E308 -H 1.0 -Z 3.0 -O 1 -E 1 -S 1 -I 20 -W weka.classifiers.trees.DecisionStump
+neural-network: -L 0.3 -M 0.2 -N 30 -V 0 -S 1 -E 20 -H 8

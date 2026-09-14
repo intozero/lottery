@@ -72,3 +72,6 @@ npm test
 
 See the [web guide](lottery-web/README.md) for features, configuration, data rules,
 backups, and API details, or the [core guide](lottery-core/README.md) for Java reuse.
+
+See the [machine learning guide](docs/machine-learning/README.md) for all ten
+models, training sample sets, feature and weighting formulas, and evaluation rules.

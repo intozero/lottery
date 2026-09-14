@@ -215,6 +215,40 @@ public class ApiController {
                         });
     }
 
+    @GetMapping("/ml-forecast")
+    public Map<String, Object> machineLearningForecast(
+            @RequestParam(defaultValue = "PB") String game,
+            @RequestParam(required = false) LocalDate from,
+            @RequestParam(required = false) LocalDate to,
+            @RequestParam(defaultValue = "1") int rowStep,
+            @RequestParam(defaultValue = "1") int startDraw,
+            @RequestParam(required = false) Integer lastDraw,
+            @RequestParam(defaultValue = "all") String model,
+            @RequestParam(defaultValue = "1") double delta,
+            @RequestParam(defaultValue = "0.7") double mlWeight,
+            @RequestParam(defaultValue = "150") int trainingWindow) {
+        var settings =
+                new com.vipin.lottery.core.analysis.MachineLearningForecast.Settings(
+                        model, delta, mlWeight, trainingWindow);
+        int available = store.lastDraw(game);
+        int end = lastDraw == null ? available : lastDraw;
+        if (end < 1 || end > available)
+            throw new IllegalArgumentException("Choose a last draw within the available history");
+        var selected = store.selected(game, from, to, rowStep, startDraw, end);
+        var all = store.all(game);
+        var later =
+                java.util.stream.IntStream.range(end, all.size())
+                        .mapToObj(
+                                i ->
+                                        new com.vipin.lottery.core.analysis.NextDrawCandidates
+                                                .LaterDraw(i + 1, all.get(i)))
+                        .toList();
+        var result =
+                new com.vipin.lottery.core.analysis.MachineLearningForecast()
+                        .forecast(selected, game, later, end, settings);
+        return Map.of("targetDraw", end + 1, "lastDraw", end, "result", result);
+    }
+
     @GetMapping("/combinations")
     public Map<String, Object> combinations(
             @RequestParam int maximum,

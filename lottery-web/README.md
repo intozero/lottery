@@ -264,3 +264,55 @@ distance from the cutoff show when each match happened. Empty candidate sets and
 no-later-history cases are explicitly reported. This retrospective check is not a
 validation of future predictive ability. `/api/next-draw-candidates/export` streams
 the full candidate set as tab-separated text using the same training filters.
+
+
+## Machine learning option
+
+See the comprehensive [machine learning guide](../docs/machine-learning/README.md)
+for model-by-model logic, exact calculations, sample sets, worked examples, and
+validation details.
+
+Next draw candidates also includes **Machine learning · Weka Java**. This is ten
+real classifier choices through one established Java library, **Weka 3.8.6**, not
+ten separate libraries: random forest, logistic regression, Naive Bayes, J48,
+REPTree, random tree, k-nearest neighbors, AdaBoost, LogitBoost, and multilayer
+perceptron. Run one model or compare all ten. The ML section is independent of the
+strict candidate-pattern search above; it always chooses the five highest blended
+ball scores from each successfully trained model.
+
+- Select at least 20 training draws. All global filters apply to training.
+- Training window: 20–300 latest selected transitions, default 150. Earlier
+  selected draws still supply feature history. If fewer transitions exist, all
+  available transitions are used. With row step > 1, labels are the next selected
+  draw, so training intervals differ from one original draw.
+- Each transition has one binary label per possible white ball. Features are
+  computed **before** the labeled draw: number, cumulative and recent (10/30)
+  frequencies, draws since last seen, previous membership, range frequency, mean
+  sum, previous sum/deviation, and parity. Models share this dataset and a fixed
+  seed; no future draws or target values appear in training features.
+- Delta (0–10) weights transition age by `exp(-delta * normalizedAge)`; zero
+  means equal weight. Weighted empirical ball frequencies use the same decay
+  over the full selected history, with one uniform pseudodraw of smoothing.
+- ML weight (0–1) blends `weight * learnedScore + (1-weight) * historicalFrequency`.
+  Score ties favor smaller numbers. Scores are uncalibrated and are not validated
+  winning probabilities. Weight 0 is a history-only comparison, weight 1 ML-only.
+- Each model's guess is frozen at the cutoff and compared with every later
+  stored draw. Next-draw matches are reported separately from average overlap,
+  exact-match count, and earliest closest match. No later draws means unavailable
+  evaluation metrics, not a failed prediction. Individual model failures are
+  displayed explicitly without substituting another algorithm.
+- The random-overlap reference is `25 / maximumWhiteBall` for two five-ball sets;
+  this is an expectation, not a significance test. Repeatedly tuning settings
+  against the same future period can overfit the comparison. There is no claim
+  of predictive advantage, and special balls are excluded.
+
+`GET /api/ml-forecast` accepts the normal history filters and `model`, `delta`,
+`mlWeight`, `trainingWindow`. Models train on demand in memory. Random forest,
+REPTree, and random tree use maximum depth 8; J48 uses pruning and minimum support
+10 without an explicit depth cap. Boosting uses up to 20 rounds, logistic regression
+up to 100 iterations, and the neural net uses 8 hidden units and 30 epochs.
+Weka is downloaded by Maven at build time.
+
+Library references: [Weka Java API](https://waikato.github.io/weka-wiki/use_weka_in_your_java_code/),
+[Weka classifier overview](https://waikato.github.io/weka-wiki/primer/),
+[Weka Maven integration](https://waikato.github.io/weka-wiki/maven/).

@@ -376,3 +376,49 @@ test('candidate backtest displays exact and closest matches and downloads the co
   assert.equal(download.searchParams.get('lastDraw'),'2');
  }finally{dom.window.close();}
 });
+
+test('ML controls forward model, delta and weight and show guesses, scores and later matches',async()=>{
+ const history=Array.from({length:30},(_,i)=>({...draws[0],drawNumber:i+1,date:'2026-01-'+String(i+1).padStart(2,'0')}));
+ const {dom,doc,calls}=await setup(analysis,history);
+ const fetch=dom.window.fetch;
+ dom.window.fetch=async(url,options)=>{
+  if(!url.startsWith('/api/ml-forecast?'))return fetch(url,options);
+  calls.push({url,options});
+  return {ok:true,json:async()=>({targetDraw:21,result:{library:'Weka 3.8.6',settings:{delta:2,mlWeight:.25},selectedDraws:20,trainingTransitions:19,trainingExamples:1311,trainingFrom:'2026-01-02',trainingThrough:'2026-01-20',randomExpectedMatches:25/69,models:[{id:'naive-bayes',name:'Naive Bayes',error:null,whites:[1,2,3,4,5],scores:[{number:1,learned:.2,historical:.1,blended:.125}],nextDrawMatches:2,averageMatches:2,exactMatches:0,closestMatchedBalls:2,closestDraw:21,later:[{drawNumber:21,date:'2026-01-21',drawsAfterCutoff:1,actual:[1,2,6,7,8],shared:[1,2],matchedBalls:2}]}]}})};
+ };
+ try{
+  doc.querySelector('#lastDraw').value='20';submit(dom,doc.querySelector('#filters'));await settle();
+  doc.querySelector('[data-view="candidates"]').click();await settle();
+  assert.equal(doc.querySelectorAll('#mlModel option').length,11);
+  doc.querySelector('#mlModel').value='naive-bayes';doc.querySelector('#mlDelta').value='2';doc.querySelector('#mlWeight').value='.25';doc.querySelector('#mlWindow').value='20';
+  submit(dom,doc.querySelector('#mlForm'));await settle();
+  const p=new URL(calls.find(c=>c.url.startsWith('/api/ml-forecast?')).url,'http://localhost').searchParams;
+  for(const [key,value] of Object.entries({lastDraw:'20',model:'naive-bayes',delta:'2',mlWeight:'0.25',trainingWindow:'20'}))assert.equal(p.get(key),value);
+  assert.match(doc.querySelector('#mlStatus').textContent,/target draw #21/);
+  assert.equal(doc.querySelector('#mlComparison tbody tr').cells[2].textContent,'2');
+  assert.equal(doc.querySelector('#mlScores tbody tr').cells[3].textContent,'0.1250');
+  assert.equal(doc.querySelector('#mlLater tbody tr').cells[0].textContent,'21');
+  submit(dom,doc.querySelector('#filters'));await settle();
+  assert.equal(doc.querySelector('#mlResults').textContent,'');
+  assert.equal(doc.querySelector('#mlWeight').value,'0.25');
+  const count=calls.length;doc.querySelector('#mlDelta').value='-1';submit(dom,doc.querySelector('#mlForm'));await settle();assert.equal(calls.length,count);
+ }finally{dom.window.close();}
+});
+test('ML requires enough history and ignores results after filters change',async()=>{
+ const small=await setup();
+ try{
+  small.doc.querySelector('[data-view="candidates"]').click();await settle();
+  assert.equal(small.doc.querySelector('#mlForm button').disabled,true);
+  assert.match(small.doc.querySelector('#mlStatus').textContent,/at least 20/);
+ }finally{small.dom.window.close();}
+ const history=Array.from({length:20},(_,i)=>({...draws[0],drawNumber:i+1}));
+ const {dom,doc}=await setup(analysis,history);
+ let release;const fetch=dom.window.fetch;
+ dom.window.fetch=async(url,options)=>url.startsWith('/api/ml-forecast?')?new Promise(resolve=>{release=()=>resolve({ok:true,json:async()=>({})})}):fetch(url,options);
+ try{
+  doc.querySelector('[data-view="candidates"]').click();await settle();submit(dom,doc.querySelector('#mlForm'));await settle();
+  submit(dom,doc.querySelector('#filters'));await settle();release();await settle();
+  assert.equal(doc.querySelector('#mlResults').textContent,'');
+  assert.equal(doc.querySelector('#notice').hidden,true);
+ }finally{dom.window.close();}
+});

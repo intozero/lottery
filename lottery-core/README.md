@@ -1,8 +1,8 @@
 # Lottery Core
 
 Plain Java 17 library shared by the Lottery Workbench web application. It has
-no production dependencies and does not start a server, read console input,
-or open a database.
+a Weka 3.8.6 dependency for machine learning and does not start a server, read
+console input, or open a database.
 
 | Package under `com.vipin.lottery.core` | Responsibility |
 | --- | --- |
@@ -38,3 +38,10 @@ and tabular layouts as well as values.
 
 See [the web guide](../lottery-web/README.md) for calculation definitions and
 [the consolidation mapping](../lottery-web/MODULE-ANALYSIS.md) for retired tools.
+
+
+The optional ML forecast service uses Weka 3.8.6 classifiers in Java. It trains
+from chronological selected-history transitions, exposes recency and blending
+weights, and evaluates frozen guesses against later draws. The comprehensive
+[machine learning guide](../docs/machine-learning/README.md) documents all ten
+classifiers, exact formulas, training samples, settings, and evaluation semantics.

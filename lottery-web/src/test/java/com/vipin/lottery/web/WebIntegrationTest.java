@@ -343,6 +343,60 @@ class WebIntegrationTest {
     }
 
     @Test
+    void mlApiAppliesTrainingFiltersAndSettingsAndChecksAllLaterDraws() throws Exception {
+        var rows = new ArrayList<DrawRecord>();
+        for (int i = 0; i < 44; i++) {
+            var whites = new ArrayList<Integer>();
+            for (int j = 0; j < 5; j++) whites.add((i * 7 + j * 13) % 69 + 1);
+            rows.add(new DrawRecord(java.time.LocalDate.of(2026, 1, 1).plusDays(i), whites, 1));
+        }
+        store.save("PB", rows, "test", false);
+        mvc.perform(
+                        get("/api/ml-forecast")
+                                .param("model", "naive-bayes")
+                                .param("lastDraw", "40")
+                                .param("to", "2026-01-25")
+                                .param("delta", "2")
+                                .param("mlWeight", "0.25")
+                                .param("trainingWindow", "20"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.targetDraw").value(41))
+                .andExpect(jsonPath("$.result.selectedDraws").value(25))
+                .andExpect(jsonPath("$.result.trainingTransitions").value(20))
+                .andExpect(jsonPath("$.result.settings.delta").value(2))
+                .andExpect(jsonPath("$.result.settings.mlWeight").value(.25))
+                .andExpect(jsonPath("$.result.models[0].whites.length()").value(5))
+                .andExpect(jsonPath("$.result.models[0].scores.length()").value(69))
+                .andExpect(jsonPath("$.result.models[0].later.length()").value(4))
+                .andExpect(jsonPath("$.result.models[0].later[0].drawNumber").value(41));
+        mvc.perform(
+                        get("/api/ml-forecast")
+                                .param("model", "naive-bayes")
+                                .param("startDraw", "2")
+                                .param("lastDraw", "40")
+                                .param("rowStep", "2"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.result.selectedDraws").value(20));
+        for (var invalid :
+                Map.of(
+                                "model",
+                                "invalid",
+                                "delta",
+                                "NaN",
+                                "mlWeight",
+                                "1.1",
+                                "trainingWindow",
+                                "1000",
+                                "lastDraw",
+                                "45")
+                        .entrySet())
+            mvc.perform(get("/api/ml-forecast").param(invalid.getKey(), invalid.getValue()))
+                    .andExpect(status().isBadRequest());
+        mvc.perform(get("/api/ml-forecast").param("lastDraw", "19"))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
     void csrfIsRequiredAndMultipartWorks() throws Exception {
         String body = "{\"game\":\"PB\",\"text\":\"1/1/2026 1 2 3 4 5 1\"}";
         mvc.perform(post("/api/import-text").contentType(MediaType.APPLICATION_JSON).content(body))
